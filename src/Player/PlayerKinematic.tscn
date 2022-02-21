@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/Player/PlayerKinematic.gd" type="Script" id=1]
+[ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
+[ext_resource path="res://assets/cannon.png" type="Texture" id=3]
+[ext_resource path="res://src/Player/CannonBase.gd" type="Script" id=4]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 12.0104
+
+[node name="PlayerKinematic" type="KinematicBody2D"]
+collision_mask = 10
+script = ExtResource( 1 )
+_hitpoints_override = 40
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 2 )
+shape = SubResource( 3 )
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( 0, 2 )
+shape = SubResource( 4 )
+
+[node name="CannonLeftPivot" type="Position2D" parent="."]
+position = Vector2( -12, 7 )
+z_index = 1
+script = ExtResource( 4 )
+
+[node name="CannonLeft" type="Sprite" parent="CannonLeftPivot"]
+rotation = -1.5708
+texture = ExtResource( 3 )
+offset = Vector2( 0, 3 )
+
+[node name="BulletSpawnPoint" type="Position2D" parent="CannonLeftPivot/CannonLeft"]
+position = Vector2( -4.76837e-07, 8 )
+
+[node name="CannonRightPivot" type="Position2D" parent="."]
+position = Vector2( 11, 7 )
+z_index = 1
+script = ExtResource( 4 )
+
+[node name="CannonRight" type="Sprite" parent="CannonRightPivot"]
+rotation = -1.5708
+texture = ExtResource( 3 )
+offset = Vector2( 0.5, 3 )
+
+[node name="BulletSpawnPoint" type="Position2D" parent="CannonRightPivot/CannonRight"]
+position = Vector2( 0, 8 )
+
+[node name="BulletsContainer" type="Node" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_enabled = true

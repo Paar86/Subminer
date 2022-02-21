@@ -1,0 +1,33 @@
+extends Area2D
+
+export var splash_damage_extents_max := 32.0
+export var splash_damage_area_growth: float
+
+var animation_duration: float
+
+onready var collision_shape := $CollisionShape2D
+
+func _ready() -> void:
+	$AnimatedSprite.playing = true
+	var animation_speed = $AnimatedSprite.frames.get_animation_speed("default")
+	var animation_frames = $AnimatedSprite.frames.get_frame_count("default")
+	animation_duration = animation_frames / animation_speed
+	# Grow full radius in half of the animation duration
+	splash_damage_area_growth = splash_damage_extents_max / animation_duration * 2
+	
+
+func _physics_process(delta: float) -> void:
+	if collision_shape.shape.radius < splash_damage_extents_max and !collision_shape.disabled:
+		collision_shape.shape.set_deferred("radius", collision_shape.shape.radius + splash_damage_area_growth * delta)
+	else:
+		collision_shape.set_deferred("disabled", true)
+
+
+func _on_AnimatedSprite_animation_finished():
+	queue_free()
+
+
+func _on_MineExplosion_area_entered(area: Area2D) -> void:
+	if area.owner is GameActor:
+		var direction = (area.owner.global_position - global_position).normalized()
+		area.owner.propagate_effects({Enums.Effects.DAMAGE: 10, Enums.Effects.PUSH: direction * 300.0})
