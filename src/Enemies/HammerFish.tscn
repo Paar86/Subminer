@@ -17,6 +17,7 @@ height = 8.0
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )
+hitpoints_override = 30
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

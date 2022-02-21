@@ -19,7 +19,8 @@ var _patrol_acceleration := 50.0
 var _death_acceleration := 30.0
 var _velocity := Vector2.ZERO
 var _charge_speed := _max_patrol_speed * 6.0
-var _is_resting := false
+var _rest_duration := 1.0
+var _rested_time := 0.0
 
 var _time := 0.0
 var _shake_duration := 1.0
@@ -74,8 +75,14 @@ func _physics_process(delta: float) -> void:
 				_state = States.REST
 				return
 		States.REST:
-			if !_is_resting:
-				_rest()
+			_rested_time += delta
+			if _rested_time >= _rest_duration:
+				var collision = move_and_collide(_direction, true, true, true)
+				if is_collision_with_world(collision):
+					_flip_direction()
+				_rested_time = 0.0
+				_state = States.PATROL
+				return
 		States.DEATH:
 			_velocity += Vector2.DOWN * _death_acceleration * delta
 			_velocity.y = clamp(_velocity.y, -_max_patrol_speed, _max_patrol_speed)
@@ -95,22 +102,6 @@ func _flip_direction() -> void:
 	var _player_detector_scale := Vector2(_direction.x, 0.0)
 	_player_detector_high.set_deferred("scale", _player_detector_scale)
 	_player_detector_low.set_deferred("scale", _player_detector_scale)
-
-
-func _rest() -> void:
-	_is_resting = true
-	yield(get_tree().create_timer(1), "timeout")
-	
-	# This is here because we can return to this function after setting DEATH state, because of yielding
-	# Maybe there's a better way to handle it?
-	if _state == States.DEATH:
-		return
-		
-	var collision = move_and_collide(_direction, true, true, true)
-	if is_collision_with_world(collision):
-		_flip_direction()
-	_state = States.PATROL
-	_is_resting = false
 
 
 func _prepare_death_state() -> void:
