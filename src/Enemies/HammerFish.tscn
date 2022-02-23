@@ -51,4 +51,8 @@ collision_layer = 0
 rotation = 1.5708
 shape = SubResource( 3 )
 
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+rect = Rect2( -100, -100, 200, 200 )
+physics_process_parent = true
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
