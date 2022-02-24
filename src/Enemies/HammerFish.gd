@@ -5,16 +5,16 @@ export var hitpoints_override := 40
 enum Directions { LEFT, RIGHT }
 export(Directions) var initial_direction = Directions.RIGHT
 
-enum States { PATROL, ROAR, CHARGE, REST, DEATH }
+enum States { PATROL, FOLLOW, ROAR, CHARGE, REST, DEATH }
 var _state = States.PATROL
 
 onready var _sprite: Sprite = $Sprite
-onready var _player_detector_high: RayCast2D = $PlayerDetectorHigh
-onready var _player_detector_low: RayCast2D = $PlayerDetectorLow
+onready var _charge_detector_high: RayCast2D = $ChargeDetectorHigh
+onready var _charge_detector_low: RayCast2D = $ChargeDetectorLow
 
 var _smoke_effect := preload("res://src/Common/SmokeParticles.tscn")
 var _direction := Vector2.RIGHT
-var _max_patrol_speed := 50.0
+var _max_patrol_speed := 40.0
 var _patrol_acceleration := 50.0
 var _death_acceleration := 30.0
 var _velocity := Vector2.ZERO
@@ -28,18 +28,24 @@ var _shake_default_position: Vector2
 var _shake_default_distance: float = 3.0
 var _shake_distance: float = _shake_default_distance
 var _shake_frequency: float = 50.0
+var _target_body: KinematicBody2D = null
+
 
 func _ready() -> void:
 	_shake_default_position =  _sprite.position
 	hitpoints = hitpoints_override
 	if initial_direction == Directions.LEFT:
-			_flip_direction()
+		_set_sprite_orientation(Vector2.LEFT)
 
 
 func _physics_process(delta: float) -> void:
 
 	match _state:
 		States.PATROL:
+			if _target_body:
+				_state = States.FOLLOW
+				return
+
 			_velocity += _direction * _patrol_acceleration * delta
 			_velocity.x = clamp(_velocity.x, -_max_patrol_speed, _max_patrol_speed)
 
@@ -49,8 +55,17 @@ func _physics_process(delta: float) -> void:
 				_state = States.REST
 				return
 
-			if _player_detector_high.is_colliding() or _player_detector_low.is_colliding():
-				_state = States.ROAR
+			_check_charge_collision()
+		States.FOLLOW:
+			if !_target_body:
+				_state = States.REST
+				return
+
+			_direction = (_target_body.global_position - global_position).normalized()
+			_velocity = _direction * _max_patrol_speed
+			move_and_slide(_velocity)
+			_check_charge_collision()
+			_set_sprite_orientation(_direction)
 		States.ROAR:
 			# Shake animation
 			_time += delta
@@ -77,9 +92,11 @@ func _physics_process(delta: float) -> void:
 		States.REST:
 			_rested_time += delta
 			if _rested_time >= _rest_duration:
+				_direction = _get_simplified_direction(_direction)
 				var collision = move_and_collide(_direction, true, true, true)
 				if is_collision_with_world(collision):
-					_flip_direction()
+					_direction = _direction * -1
+					_set_sprite_orientation(_direction)
 				_rested_time = 0.0
 				_state = States.PATROL
 				return
@@ -95,13 +112,20 @@ func is_collision_with_world(collision: KinematicCollision2D) -> bool:
 	return false
 
 
-func _flip_direction() -> void:
-	_direction = _direction * -1
-	_sprite.flip_h = !_sprite.flip_h
+func _set_sprite_orientation(direction: Vector2) -> void:
+	var sign_value: int = sign(direction.x)
+	_sprite.flip_h = true if sign_value < 0 else false
 
-	var _player_detector_scale := Vector2(_direction.x, 0.0)
-	_player_detector_high.set_deferred("scale", _player_detector_scale)
-	_player_detector_low.set_deferred("scale", _player_detector_scale)
+	var _player_detector_scale := Vector2(sign_value, 0.0)
+	_charge_detector_high.set_deferred("scale", _player_detector_scale)
+	_charge_detector_low.set_deferred("scale", _player_detector_scale)
+
+
+# To get left or right direction, without verticality
+func _get_simplified_direction(direction: Vector2) -> Vector2:
+	var sign_value: int = sign(direction.x)
+	var direction_x = -1.0 if sign_value < 0 else 1.0
+	return Vector2(direction_x, 0.0)
 
 
 func _prepare_death_state() -> void:
@@ -111,8 +135,8 @@ func _prepare_death_state() -> void:
 
 	$Hurtbox.set_deferred("monitorable", false)
 	$Hitbox.set_deferred("monitoring", false)
-	_player_detector_high.set_deferred("enabled", false)
-	_player_detector_low.set_deferred("enabled", false)
+	_charge_detector_high.set_deferred("enabled", false)
+	_charge_detector_low.set_deferred("enabled", false)
 
 	# Disable KinematicBody collision with the player layer
 	call_deferred("set_collision_mask_bit", 0, false)
@@ -136,7 +160,22 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		_flash_before_vanish()
 
 
+func _check_charge_collision() -> void:
+	if _charge_detector_high.is_colliding() or _charge_detector_low.is_colliding():
+		_direction = _get_simplified_direction(_direction)
+		_state = States.ROAR
+
+
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var direction = (area.owner.global_position - global_position).normalized()
 		area.owner.propagate_effects({Enums.Effects.DAMAGE: 5, Enums.Effects.PUSH: direction * 150.0 })
+
+
+func _on_PlayerDetector_body_entered(body: KinematicBody2D) -> void:
+	_target_body = body
+
+
+func _on_PlayerDetector_body_exited(body: KinematicBody2D) -> void:
+	_target_body = null
+	_velocity = Vector2.ZERO

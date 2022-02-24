@@ -25,6 +25,7 @@ shape = SubResource( 3 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_mask = 0
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0, 2 )

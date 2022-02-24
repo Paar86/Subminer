@@ -22,15 +22,10 @@ _global_script_class_icons={
 
 config/name="Subminer"
 run/main_scene="res://src/Levels/Main.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 
 Enums="*res://src/Autoload/Enums.gd"
-PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
-IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
-UserData="*res://addons/github-integration/scripts/user_data.gd"
-RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
 
 [display]
 
@@ -46,6 +41,10 @@ window/stretch/aspect="keep"
 [editor_plugins]
 
 enabled=PoolStringArray(  )
+
+[global]
+
+pixel=false
 
 [importer_defaults]
 

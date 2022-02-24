@@ -17,16 +17,17 @@ var velocity := Vector2(0.0, 0.0)
 var is_firing := false
 var state: int = states.IDLE
 var input_direction = Vector2.ZERO
-var _is_invincible := false
+var _is_invincible: bool setget set_invincibility, get_invincibility
 
-onready var _main_sprite := $Sprite
-onready var _cannon_left_sprite := $CannonLeftPivot/CannonLeft
-onready var _cannon_right_sprite := $CannonRightPivot/CannonRight
-onready var projectiles_container := $BulletsContainer
-onready var left_cannon := $CannonLeftPivot
-onready var right_cannon := $CannonRightPivot
-onready var left_cannon_point := $CannonLeftPivot/CannonLeft/BulletSpawnPoint
-onready var right_cannon_point := $CannonRightPivot/CannonRight/BulletSpawnPoint
+onready var _main_sprite: Sprite = $Sprite
+onready var _cannon_left_sprite: Sprite = $CannonLeftPivot/CannonLeft
+onready var _cannon_right_sprite: Sprite = $CannonRightPivot/CannonRight
+onready var projectiles_container: Node = $BulletsContainer
+onready var left_cannon: Position2D = $CannonLeftPivot
+onready var right_cannon: Position2D = $CannonRightPivot
+onready var left_cannon_point: Position2D = $CannonLeftPivot/CannonLeft/BulletSpawnPoint
+onready var right_cannon_point: Position2D = $CannonRightPivot/CannonRight/BulletSpawnPoint
+onready var _hurt_box := $Hurtbox
 
 var projectile_scene := preload("res://src/Player/Projectile.tscn")
 
@@ -83,6 +84,15 @@ func _physics_process(delta: float) -> void:
 		_fire_cannons()
 
 
+func set_invincibility(value: bool) -> void:
+	var collision_layer_value = 0 if value else 1
+	_hurt_box.set_deferred("collision_layer", collision_layer_value)
+
+
+func get_invincibility() -> bool:
+	return true if _hurt_box.collision_layer == 0 else false
+
+
 func _get_direction() -> Vector2:
 	var horizontal_direction = Input.get_action_strength("right") - Input.get_action_strength("left")
 	var vertical_direction = Input.get_action_strength("down") - Input.get_action_strength("up")
@@ -120,9 +130,9 @@ func _spawn_projectile(global_position: Vector2, angle_rad: float) -> void:
 
 
 func _start_damage_flashing() -> void:
-	_is_invincible = true
+	self._is_invincible = true
 
-	for i in range(20):
+	for i in 20:
 		_main_sprite.hide()
 		_cannon_left_sprite.hide()
 		_cannon_right_sprite.hide()
@@ -132,7 +142,7 @@ func _start_damage_flashing() -> void:
 		_cannon_right_sprite.show()
 		yield(get_tree().create_timer(0.05), "timeout")
 
-	_is_invincible = false
+	self._is_invincible = false
 
 
 func propagate_effects(effects: Dictionary = {}) -> void:
