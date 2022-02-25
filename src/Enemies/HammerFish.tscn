@@ -20,7 +20,6 @@ radius = 95.0053
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )
-hitpoints_override = 30
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -65,6 +64,11 @@ collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
 shape = SubResource( 4 )
+
+[node name="RayCastVisibility" type="RayCast2D" parent="."]
+enabled = true
+cast_to = Vector2( 1, 0 )
+collision_mask = 2
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]

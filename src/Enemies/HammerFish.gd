@@ -1,131 +1,150 @@
 extends GameActor
 
 export var hitpoints_override := 40
+export var damage := 5
+export var push_strength := 150.0
 
-enum Directions { LEFT, RIGHT }
-export(Directions) var initial_direction = Directions.RIGHT
-
-enum States { PATROL, FOLLOW, ROAR, CHARGE, REST, DEATH }
-var _state = States.PATROL
+enum States { IDLE, FOLLOW, ROAR, CHARGE, REST, DEATH }
+var _state = States.IDLE
 
 onready var _sprite: Sprite = $Sprite
 onready var _charge_detector_high: RayCast2D = $ChargeDetectorHigh
 onready var _charge_detector_low: RayCast2D = $ChargeDetectorLow
+onready var _raycast_visibility: RayCast2D = $RayCastVisibility
 
 var _smoke_effect := preload("res://src/Common/SmokeParticles.tscn")
-var _direction := Vector2.RIGHT
-var _max_patrol_speed := 40.0
-var _patrol_acceleration := 50.0
-var _death_acceleration := 30.0
 var _velocity := Vector2.ZERO
-var _charge_speed := _max_patrol_speed * 6.0
+var _death_acceleration := 30.0
+var _max_speed := 40.0
+var _charge_speed := _max_speed * 6.0
+var _time: float = position.x + position.y
+var _direction := Vector2.RIGHT
+var _direction_basic: Vector2 setget ,_get_direction_basic
+
+# For IDLE state's sprite waving
+var _starting_position: Vector2
+var _move_distance: float = 2.0
+var _move_frequency: float = 2.0
+
+# For REST state
 var _rest_duration := 1.0
 var _rested_time := 0.0
 
-var _time := 0.0
+# For FOLLOW state
+var _mass := 3.0
+
+# For ROAR state
 var _shake_duration := 1.0
 var _shake_default_position: Vector2
 var _shake_default_distance: float = 3.0
 var _shake_distance: float = _shake_default_distance
 var _shake_frequency: float = 50.0
+
 var _target_body: KinematicBody2D = null
+
+
+func propagate_effects(effects: Dictionary = {}) -> void:
+	.propagate_effects(effects)
+	if hitpoints == 0:
+		_prepare_death_state()
+		yield(get_tree().create_timer(1), "timeout")
+		_flash_before_vanish()
 
 
 func _ready() -> void:
 	_shake_default_position =  _sprite.position
 	hitpoints = hitpoints_override
-	if initial_direction == Directions.LEFT:
-		_set_sprite_orientation(Vector2.LEFT)
 
 
 func _physics_process(delta: float) -> void:
-
 	match _state:
-		States.PATROL:
-			if _target_body:
-				_state = States.FOLLOW
-				return
-
-			_velocity += _direction * _patrol_acceleration * delta
-			_velocity.x = clamp(_velocity.x, -_max_patrol_speed, _max_patrol_speed)
-
-			var collision := move_and_collide(_velocity * delta)
-			if collision:
-				_velocity = Vector2.ZERO
-				_state = States.REST
-				return
-
-			_check_charge_collision()
+		States.IDLE:
+			_idle_state(delta)
 		States.FOLLOW:
-			if !_target_body:
-				_state = States.REST
-				return
-
-			_direction = (_target_body.global_position - global_position).normalized()
-			_velocity = _direction * _max_patrol_speed
-			move_and_slide(_velocity)
-			_check_charge_collision()
-			_set_sprite_orientation(_direction)
+			_follow_state(delta)
 		States.ROAR:
-			# Shake animation
-			_time += delta
-			_sprite.position.y = _shake_default_position.y + sin(_time * _shake_frequency) * _shake_distance
-			_shake_distance -= delta * 5.0
-			# Transition to CHARGE state at the end of shake animation
-			if _shake_distance <= 0.0:
-				_shake_distance = _shake_default_distance
-				# Change sprite
-				# Make a sound
-				_state = States.CHARGE
-				return
+			_roar_state(delta)
 		States.CHARGE:
-			_velocity = _direction * _charge_speed
-			var collision := move_and_collide(_velocity * delta)
-			if collision:
-				if is_collision_with_world(collision):
-					var smoke_instance = _smoke_effect.instance()
-					smoke_instance.global_position = collision.position
-					get_parent().call_deferred("add_child", smoke_instance)
-				_velocity = Vector2.ZERO
-				_state = States.REST
-				return
+			_charge_state(delta)
 		States.REST:
-			_rested_time += delta
-			if _rested_time >= _rest_duration:
-				_direction = _get_simplified_direction(_direction)
-				var collision = move_and_collide(_direction, true, true, true)
-				if is_collision_with_world(collision):
-					_direction = _direction * -1
-					_set_sprite_orientation(_direction)
-				_rested_time = 0.0
-				_state = States.PATROL
-				return
+			_rest_state(delta)
 		States.DEATH:
-			_velocity += Vector2.DOWN * _death_acceleration * delta
-			_velocity.y = clamp(_velocity.y, -_max_patrol_speed, _max_patrol_speed)
-			move_and_collide(_velocity * delta)
+			_death_state(delta)
 
 
-func is_collision_with_world(collision: KinematicCollision2D) -> bool:
-	if collision and collision.collider is TileMap:
-		return true
-	return false
+func _idle_state(delta: float) -> void:
+	_time += delta
+	_sprite.position.y = _starting_position.y + sin(_time * _move_frequency) * _move_distance
+	
+	if _is_target_body_visible():
+		_sprite.position.y = _starting_position.y
+		_time = 0.0
+		_state = States.FOLLOW
 
 
-func _set_sprite_orientation(direction: Vector2) -> void:
-	var sign_value: int = sign(direction.x)
-	_sprite.flip_h = true if sign_value < 0 else false
+func _follow_state(delta: float) -> void:
+	if !_is_target_body_visible():
+		_state = States.IDLE
+		return
+		
+	_check_charge_detectors_colliding()
+	
+	# Steering behaviour
+	var desired_velocity = (_target_body.global_position - global_position).normalized() * _max_speed
+	var to_desired_velocity = (desired_velocity - _velocity) / _mass
+	_velocity += to_desired_velocity
+	
+	_direction = _velocity.normalized()
+	_set_sprite_orientation(self._direction_basic)
+	_velocity = move_and_slide(_velocity)
 
-	var _player_detector_scale := Vector2(sign_value, 0.0)
-	_charge_detector_high.set_deferred("scale", _player_detector_scale)
-	_charge_detector_low.set_deferred("scale", _player_detector_scale)
+
+func _roar_state(delta: float) -> void:
+	_time += delta
+	_sprite.position.y = _shake_default_position.y + sin(_time * _shake_frequency) * _shake_distance
+	_shake_distance -= delta * 5.0
+	# Transition to CHARGE state at the end of shake animation
+	if _shake_distance <= 0.0:
+		_shake_distance = _shake_default_distance
+		# TODO: Change sprite
+		# TODO: Make a sound
+		_direction = self._direction_basic
+		_time = 0.0
+		_state = States.CHARGE
+		return
 
 
-# To get left or right direction, without verticality
-func _get_simplified_direction(direction: Vector2) -> Vector2:
-	var sign_value: int = sign(direction.x)
-	var direction_x = -1.0 if sign_value < 0 else 1.0
-	return Vector2(direction_x, 0.0)
+func _charge_state(delta: float) -> void:
+	_velocity = move_and_slide(_direction * _charge_speed)
+	var collisions_number = get_slide_count()
+	for i in collisions_number:
+		var collision = get_slide_collision(i)
+		if collision.collider is TileMap:
+			var smoke_instance = _smoke_effect.instance()
+			smoke_instance.global_position = collision.position
+			get_parent().call_deferred("add_child", smoke_instance)
+			_state = States.REST
+			return
+			
+	if collisions_number > 0:
+		_state = States.IDLE
+		return
+
+
+func _rest_state(delta: float) -> void:
+	_rested_time += delta
+	if _rested_time >= _rest_duration:
+		_direction = self._direction_basic * -1
+		_set_sprite_orientation(_direction)
+		_rested_time = 0.0
+		_state = States.IDLE
+		return
+
+
+func _death_state(delta: float) -> void:
+	_velocity += Vector2.DOWN * _death_acceleration * delta
+	_velocity.y = clamp(_velocity.y, -_max_speed, _max_speed)
+	move_and_collide(_velocity * delta)
 
 
 func _prepare_death_state() -> void:
@@ -142,8 +161,16 @@ func _prepare_death_state() -> void:
 	call_deferred("set_collision_mask_bit", 0, false)
 
 
+func _set_sprite_orientation(direction_basic: Vector2) -> void:
+	_sprite.flip_h = true if direction_basic.x < 0 else false
+	
+	var _player_detector_scale := Vector2(direction_basic.x, 0.0)
+	_charge_detector_high.set_deferred("scale", _player_detector_scale)
+	_charge_detector_low.set_deferred("scale", _player_detector_scale)
+
+
 func _flash_before_vanish() -> void:
-	for i in range(5):
+	for i in 5:
 		_sprite.hide()
 		yield(get_tree().create_timer(0.05), "timeout")
 		_sprite.show()
@@ -152,24 +179,38 @@ func _flash_before_vanish() -> void:
 	queue_free()
 
 
-func propagate_effects(effects: Dictionary = {}) -> void:
-	.propagate_effects(effects)
-	if hitpoints == 0:
-		_prepare_death_state()
-		yield(get_tree().create_timer(1), "timeout")
-		_flash_before_vanish()
+func _check_charge_detectors_colliding() -> void:
+	var high_collider = _charge_detector_high.get_collider()
+	var low_collider = _charge_detector_low.get_collider()
+	var collider = high_collider if high_collider else low_collider
+	if collider:
+		var destination = collider.global_position - _raycast_visibility.global_position
+		_raycast_visibility.cast_to = destination
+		if !_raycast_visibility.is_colliding():
+			_state = States.ROAR
 
 
-func _check_charge_collision() -> void:
-	if _charge_detector_high.is_colliding() or _charge_detector_low.is_colliding():
-		_direction = _get_simplified_direction(_direction)
-		_state = States.ROAR
+func _is_target_body_visible() -> bool:
+	if !_target_body:
+		return false
+
+	var to_target = _target_body.global_position - _raycast_visibility.global_position
+	_raycast_visibility.cast_to = to_target
+	if _raycast_visibility.is_colliding():
+		return false
+
+	return true
+	
+	
+func _get_direction_basic() -> Vector2:
+	var direction_basic = Vector2.LEFT if _direction.x < 0 else Vector2.RIGHT
+	return direction_basic
 
 
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var direction = (area.owner.global_position - global_position).normalized()
-		area.owner.propagate_effects({Enums.Effects.DAMAGE: 5, Enums.Effects.PUSH: direction * 150.0 })
+		area.owner.propagate_effects({Enums.Effects.DAMAGE: damage, Enums.Effects.PUSH: direction * push_strength })
 
 
 func _on_PlayerDetector_body_entered(body: KinematicBody2D) -> void:
@@ -178,4 +219,3 @@ func _on_PlayerDetector_body_entered(body: KinematicBody2D) -> void:
 
 func _on_PlayerDetector_body_exited(body: KinematicBody2D) -> void:
 	_target_body = null
-	_velocity = Vector2.ZERO
