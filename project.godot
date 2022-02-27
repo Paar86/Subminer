@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "GameActor",
 "language": "GDScript",
 "path": "res://src/Common/GameActor.gd"
+}, {
+"base": "Control",
+"class": "HUD",
+"language": "GDScript",
+"path": "res://src/UI/HUD.gd"
 } ]
 _global_script_class_icons={
-"GameActor": ""
+"GameActor": "",
+"HUD": ""
 }
 
 [application]
@@ -26,6 +32,7 @@ run/main_scene="res://src/Levels/Main.tscn"
 [autoload]
 
 Enums="*res://src/Autoload/Enums.gd"
+PlayerStats="*res://src/Autoload/PlayerStats.gd"
 
 [display]
 

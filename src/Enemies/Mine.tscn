@@ -97,4 +97,4 @@ anims/Warning = SubResource( 5 )
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_PlayerDetector_body_exited"]
-[connection signal="area_entered" from="TriggerArea" to="." method="_on_TriggerArea_area_entered"]
+[connection signal="body_entered" from="TriggerArea" to="." method="_on_TriggerArea_body_entered"]

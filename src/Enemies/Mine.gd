@@ -42,6 +42,6 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		explode()
 
 
-func _on_TriggerArea_area_entered(area: Area2D) -> void:
-	if !area.owner.is_in_group("Mines"):
+func _on_TriggerArea_body_entered(body: Node) -> void:
+	if !body.is_in_group("Mines"):
 		explode()
