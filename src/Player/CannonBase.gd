@@ -12,6 +12,7 @@ func _process(delta: float) -> void:
 	if abs(smallest_angle_to_mouse) < rotation_speed_rad * delta:
 		look_at(mouse_global_position)
 
+
 # We need to determine the shortest way to the destination (clockwise/counterclockwise)
 func get_smallest_angle_to() -> float:
 	var angle_to_mouse: float = get_angle_to(mouse_global_position)

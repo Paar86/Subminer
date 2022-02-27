@@ -56,14 +56,15 @@ func give_impulse(impulse_velocity: Vector2) -> void:
 	_velocity = impulse_velocity
 
 
-func _on_PickupBox_body_entered(body: KinematicBody2D) -> void:
+func _on_PickupBox_body_entered(body: GameActor) -> void:
+	body.propagate_effects( {Enums.Effects.MINERALS: 1} )
 	animation_player.play("Pickup")
 	$PickupBox.set_deferred("disabled", true)
 	yield(animation_player, "animation_finished")
 	queue_free()
 
 
-func _on_AutoPickupDetector_body_entered(body: KinematicBody2D) -> void:
+func _on_AutoPickupDetector_body_entered(body: GameActor) -> void:
 	_target_body = body
 	$CollisionShape2D.set_deferred("disabled", true)
 	_state = States.FOLLOW

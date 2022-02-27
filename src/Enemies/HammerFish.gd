@@ -11,8 +11,12 @@ onready var _sprite: Sprite = $Sprite
 onready var _charge_detector_high: RayCast2D = $ChargeDetectorHigh
 onready var _charge_detector_low: RayCast2D = $ChargeDetectorLow
 onready var _raycast_visibility: RayCast2D = $RayCastVisibility
+onready var _charge_timer: Timer = $ChargeCooldown
 
 var _smoke_effect := preload("res://src/Common/SmokeParticles.tscn")
+
+var _target_body: KinematicBody2D = null
+var _can_charge := true
 var _velocity := Vector2.ZERO
 var _death_acceleration := 30.0
 var _max_speed := 40.0
@@ -40,7 +44,6 @@ var _shake_default_distance: float = 3.0
 var _shake_distance: float = _shake_default_distance
 var _shake_frequency: float = 50.0
 
-var _target_body: KinematicBody2D = null
 
 
 func propagate_effects(effects: Dictionary = {}) -> void:
@@ -75,7 +78,7 @@ func _physics_process(delta: float) -> void:
 func _idle_state(delta: float) -> void:
 	_time += delta
 	_sprite.position.y = _starting_position.y + sin(_time * _move_frequency) * _move_distance
-	
+
 	if _is_target_body_visible():
 		_sprite.position.y = _starting_position.y
 		_time = 0.0
@@ -86,14 +89,14 @@ func _follow_state(delta: float) -> void:
 	if !_is_target_body_visible():
 		_state = States.IDLE
 		return
-		
+
 	_check_charge_detectors_colliding()
-	
+
 	# Steering behaviour
 	var desired_velocity = (_target_body.global_position - global_position).normalized() * _max_speed
 	var to_desired_velocity = (desired_velocity - _velocity) / _mass
 	_velocity += to_desired_velocity
-	
+
 	_direction = _velocity.normalized()
 	_set_sprite_orientation(self._direction_basic)
 	_velocity = move_and_slide(_velocity)
@@ -125,7 +128,7 @@ func _charge_state(delta: float) -> void:
 			get_parent().call_deferred("add_child", smoke_instance)
 			_state = States.REST
 			return
-			
+
 	if collisions_number > 0:
 		_state = States.IDLE
 		return
@@ -163,7 +166,7 @@ func _prepare_death_state() -> void:
 
 func _set_sprite_orientation(direction_basic: Vector2) -> void:
 	_sprite.flip_h = true if direction_basic.x < 0 else false
-	
+
 	var _player_detector_scale := Vector2(direction_basic.x, 0.0)
 	_charge_detector_high.set_deferred("scale", _player_detector_scale)
 	_charge_detector_low.set_deferred("scale", _player_detector_scale)
@@ -186,7 +189,9 @@ func _check_charge_detectors_colliding() -> void:
 	if collider:
 		var destination = collider.global_position - _raycast_visibility.global_position
 		_raycast_visibility.cast_to = destination
-		if !_raycast_visibility.is_colliding():
+		if !_raycast_visibility.is_colliding() and _can_charge:
+			_can_charge = false
+			_charge_timer.start()
 			_state = States.ROAR
 
 
@@ -200,8 +205,8 @@ func _is_target_body_visible() -> bool:
 		return false
 
 	return true
-	
-	
+
+
 func _get_direction_basic() -> Vector2:
 	var direction_basic = Vector2.LEFT if _direction.x < 0 else Vector2.RIGHT
 	return direction_basic
@@ -219,3 +224,7 @@ func _on_PlayerDetector_body_entered(body: KinematicBody2D) -> void:
 
 func _on_PlayerDetector_body_exited(body: KinematicBody2D) -> void:
 	_target_body = null
+
+
+func _on_ChargeCooldown_timeout() -> void:
+	_can_charge = true

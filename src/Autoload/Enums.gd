@@ -1,4 +1,4 @@
 extends Node
 
 
-enum Effects { DAMAGE, PUSH }
+enum Effects { DAMAGE, PUSH, MINERALS }

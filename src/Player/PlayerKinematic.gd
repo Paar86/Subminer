@@ -2,7 +2,6 @@ extends GameActor
 
 enum States { IDLE, MOVE, DRIFT }
 
-export var _hitpoints_override := 50
 export var _gravity_max := 30.0
 export var _gravity_accel := 10.0
 export var _dash_power := 160.0
@@ -35,18 +34,19 @@ var _projectile_scene := preload("res://src/Player/Projectile.tscn")
 
 func propagate_effects(effects: Dictionary = {}) -> void:
 	if !_is_invincible:
-		_start_damage_flashing()
-
 		if Enums.Effects.DAMAGE in effects:
+			_start_damage_flashing()
 			PlayerStats.hitpoints -= effects[Enums.Effects.DAMAGE]
 		if Enums.Effects.PUSH in effects:
 			var value: Vector2 = effects[Enums.Effects.PUSH]
 			_velocity = value
 			_state = States.DRIFT
+			
+	if Enums.Effects.MINERALS in effects:
+			PlayerStats.minerals += effects[Enums.Effects.MINERALS]
 
 
 func _ready() -> void:
-	hitpoints = _hitpoints_override
 	PlayerStats.connect("hitpoints_depleted", self, "_on_hitpoints_depleted")
 
 
@@ -160,4 +160,8 @@ func _start_damage_flashing() -> void:
 
 
 func _on_hitpoints_depleted() -> void:
-	queue_free()
+	visible = false
+	$BodyCollision.set_deferred("disabled", true)
+	$Hurtbox.set_deferred("monitorable", false)
+	set_physics_process(false)
+

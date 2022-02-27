@@ -14,7 +14,6 @@ radius = 12.0104
 [node name="PlayerKinematic" type="KinematicBody2D"]
 collision_mask = 10
 script = ExtResource( 1 )
-_hitpoints_override = 40
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

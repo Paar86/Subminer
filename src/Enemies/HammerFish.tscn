@@ -14,7 +14,7 @@ height = 8.0
 height = 8.0
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 95.0053
+radius = 136.235
 
 [node name="HammerFish" type="KinematicBody2D"]
 collision_layer = 4
@@ -70,6 +70,10 @@ enabled = true
 cast_to = Vector2( 1, 0 )
 collision_mask = 2
 
+[node name="ChargeCooldown" type="Timer" parent="."]
+wait_time = 3.0
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_PlayerDetector_body_exited"]
+[connection signal="timeout" from="ChargeCooldown" to="." method="_on_ChargeCooldown_timeout"]
