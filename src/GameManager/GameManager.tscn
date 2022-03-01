@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/GameManager/GameManager.gd" type="Script" id=1]
+
+[node name="GameManager" type="Node"]
+script = ExtResource( 1 )
+
+[node name="CurrentScene" type="Node" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]

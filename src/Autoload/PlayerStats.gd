@@ -10,6 +10,11 @@ var hitpoints := STARTING_HITPOINTS setget _set_hitpoints
 var minerals := 0 setget _set_minerals
 
 
+func reset() -> void:
+	hitpoints = STARTING_HITPOINTS
+	minerals = 0
+
+
 func _ready() -> void:
 	pass
 
