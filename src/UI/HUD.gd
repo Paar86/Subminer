@@ -3,6 +3,7 @@ class_name HUD
 
 # Nodes
 onready var _minerals_counter: Label = $VBoxContainer/MineralsBar/Counter
+onready var _minerals_goal: Label = $VBoxContainer/MineralsBar/GoalNumber
 onready var _power_logo: TextureRect = $VBoxContainer/LifeBar/PowerLogo
 onready var _hitpoints_holder: Control = $VBoxContainer/LifeBar/HitpointsMargin/HitpointsHolder
 
@@ -12,6 +13,10 @@ onready var _power_texture := preload("res://assets/ui/power_symbol_yellow.png")
 onready var _blinking_power_texture := preload("res://src/UI/PowerBlinkingAnimatedTexture.tres")
 
 const POWER_BLINKING_THRESHOLD := 10
+
+
+func set_minerals_goal(goal_number: int) -> void:
+	_minerals_goal.text = str(goal_number)
 
 
 func _ready() -> void:

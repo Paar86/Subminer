@@ -1,20 +1,18 @@
 extends Node
 
 var _levels: Array = [
-	"res://src/Levels/TestLevel.tscn",
+	"res://src/Levels/Level1.tscn",
 ]
 
-var HUD: PackedScene = preload("res://src/UI/HUD.tscn")
 var _current_level := 0
 
 onready var CurrentScene: Node = $CurrentScene
-onready var UI: CanvasLayer = $UI
+onready var CanvasHUD := $UI/HUD
 
 
 func _ready() -> void:
 	_clear_current_scene()
 	_load_level(1)
-	_init_ui()
 
 
 func _clear_current_scene() -> void:
@@ -29,13 +27,10 @@ func _load_level(level_number: int) -> void:
 	_current_level = level_number
 	PlayerStats.reset()
 	
+	var minerals_goal: int = level.get_node("LevelBase").minerals_goal
+	CanvasHUD.set_minerals_goal(minerals_goal)
+	CanvasHUD.show()
+	
 
 func _load_next_level() -> void:
 	_load_level(_current_level + 1)
-
-
-func _init_ui() -> void:
-	if UI.get_children().size() > 0:
-		return
-	
-	UI.call_deferred("add_child", HUD.instance())
