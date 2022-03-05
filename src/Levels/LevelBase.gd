@@ -18,7 +18,7 @@ var _hammer_fish_tile_name := "hammer_fish"
 var _objects_dictionary = {
 	_player_tile_name: "res://src/Player/PlayerKinematic.tscn",
 	_mine_tile_name: "res://src/Enemies/Mine.tscn",
-	_mineral_ground_name: "res://src/Pickups/MineralBodyFloor.tscn",
+	_mineral_ground_name: "res://src/Pickups/MineralBodyHorizontal.tscn",
 	_fragment_tile_name: "res://src/Pickups/Fragment.tscn",
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
 }
@@ -28,8 +28,17 @@ func _ready() -> void:
 	# Object Placer TileMap's tile graphics are only handy in the editor,
 	# therefore we must hide it when running the game
 	_objects_tilemap.hide()
-	prepare_folder_nodes()
+	clean_player_tiles()
 	place_objects()
+
+
+# There can be only one player tile in the level
+func clean_player_tiles() -> void:
+	var player_tile = _objects_tilemap.tile_set.find_tile_by_name(_player_tile_name)
+	var player_tiles = _objects_tilemap.get_used_cells_by_id(player_tile)
+	for i in player_tiles.size():
+		if i > 0:
+			_objects_tilemap.set_cell(player_tiles[i].x, player_tiles[i].y, -1)
 
 
 func place_objects() -> void:
@@ -57,26 +66,12 @@ func place_objects() -> void:
 			var scene: PackedScene = load(node_path)
 			var instance: Node2D = scene.instance()
 			instance.position = pos
+			
+			if instance is GameActor:
+				if _objects_tilemap.is_cell_x_flipped(cell.x, cell.y):
+					instance.flip_horizontally()
+				if _objects_tilemap.is_cell_y_flipped(cell.x, cell.y):
+					instance.flip_vertically()
 
 			var folder = get_node(folder_name)
 			folder.add_child(instance)
-
-
-func prepare_folder_nodes() -> void:
-	var playerFolder := has_node(_player_folder_name)
-	if !playerFolder:
-		create_folder_node(_player_folder_name)
-
-	var pickupsFolder := has_node(_pickups_folder_name)
-	if !pickupsFolder:
-		create_folder_node(_pickups_folder_name)
-
-	var enemiesFolder := has_node(_enemies_folder_name)
-	if !enemiesFolder:
-		create_folder_node(_enemies_folder_name)
-
-
-func create_folder_node(folder_name: String) -> void:
-	var folder := Node.new()
-	folder.name = folder_name
-	add_child(folder)

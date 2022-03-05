@@ -37,3 +37,11 @@ func blink() -> void:
 		yield(get_tree().create_timer(0.02), "timeout")
 		visible = true
 		blinking = false
+
+
+func flip_horizontally() -> void:
+	pass
+	
+	
+func flip_vertically() -> void:
+	pass

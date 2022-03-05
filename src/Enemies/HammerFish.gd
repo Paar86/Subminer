@@ -54,9 +54,14 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		_flash_before_vanish()
 
 
+func flip_horizontally() -> void:
+	self._direction_basic *= -1
+
+
 func _ready() -> void:
 	_shake_default_position =  _sprite.position
 	hitpoints = hitpoints_override
+	_set_sprite_orientation(_direction_basic)
 
 
 func _physics_process(delta: float) -> void:

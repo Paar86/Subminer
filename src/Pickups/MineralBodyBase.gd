@@ -21,6 +21,17 @@ var damage_phase_threshold: int
 # How much should the damage phase threshold be lowered when neccessary
 var damage_threshold_modifier: int
 
+
+func flip_vertically() -> void:
+	scale.y *= -1
+	fragment_spawn_direction.y *= -1
+	
+	
+func flip_horizontally() -> void:
+	scale.x *= -1
+	fragment_spawn_direction.x *= -1
+
+
 func _ready() -> void:
 	_sprite = $Sprite
 	_smoke_particles_origin = $SmokeParticlesOrigin
