@@ -38,8 +38,8 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 			_start_damage_flashing()
 			PlayerStats.hitpoints -= effects[Enums.Effects.DAMAGE]
 		if Enums.Effects.PUSH in effects:
-			var value: Vector2 = effects[Enums.Effects.PUSH]
-			_velocity = value
+			var push_velocity: Vector2 = effects[Enums.Effects.PUSH]
+			_velocity = push_velocity
 			_state = States.DRIFT
 			
 	if Enums.Effects.MINERALS in effects:
@@ -90,7 +90,7 @@ func _physics_process(delta: float) -> void:
 			_apply_friction(true, true, delta)
 			if (_velocity.length() < _thrust_power_max):
 				_state = States.MOVE
-
+	
 	_velocity = move_and_slide(_velocity)
 
 	# We should be able to fire anytime
@@ -99,12 +99,13 @@ func _physics_process(delta: float) -> void:
 
 
 func _set_invincibility(value: bool) -> void:
+	_is_invincible = value
 	var collision_layer_value = 0 if value else 1
 	_hurt_box.set_deferred("collision_layer", collision_layer_value)
 
 
 func _get_invincibility() -> bool:
-	return true if _hurt_box.collision_layer == 0 else false
+	return _is_invincible
 
 
 func _get_direction() -> Vector2:
