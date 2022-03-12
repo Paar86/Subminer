@@ -16,18 +16,6 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 	if Enums.Effects.PUSH in effects:
 		# Every object needs to implement it differently
 		pass
-	
-
-func propagate_damage(value: int) -> void:
-	blink()
-	if hitpoints > value:
-		hitpoints -= value
-	else:
-		hitpoints = 0
-	
-
-func propagate_push(_value: Vector2) -> void:
-	pass
 
 
 func blink() -> void:

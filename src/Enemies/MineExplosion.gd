@@ -5,22 +5,23 @@ export var splash_damage_area_growth: float
 
 var animation_duration: float
 
-onready var collision_shape := $CollisionShape2D
+onready var CollisionShapeNode := $CollisionShape2D
+onready var AnimatedSpriteNode := $AnimatedSprite
 
 func _ready() -> void:
-	$AnimatedSprite.playing = true
-	var animation_speed = $AnimatedSprite.frames.get_animation_speed("default")
-	var animation_frames = $AnimatedSprite.frames.get_frame_count("default")
+	AnimatedSpriteNode.playing = true
+	var animation_speed = AnimatedSpriteNode.frames.get_animation_speed("default")
+	var animation_frames = AnimatedSpriteNode.frames.get_frame_count("default")
 	animation_duration = animation_frames / animation_speed
 	# Grow full radius in half of the animation duration
 	splash_damage_area_growth = splash_damage_extents_max / animation_duration * 2
 	
 
 func _physics_process(delta: float) -> void:
-	if collision_shape.shape.radius < splash_damage_extents_max and !collision_shape.disabled:
-		collision_shape.shape.set_deferred("radius", collision_shape.shape.radius + splash_damage_area_growth * delta)
+	if CollisionShapeNode.shape.radius < splash_damage_extents_max and !CollisionShapeNode.disabled:
+		CollisionShapeNode.shape.set_deferred("radius", CollisionShapeNode.shape.radius + splash_damage_area_growth * delta)
 	else:
-		collision_shape.set_deferred("disabled", true)
+		CollisionShapeNode.set_deferred("disabled", true)
 
 
 func _on_AnimatedSprite_animation_finished():

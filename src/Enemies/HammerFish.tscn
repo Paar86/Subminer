@@ -61,6 +61,7 @@ physics_process_parent = true
 
 [node name="PlayerDetector" type="Area2D" parent="."]
 collision_layer = 0
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
 shape = SubResource( 4 )
