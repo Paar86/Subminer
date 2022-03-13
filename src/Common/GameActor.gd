@@ -7,10 +7,10 @@ var blinking := false
 
 func propagate_effects(effects: Dictionary = {}) -> void:
 	if Enums.Effects.DAMAGE in effects:
-		blink()
 		var value: int = effects[Enums.Effects.DAMAGE]
 		if hitpoints > value:
 			hitpoints -= value
+			blink()
 		else:
 			hitpoints = 0
 	if Enums.Effects.PUSH in effects:

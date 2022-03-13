@@ -14,6 +14,7 @@ var _mine_tile_name := "mine"
 var _mineral_ground_name := "mineral_ground"
 var _fragment_tile_name := "mineral_fragment"
 var _hammer_fish_tile_name := "hammer_fish"
+var _seaweed_tile_name := "seaweed"
 
 var _objects_dictionary = {
 	_player_tile_name: "res://src/Player/PlayerKinematic.tscn",
@@ -21,6 +22,7 @@ var _objects_dictionary = {
 	_mineral_ground_name: "res://src/Pickups/MineralBodyHorizontal.tscn",
 	_fragment_tile_name: "res://src/Pickups/Fragment.tscn",
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
+	_seaweed_tile_name: "res://src/Enemies/Seaweed.tscn",
 }
 
 
@@ -60,18 +62,43 @@ func place_objects() -> void:
 				folder_name = _pickups_folder_name
 			_hammer_fish_tile_name:
 				folder_name = _enemies_folder_name
+			_seaweed_tile_name:
+				folder_name = _enemies_folder_name
 
 		var node_path = _objects_dictionary.get(type)
 		if node_path:
 			var scene: PackedScene = load(node_path)
 			var instance: Node2D = scene.instance()
 			instance.position = pos
-			
-			if instance is GameActor:
-				if _objects_tilemap.is_cell_x_flipped(cell.x, cell.y):
+
+			var is_cell_x_flipped: bool = _objects_tilemap.is_cell_x_flipped(cell.x, cell.y)
+			var is_cell_y_flipped: bool = _objects_tilemap.is_cell_y_flipped(cell.x, cell.y)
+			var is_cell_transposed: bool = _objects_tilemap.is_cell_transposed(cell.x, cell.y)
+
+#			if _objects_tilemap.is_cell_transposed(cell.x, cell.y):
+#				if instance.has_method("rotate_left"):
+#					instance.rotate_left()
+#			if is_cell_x_flipped:
+#				if !is_cell_transposed:
+#					instance.flip_horizontally()
+#				else:
+#					instance.flip_vertically()
+#			if is_cell_y_flipped:
+#				if !is_cell_transposed:
+#					instance.flip_vertically()
+#				else:
+#					instance.flip_horizontally()
+
+			if is_cell_transposed:
+				if instance.has_method("transpose"):
+					instance.transpose()
+			if is_cell_x_flipped:
+				if instance.has_method("flip_horizontally"):
 					instance.flip_horizontally()
-				if _objects_tilemap.is_cell_y_flipped(cell.x, cell.y):
+			if is_cell_y_flipped:
+				if instance.has_method("flip_vertically"):
 					instance.flip_vertically()
+			
 
 			var folder = get_node(folder_name)
 			folder.add_child(instance)

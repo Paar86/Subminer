@@ -11,6 +11,13 @@ onready var explosion_scene: PackedScene = preload("res://src/Enemies/MineExplos
 
 var starting_position: Vector2
 
+
+func propagate_effects(effects: Dictionary = {}) -> void:
+	.propagate_effects(effects)
+	if hitpoints == 0:
+		explode()
+
+
 func _ready() -> void:
 	hitpoints = 10
 	starting_position = position
@@ -34,12 +41,6 @@ func explode() -> void:
 	new_explosion.global_position = global_position
 	get_parent().call_deferred("add_child", new_explosion)
 	queue_free()
-
-
-func propagate_effects(effects: Dictionary = {}) -> void:
-	.propagate_effects(effects)
-	if hitpoints == 0:
-		explode()
 
 
 func _on_TriggerArea_body_entered(body: Node) -> void:
