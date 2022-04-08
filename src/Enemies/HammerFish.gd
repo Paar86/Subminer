@@ -1,8 +1,8 @@
 extends GameActor
 
-export var hitpoints_override := 40
-export var damage := 5
-export var push_strength := 150.0
+var _hitpoints_override := 40
+var _damage := 5
+var _push_strength := 150.0
 
 enum States { IDLE, FOLLOW, ROAR, CHARGE, REST, DEATH }
 var _state = States.IDLE
@@ -48,10 +48,10 @@ var _shake_frequency: float = 50.0
 
 func propagate_effects(effects: Dictionary = {}) -> void:
 	.propagate_effects(effects)
-	if hitpoints == 0:
+	if _hitpoints == 0:
 		_prepare_death_state()
 		yield(get_tree().create_timer(1), "timeout")
-		_flash_before_vanish()
+		flash_before_vanish()
 
 
 func flip_horizontally() -> void:
@@ -60,7 +60,7 @@ func flip_horizontally() -> void:
 
 func _ready() -> void:
 	_shake_default_position =  _sprite.position
-	hitpoints = hitpoints_override
+	_hitpoints = _hitpoints_override
 	_set_sprite_orientation(_direction_basic)
 
 
@@ -177,16 +177,6 @@ func _set_sprite_orientation(direction_basic: Vector2) -> void:
 	_charge_detector_low.set_deferred("scale", _player_detector_scale)
 
 
-func _flash_before_vanish() -> void:
-	for i in 5:
-		_sprite.hide()
-		yield(get_tree().create_timer(0.05), "timeout")
-		_sprite.show()
-		yield(get_tree().create_timer(0.05), "timeout")
-
-	queue_free()
-
-
 func _check_charge_detectors_colliding() -> void:
 	var high_collider = _charge_detector_high.get_collider()
 	var low_collider = _charge_detector_low.get_collider()
@@ -220,7 +210,7 @@ func _get_direction_basic() -> Vector2:
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var direction = (area.owner.global_position - global_position).normalized()
-		area.owner.propagate_effects({Enums.Effects.DAMAGE: damage, Enums.Effects.PUSH: direction * push_strength })
+		area.owner.propagate_effects({Enums.Effects.DAMAGE: _damage, Enums.Effects.PUSH: direction * _push_strength })
 
 
 func _on_PlayerDetector_body_entered(body: KinematicBody2D) -> void:

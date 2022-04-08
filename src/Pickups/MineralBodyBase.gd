@@ -1,25 +1,22 @@
-"""
-Base script for all kinds of mineral bodies
-"""
 extends GameActor
 
-export var hitpoints_override := 60
-export var fragment_spawn_direction := Vector2.UP
+var fragment_spawn_direction := Vector2.UP
 
 # These nodes need to be present in the inheriting scene otherwise error will be logged
-var _sprite: Sprite
-var _smoke_particles_origin: Position2D
-var _fragment_spawn_point: Position2D
+onready var _sprite: Sprite = $Sprite
+onready var _smoke_particles_origin: Position2D = $SmokeParticlesOrigin
+onready var _fragment_spawn_point: Position2D = $FragmentSpawnOrigin
 
 var _smoke_particles_scene := preload("res://src/Common/SmokeParticles.tscn")
 var _fragment_scene := preload("res://src/Pickups/Fragment.tscn")
+var _hitpoints_override := 60
 var _fragment_impulse_force_min := 20.0
 var _fragment_impulse_force_max := 60.0
 
 # Next hitpoints value after which there'll be a sprite change
-var damage_phase_threshold: int
+var _damage_phase_threshold: int
 # How much should the damage phase threshold be lowered when neccessary
-var damage_threshold_modifier: int
+var _damage_threshold_modifier: int
 
 
 func flip_vertically() -> void:
@@ -33,25 +30,21 @@ func flip_horizontally() -> void:
 
 
 func _ready() -> void:
-	_sprite = $Sprite
-	_smoke_particles_origin = $SmokeParticlesOrigin
-	_fragment_spawn_point = $FragmentSpawnOrigin
-
-	hitpoints = hitpoints_override
-	damage_threshold_modifier = ceil(hitpoints / 3.0)
+	_hitpoints = _hitpoints_override
+	_damage_threshold_modifier = ceil(_hitpoints / 3.0)
 	update_damage_threshold()
 
 
 func propagate_effects(effects: Dictionary = {}) -> void:
 	.propagate_effects(effects)
 
-	if hitpoints <= 0:
+	if _hitpoints <= 0:
 		# Spit final fragments
 		spawn_fragments(4)
 		create_smoke_effect()
 		queue_free()
 
-	if hitpoints <= damage_phase_threshold:
+	if _hitpoints <= _damage_phase_threshold:
 		# Spit fragments
 		update_damage_threshold()
 		if change_sprite_frame():
@@ -60,9 +53,9 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 
 
 func update_damage_threshold() -> void:
-	var new_value = hitpoints - damage_threshold_modifier
+	var new_value = _hitpoints - _damage_threshold_modifier
 	if new_value > 0:
-		damage_phase_threshold = new_value
+		_damage_phase_threshold = new_value
 
 
 func change_sprite_frame() -> bool:

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/thrust.wav-4b589192d1ada446fe2a6fd22c09e467.sample"
+
+[deps]
+
+source_file="res://assets/sfx/thrust.wav"
+dest_files=[ "res://.import/thrust.wav-4b589192d1ada446fe2a6fd22c09e467.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

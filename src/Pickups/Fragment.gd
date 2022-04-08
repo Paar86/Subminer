@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
-onready var animation_player := $AnimationPlayer
+onready var AnimPlayer := $AnimationPlayer
+onready var _pickup_sfx_path := "res://assets/sfx/pickup2.wav"
 
 enum States { IDLE, FOLLOW, TRAVEL }
 
@@ -57,10 +58,11 @@ func give_impulse(impulse_velocity: Vector2) -> void:
 
 
 func _on_PickupBox_body_entered(body: GameActor) -> void:
+	AudioStreamManager.play_sound(_pickup_sfx_path)
 	body.propagate_effects( {Enums.Effects.MINERALS: 1} )
-	animation_player.play("Pickup")
+	AnimPlayer.play("Pickup")
 	$PickupBox.set_deferred("disabled", true)
-	yield(animation_player, "animation_finished")
+	yield(AnimPlayer, "animation_finished")
 	queue_free()
 
 

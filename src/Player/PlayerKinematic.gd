@@ -8,7 +8,7 @@ export var _dash_power := 160.0
 export var _thrust_power_max := 90.0
 export var _thrust_accel := 150.0
 export var _friction := 90.0
-export var _rate_of_fire := 0.08
+export var _rate_of_fire := 0.1
 export var _dash_timeout := 1.5
 
 var _player_stats := PlayerStats
@@ -19,17 +19,18 @@ var _is_firing := false
 var _state: int = States.IDLE
 var _input_direction = Vector2.ZERO
 
-onready var _main_sprite: Sprite = $Sprite
-onready var _cannon_left_sprite: Sprite = $CannonLeftPivot/CannonLeft
-onready var _cannon_right_sprite: Sprite = $CannonRightPivot/CannonRight
-onready var _projectiles_container: Node = $BulletsContainer
-onready var _left_cannon: Position2D = $CannonLeftPivot
-onready var _right_cannon: Position2D = $CannonRightPivot
-onready var _left_cannon_point: Position2D = $CannonLeftPivot/CannonLeft/BulletSpawnPoint
-onready var _right_cannon_point: Position2D = $CannonRightPivot/CannonRight/BulletSpawnPoint
-onready var _hurt_box := $Hurtbox
+onready var MainSprite: Sprite = $Sprite
+onready var CannonLeftSprite: Sprite = $CannonLeftPivot/CannonLeft
+onready var CannonRightSprite: Sprite = $CannonRightPivot/CannonRight
+onready var ProjectilesContainer: Node = $BulletsContainer
+onready var LeftCannon: Position2D = $CannonLeftPivot
+onready var RightCannon: Position2D = $CannonRightPivot
+onready var LeftCannonPoint: Position2D = $CannonLeftPivot/CannonLeft/BulletSpawnPoint
+onready var RightCannonPoint: Position2D = $CannonRightPivot/CannonRight/BulletSpawnPoint
+onready var HurtBox := $Hurtbox
 
-var _projectile_scene := preload("res://src/Player/Projectile.tscn")
+var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
+var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
 
 
 func propagate_effects(effects: Dictionary = {}) -> void:
@@ -101,7 +102,7 @@ func _physics_process(delta: float) -> void:
 func _set_invincibility(value: bool) -> void:
 	_is_invincible = value
 	var collision_layer_value = 0 if value else 1
-	_hurt_box.set_deferred("collision_layer", collision_layer_value)
+	HurtBox.set_deferred("collision_layer", collision_layer_value)
 
 
 func _get_invincibility() -> bool:
@@ -130,10 +131,12 @@ func _apply_friction(x_axis: bool, y_axis: bool, delta: float) -> void:
 
 func _fire_cannons() -> void:
 	_is_firing = true
-	_spawn_projectile(_left_cannon_point.global_position, _left_cannon.rotation)
+	_spawn_projectile(LeftCannonPoint.global_position, LeftCannon.rotation)
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
-	_spawn_projectile(_right_cannon_point.global_position, _right_cannon.rotation)
+	AudioStreamManager.play_sound(_shoot_sfx_path)
+	_spawn_projectile(RightCannonPoint.global_position, RightCannon.rotation)
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
+	AudioStreamManager.play_sound(_shoot_sfx_path)
 	_is_firing = false
 
 
@@ -141,20 +144,20 @@ func _spawn_projectile(global_position: Vector2, angle_rad: float) -> void:
 	var projectile_instance = _projectile_scene.instance()
 	projectile_instance.global_position = global_position
 	projectile_instance.rotation = angle_rad
-	_projectiles_container.add_child(projectile_instance)
+	ProjectilesContainer.add_child(projectile_instance)
 
 
 func _start_damage_flashing() -> void:
 	self._is_invincible = true
 
 	for i in 20:
-		_main_sprite.hide()
-		_cannon_left_sprite.hide()
-		_cannon_right_sprite.hide()
+		MainSprite.hide()
+		CannonLeftSprite.hide()
+		CannonRightSprite.hide()
 		yield(get_tree().create_timer(0.05), "timeout")
-		_main_sprite.show()
-		_cannon_left_sprite.show()
-		_cannon_right_sprite.show()
+		MainSprite.show()
+		CannonLeftSprite.show()
+		CannonRightSprite.show()
 		yield(get_tree().create_timer(0.05), "timeout")
 
 	self._is_invincible = false

@@ -1,11 +1,11 @@
 extends Area2D
 
-export var speed := 400.0
-var projectile_explosion := preload("res://src/Player/ProjectileExplosion.tscn")
+var _speed := 400.0
+var _projectile_explosion_scene := preload("res://src/Player/ProjectileExplosion.tscn")
 
 
 func _physics_process(delta: float) -> void:
-	translate(transform.x * speed * delta)
+	translate(transform.x * _speed * delta)
 
 
 func _on_VisibilityNotifier2D_screen_exited() -> void:
@@ -13,7 +13,7 @@ func _on_VisibilityNotifier2D_screen_exited() -> void:
 
 
 func _create_explosion(global_position: Vector2) -> void:
-	var new_explosion = projectile_explosion.instance()
+	var new_explosion = _projectile_explosion_scene.instance()
 	new_explosion.global_position = global_position
 	get_parent().call_deferred("add_child", new_explosion)
 	queue_free()
