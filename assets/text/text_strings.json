@@ -1,0 +1,68 @@
+{
+  "text_strings": [
+    {
+      "id": "level1",
+      "languages":
+        {
+          "cz": "{level1_cz}",
+          "en": "{level1_en}"
+        }
+    },
+    {
+      "id": "level2",
+      "languages":
+        {
+          "cz": "{level2_cz}",
+          "en": "{level2_en}"
+        }
+    },
+    {
+      "id": "level3",
+      "languages":
+        {
+          "cz": "{level3_cz}",
+          "en": "{level3_en}"
+        }
+    },
+    {
+      "id": "level4",
+      "languages":
+        {
+          "cz": "{level4_cz}",
+          "en": "{level4_en}"
+        }
+    },
+    {
+      "id": "level5",
+      "languages":
+        {
+          "cz": "{level5_cz}",
+          "en": "{level5_en}"
+        }
+    },
+    {
+      "id": "level6",
+      "languages":
+        {
+          "cz": "{level6_cz}",
+          "en": "{level6_en}"
+        }
+    },
+    {
+      "id": "level7",
+      "languages":
+        {
+          "cz": "{level7_cz}",
+          "en": "{level7_en}"
+        }
+    },
+    {
+      "id": "level8",
+      "languages":
+        {
+          "cz": "{level8_cz}",
+          "en": "{level8_en}"
+        }
+    }
+  ]
+}

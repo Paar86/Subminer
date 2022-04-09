@@ -35,6 +35,7 @@ Enums="*res://src/Autoload/Enums.gd"
 PlayerStats="*res://src/Autoload/PlayerStats.gd"
 YieldHandler="*res://src/Autoload/YieldHandler.gd"
 AudioStreamManager="*res://src/Autoload/AudioStreamManager.gd"
+TextManager="*res://src/Autoload/TextManager.gd"
 
 [display]
 
