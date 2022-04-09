@@ -3,7 +3,7 @@ extends Node
 export var level_name := "default_name"
 export var minerals_goal := 50
 
-onready var _objects_tilemap := $ObjectsTileMap
+onready var ObjectsTilemap := $ObjectsTileMap
 
 var _player_folder_name := "PlayerStart"
 var _pickups_folder_name := "Pickups"
@@ -29,26 +29,26 @@ var _objects_dictionary = {
 func _ready() -> void:
 	# Object Placer TileMap's tile graphics are only handy in the editor,
 	# therefore we must hide it when running the game
-	_objects_tilemap.hide()
+	ObjectsTilemap.hide()
 	clean_player_tiles()
 	place_objects()
 
 
 # There can be only one player tile in the level
 func clean_player_tiles() -> void:
-	var player_tile = _objects_tilemap.tile_set.find_tile_by_name(_player_tile_name)
-	var player_tiles = _objects_tilemap.get_used_cells_by_id(player_tile)
+	var player_tile = ObjectsTilemap.tile_set.find_tile_by_name(_player_tile_name)
+	var player_tiles = ObjectsTilemap.get_used_cells_by_id(player_tile)
 	for i in player_tiles.size():
 		if i > 0:
-			_objects_tilemap.set_cell(player_tiles[i].x, player_tiles[i].y, -1)
+			ObjectsTilemap.set_cell(player_tiles[i].x, player_tiles[i].y, -1)
 
 
 func place_objects() -> void:
-	for cell in _objects_tilemap.get_used_cells():
-		var id = _objects_tilemap.get_cellv(cell)
-		var type = _objects_tilemap.tile_set.tile_get_name(id)
-		var region = _objects_tilemap.tile_set.tile_get_region(id)
-		var pos = _objects_tilemap.map_to_world(cell) + region.size / 2
+	for cell in ObjectsTilemap.get_used_cells():
+		var id = ObjectsTilemap.get_cellv(cell)
+		var type = ObjectsTilemap.tile_set.tile_get_name(id)
+		var region = ObjectsTilemap.tile_set.tile_get_region(id)
+		var pos = ObjectsTilemap.map_to_world(cell) + region.size / 2
 
 		var folder_name: String
 		match type:
@@ -71,11 +71,11 @@ func place_objects() -> void:
 			var instance: Node2D = scene.instance()
 			instance.position = pos
 
-			var is_cell_x_flipped: bool = _objects_tilemap.is_cell_x_flipped(cell.x, cell.y)
-			var is_cell_y_flipped: bool = _objects_tilemap.is_cell_y_flipped(cell.x, cell.y)
-			var is_cell_transposed: bool = _objects_tilemap.is_cell_transposed(cell.x, cell.y)
+			var is_cell_x_flipped: bool = ObjectsTilemap.is_cell_x_flipped(cell.x, cell.y)
+			var is_cell_y_flipped: bool = ObjectsTilemap.is_cell_y_flipped(cell.x, cell.y)
+			var is_cell_transposed: bool = ObjectsTilemap.is_cell_transposed(cell.x, cell.y)
 
-#			if _objects_tilemap.is_cell_transposed(cell.x, cell.y):
+#			if ObjectsTilemap.is_cell_transposed(cell.x, cell.y):
 #				if instance.has_method("rotate_left"):
 #					instance.rotate_left()
 #			if is_cell_x_flipped:

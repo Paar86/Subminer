@@ -2,7 +2,9 @@ extends GameActor
 
 onready var AnimPlayer: AnimationPlayer = $AnimationPlayer
 onready var SplashDamageArea: Area2D = $SplashDamageArea
+
 onready var _explosion_scene: PackedScene = preload("res://src/Enemies/MineExplosion.tscn")
+
 # To every mine to oscillate a little differently
 onready var _time: float = position.x + position.y
 

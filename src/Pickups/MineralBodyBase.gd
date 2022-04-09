@@ -3,9 +3,9 @@ extends GameActor
 var fragment_spawn_direction := Vector2.UP
 
 # These nodes need to be present in the inheriting scene otherwise error will be logged
-onready var _sprite: Sprite = $Sprite
-onready var _smoke_particles_origin: Position2D = $SmokeParticlesOrigin
-onready var _fragment_spawn_point: Position2D = $FragmentSpawnOrigin
+onready var SpriteNode: Sprite = $Sprite
+onready var SmokeParticlesOrigin: Position2D = $SmokeParticlesOrigin
+onready var FragmentSpawnPoint: Position2D = $FragmentSpawnOrigin
 
 var _smoke_particles_scene := preload("res://src/Common/SmokeParticles.tscn")
 var _fragment_scene := preload("res://src/Pickups/Fragment.tscn")
@@ -59,8 +59,8 @@ func update_damage_threshold() -> void:
 
 
 func change_sprite_frame() -> bool:
-	if _sprite.frame < _sprite.hframes - 1:
-		_sprite.frame = _sprite.frame + 1
+	if SpriteNode.frame < SpriteNode.hframes - 1:
+		SpriteNode.frame = SpriteNode.frame + 1
 		return true
 
 	return false
@@ -75,7 +75,7 @@ func create_smoke_effect() -> void:
 func spawn_fragments(number_of_fragments: int) -> void:
 	for i in number_of_fragments:
 		var fragment_instance = _fragment_scene.instance()
-		fragment_instance.global_position = _fragment_spawn_point.global_position
+		fragment_instance.global_position = FragmentSpawnPoint.global_position
 		var impulse_direction = fragment_spawn_direction.rotated(rand_range(deg2rad(-45.0), deg2rad(45.0)))
 		var impulse_force = rand_range(_fragment_impulse_force_min, _fragment_impulse_force_max)
 		fragment_instance.give_impulse(impulse_direction * impulse_force)

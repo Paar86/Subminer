@@ -2,7 +2,7 @@ extends Node
 
 var current_lang = Enums.Languages.CZ setget _set_current_lang
 
-const FILE_FORMAT_WARNING := "Parsed file is in wrong format!"
+const FILE_FORMAT_WARNING_MESSAGE := "Parsed file is in wrong format!"
 
 var _text_resource := "res://assets/text/text_strings.json"
 var _parsed_result: JSONParseResult
@@ -71,18 +71,18 @@ func _get_filtered_strings_by_lang(language: int) -> Dictionary:
 		return {}
 
 	if typeof(_parsed_result.result["text_strings"]) != TYPE_ARRAY:
-		push_warning(FILE_FORMAT_WARNING)
+		push_warning(FILE_FORMAT_WARNING_MESSAGE)
 		return {}
 
 	var new_dict = {}
 	var root_array = _parsed_result.result["text_strings"]
 	for string_dict in root_array:
 		if typeof(string_dict["id"]) != TYPE_STRING:
-			push_warning(FILE_FORMAT_WARNING)
+			push_warning(FILE_FORMAT_WARNING_MESSAGE)
 			return {}
 
 		if typeof(string_dict["languages"]) != TYPE_DICTIONARY:
-			push_warning(FILE_FORMAT_WARNING)
+			push_warning(FILE_FORMAT_WARNING_MESSAGE)
 			return {}
 
 		var id: String = string_dict["id"]
