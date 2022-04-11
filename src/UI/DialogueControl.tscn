@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/ui/border_box.png" type="Texture" id=1]
+[ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/UI/DialogueControl.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[node name="DialogueControl" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="BorderRect" type="NinePatchRect" parent="."]
+margin_left = 87.0
+margin_top = 144.0
+margin_right = 304.0
+margin_bottom = 220.0
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 16, 16 )
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="DialogueText" type="Label" parent="BorderRect"]
+margin_left = 8.0
+margin_top = 5.0
+margin_right = 209.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "{no data}"
+autowrap = true
+percent_visible = -0.125
+max_lines_visible = 4
