@@ -1,22 +1,75 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/ui/border_box.png" type="Texture" id=1]
 [ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/UI/DialogueControl.gd" type="Script" id=3]
+[ext_resource path="res://assets/ui/continued_text_symbol.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/walkie_talkie.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "INDICATOR_BLINKING"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("BorderRect/Indicator:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("BorderRect/Indicator:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [node name="DialogueControl" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
 
-[node name="BorderRect" type="NinePatchRect" parent="."]
-margin_left = 87.0
+[node name="RadioBorder" type="NinePatchRect" parent="."]
+margin_left = 27.0
 margin_top = 144.0
-margin_right = 304.0
-margin_bottom = 220.0
+margin_right = 76.0
+margin_bottom = 225.0
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 16, 16 )
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="RadioTexture" type="TextureRect" parent="RadioBorder"]
+margin_left = 10.0
+margin_top = 17.0
+margin_right = 39.0
+margin_bottom = 61.0
+texture = ExtResource( 5 )
+
+[node name="BorderRect" type="NinePatchRect" parent="."]
+margin_left = 77.0
+margin_top = 144.0
+margin_right = 294.0
+margin_bottom = 225.0
 size_flags_vertical = 3
 texture = ExtResource( 1 )
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -34,5 +87,16 @@ size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "{no data}"
 autowrap = true
-percent_visible = -0.125
 max_lines_visible = 4
+
+[node name="Indicator" type="TextureRect" parent="BorderRect"]
+visible = false
+margin_left = 196.0
+margin_top = 69.0
+margin_right = 212.0
+margin_bottom = 77.0
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/INDICATOR_BLINKING = SubResource( 2 )
+anims/RESET = SubResource( 3 )

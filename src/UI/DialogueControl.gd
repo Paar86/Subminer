@@ -3,9 +3,11 @@ extends Control
 enum States { PAGE_LOADING, PAGE_LOADED, LAST_PAGE_LOADED }
 
 onready var DialogueTextLabel: Label = $BorderRect/DialogueText
+onready var AnimationPlayerNode: AnimationPlayer = $AnimationPlayer
 
 var dialogue_text := "" setget _set_dialogue_text
 
+var _voice_sfx := "res://assets/sfx/voice.wav"
 var _is_dialogue_finished := false setget , _get_is_dialogue_finished
 var _state = States.PAGE_LOADING
 var _pages: PoolStringArray = PoolStringArray()
@@ -44,31 +46,34 @@ func _ready() -> void:
 	var default_string = TextManager.get_string_by_key("level1")
 	_pages = _create_pages(default_string)
 	_load_next_page()
-	
-	
+
+
 func _load_next_page() -> void:
 	_current_page += 1
-	
+
 	if _current_page > _pages.size() - 1:
 		push_error("Cannot load page number %s." % str(_current_page))
 		return
-		
+
 	_start_dialogue()
-	
-	
+
+
 func _start_dialogue() -> void:
+	AnimationPlayerNode.play("RESET")
 	_state = States.PAGE_LOADING
 	DialogueTextLabel.text = _pages[_current_page]
 	DialogueTextLabel.visible_characters = 0
 	var characters_count = DialogueTextLabel.get_total_character_count()
 	while (DialogueTextLabel.visible_characters < characters_count):
+		AudioStreamManager.play_sound(_voice_sfx)
 		DialogueTextLabel.visible_characters += 1
 		yield(get_tree().create_timer(0.025), "timeout")
-		
+
 	if _current_page == _pages.size() - 1:
 		_state = States.LAST_PAGE_LOADED
 		return
-		
+
+	AnimationPlayerNode.play("INDICATOR_BLINKING")
 	_state = States.PAGE_LOADED
 
 
@@ -92,20 +97,20 @@ func _create_pages(text: String) -> PoolStringArray:
 
 		DialogueTextLabel.text = page_string_temp
 		# If there is overflow on the Label
-		
+
 		if (DialogueTextLabel.max_lines_visible >= 0 and
 				DialogueTextLabel.get_line_count() > DialogueTextLabel.max_lines_visible):
 			pages.append(page_string)
 			DialogueTextLabel.text = ""
 			page_string = ""
 			continue
-			
+
 		page_string = page_string_temp
-	
+
 	# This is for the last lines which won't cause Label overflow
 	if page_string.length() > 0:
 		pages.append(page_string)
-	
+
 	# Getting the Label to it's original state
 	DialogueTextLabel.text = initial_text
 
