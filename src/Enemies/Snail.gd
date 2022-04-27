@@ -49,6 +49,10 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 
 func flip_horizontally() -> void:
 	set_deferred("scale", Vector2(scale.x * -1.0, scale.y))
+	
+	
+func flip_vertically() -> void:
+	set_deferred("scale", Vector2(scale.x, scale.y * -1.0))
 
 
 func _ready() -> void:

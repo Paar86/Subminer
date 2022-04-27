@@ -27,7 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Subminer"
-run/main_scene="res://src/GameManager/GameManager.tscn"
+run/main_scene="res://src/Managers/GameManager.tscn"
 
 [autoload]
 

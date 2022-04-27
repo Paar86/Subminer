@@ -10,13 +10,19 @@ onready var HitpointsHolder: Control = $VBoxContainer/LifeBar/HitpointsMargin/Hi
 # Resources
 onready var _hitpoint_texture := preload("res://assets/ui/power_unit.png")
 onready var _power_texture := preload("res://assets/ui/power_symbol_yellow.png")
-onready var _blinking_power_texture := preload("res://src/UI/PowerBlinkingAnimatedTexture.tres")
+onready var _blinking_power_texture := preload("res://assets/ui/PowerBlinkingAnimatedTexture.tres")
 
 const POWER_BLINKING_THRESHOLD := 10
 
 
 func set_minerals_goal(goal_number: int) -> void:
 	MineralsGoal.text = str(goal_number)
+	
+	
+func reset_hitpoints() -> void:
+	for i in HitpointsHolder.get_child_count():
+		var child: TextureRect = HitpointsHolder.get_child(i)
+		child.visible = true
 
 
 func _ready() -> void:

@@ -22,6 +22,9 @@ func _set_current_lang(value: int) -> void:
 
 # Functions
 func get_string_by_key(key: String) -> String:
+	if not _strings_dictionary.has(key):
+		return "{invalid key '%s'}" % key
+		
 	return _strings_dictionary[key]
 
 

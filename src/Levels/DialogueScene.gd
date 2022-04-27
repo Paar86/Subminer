@@ -1,24 +1,16 @@
 extends Control
 
+signal dialogue_ended
 enum States { PAGE_LOADING, PAGE_LOADED, LAST_PAGE_LOADED }
 
 onready var DialogueTextLabel: Label = $BorderRect/DialogueText
 onready var AnimationPlayerNode: AnimationPlayer = $AnimationPlayer
-
-var dialogue_text := "" setget _set_dialogue_text
 
 var _voice_sfx := "res://assets/sfx/voice.wav"
 var _is_dialogue_finished := false setget , _get_is_dialogue_finished
 var _state = States.PAGE_LOADING
 var _pages: PoolStringArray = PoolStringArray()
 var _current_page := -1
-
-# Properties
-func _set_dialogue_text(_dialogue_text: String) -> void:
-	dialogue_text = _dialogue_text
-	DialogueTextLabel.text = _dialogue_text
-	DialogueTextLabel.visible_characters = 0
-	DialogueTextLabel.lines_skipped = 0
 
 
 func _get_is_dialogue_finished() -> bool:
@@ -29,6 +21,23 @@ func _get_is_dialogue_finished() -> bool:
 
 
 # Functions
+func set_dialogue(dialogue_key: String) -> void:
+	var dialogue_text: String = TextManager.get_string_by_key(dialogue_key)
+	_pages = _create_pages(dialogue_text)
+	_current_page = -1
+	
+	DialogueTextLabel.text = dialogue_text
+	DialogueTextLabel.visible_characters = 0
+	DialogueTextLabel.lines_skipped = 0
+
+
+func start_dialogue() -> void:
+	# A little of breathing room before showing the dialogue
+	yield(get_tree().create_timer(2.0), "timeout")
+	show()
+	_load_next_page()
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept"):
 		match _state:
@@ -39,13 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				_load_next_page()
 				return
 			States.LAST_PAGE_LOADED:
-				hide()
-
-
-func _ready() -> void:
-	var default_string = TextManager.get_string_by_key("level1")
-	_pages = _create_pages(default_string)
-	_load_next_page()
+				emit_signal("dialogue_ended")
 
 
 func _load_next_page() -> void:
@@ -55,12 +58,12 @@ func _load_next_page() -> void:
 		push_error("Cannot load page number %s." % str(_current_page))
 		return
 
-	_start_dialogue()
+	_start_current_page()
 
 
-func _start_dialogue() -> void:
-	AnimationPlayerNode.play("RESET")
+func _start_current_page() -> void:
 	_state = States.PAGE_LOADING
+	AnimationPlayerNode.play("RESET")
 	DialogueTextLabel.text = _pages[_current_page]
 	DialogueTextLabel.visible_characters = 0
 	var characters_count = DialogueTextLabel.get_total_character_count()

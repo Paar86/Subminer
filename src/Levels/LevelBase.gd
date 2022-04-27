@@ -1,9 +1,11 @@
 extends Node
 
-export var level_name := "default_name"
+export var level_id := "default_name"
 export var minerals_goal := 50
 
 onready var ObjectsTilemap := $ObjectsTileMap
+onready var HUDNode := $Level_UI/HUD
+onready var LevelNameLabel := $Level_UI/LevelName
 
 var _player_folder_name := "PlayerStart"
 var _pickups_folder_name := "Pickups"
@@ -15,6 +17,7 @@ var _mineral_ground_name := "mineral_ground"
 var _fragment_tile_name := "mineral_fragment"
 var _hammer_fish_tile_name := "hammer_fish"
 var _seaweed_tile_name := "seaweed"
+var _snail_tile_name := "snail"
 
 var _objects_dictionary = {
 	_player_tile_name: "res://src/Player/PlayerKinematic.tscn",
@@ -23,15 +26,8 @@ var _objects_dictionary = {
 	_fragment_tile_name: "res://src/Pickups/Fragment.tscn",
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
 	_seaweed_tile_name: "res://src/Enemies/Seaweed.tscn",
+	_snail_tile_name: "res://src/Enemies/Snail.tscn",
 }
-
-
-func _ready() -> void:
-	# Object Placer TileMap's tile graphics are only handy in the editor,
-	# therefore we must hide it when running the game
-	ObjectsTilemap.hide()
-	clean_player_tiles()
-	place_objects()
 
 
 # There can be only one player tile in the level
@@ -63,6 +59,8 @@ func place_objects() -> void:
 			_hammer_fish_tile_name:
 				folder_name = _enemies_folder_name
 			_seaweed_tile_name:
+				folder_name = _enemies_folder_name
+			_snail_tile_name:
 				folder_name = _enemies_folder_name
 
 		var node_path = _objects_dictionary.get(type)
@@ -98,7 +96,26 @@ func place_objects() -> void:
 			if is_cell_y_flipped:
 				if instance.has_method("flip_vertically"):
 					instance.flip_vertically()
-			
+
 
 			var folder = get_node(folder_name)
 			folder.add_child(instance)
+
+
+func unpause() -> void:
+	get_tree().paused = false
+
+
+func _ready() -> void:
+	# Object Placer TileMap's tile graphics are only handy in the editor,
+	# therefore we must hide it when running the game
+	ObjectsTilemap.hide()
+	clean_player_tiles()
+	place_objects()
+
+	HUDNode.reset_hitpoints()
+	HUDNode.set_minerals_goal(minerals_goal)
+	LevelNameLabel.text = TextManager.get_string_by_key(level_id + "_name")
+
+	get_tree().paused = true
+	$Level_UI/UIAnimationPlayer.play("INTRO")

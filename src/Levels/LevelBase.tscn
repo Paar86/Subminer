@@ -1,8 +1,10 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_base.png" type="Texture" id=2]
+[ext_resource path="res://src/UI/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Tilesets/placeable_objects.tres" type="TileSet" id=4]
+[ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=5]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -444,6 +446,67 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 } ]
 0/z_index = 0
 
+[sub_resource type="DynamicFont" id=49]
+size = 32
+font_data = ExtResource( 5 )
+
+[sub_resource type="Animation" id=50]
+resource_name = "INTRO"
+length = 9.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("LevelName:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2.5, 4, 5.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FadeOutRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "unpause"
+} ]
+}
+
+[sub_resource type="Animation" id=51]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("FadeOutRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [node name="LevelBase" type="Node"]
 script = ExtResource( 1 )
 
@@ -468,3 +531,26 @@ format = 1
 [node name="Enemies" type="Node" parent="."]
 
 [node name="PlayerStart" type="Node" parent="."]
+
+[node name="Level_UI" type="CanvasLayer" parent="."]
+pause_mode = 2
+
+[node name="HUD" parent="Level_UI" instance=ExtResource( 3 )]
+
+[node name="FadeOutRect" type="ColorRect" parent="Level_UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="LevelName" type="Label" parent="Level_UI"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 49 )
+text = "ÚROVEŇ 1 "
+align = 1
+valign = 1
+
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="Level_UI"]
+anims/INTRO = SubResource( 50 )
+anims/RESET = SubResource( 51 )
