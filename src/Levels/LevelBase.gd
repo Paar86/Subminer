@@ -1,5 +1,7 @@
 extends Node
 
+signal level_finished
+
 export var level_id := "default_name"
 export var minerals_goal := 50
 
@@ -72,20 +74,6 @@ func place_objects() -> void:
 			var is_cell_x_flipped: bool = ObjectsTilemap.is_cell_x_flipped(cell.x, cell.y)
 			var is_cell_y_flipped: bool = ObjectsTilemap.is_cell_y_flipped(cell.x, cell.y)
 			var is_cell_transposed: bool = ObjectsTilemap.is_cell_transposed(cell.x, cell.y)
-
-#			if ObjectsTilemap.is_cell_transposed(cell.x, cell.y):
-#				if instance.has_method("rotate_left"):
-#					instance.rotate_left()
-#			if is_cell_x_flipped:
-#				if !is_cell_transposed:
-#					instance.flip_horizontally()
-#				else:
-#					instance.flip_vertically()
-#			if is_cell_y_flipped:
-#				if !is_cell_transposed:
-#					instance.flip_vertically()
-#				else:
-#					instance.flip_horizontally()
 
 			if is_cell_transposed:
 				if instance.has_method("transpose"):
