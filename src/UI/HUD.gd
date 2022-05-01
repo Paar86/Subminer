@@ -8,6 +8,7 @@ onready var PowerLogo: TextureRect = $VBoxContainer/LifeBar/PowerLogo
 onready var HitpointsHolder: Control = $VBoxContainer/LifeBar/HitpointsMargin/HitpointsHolder
 onready var HeatLogo: TextureRect = $VBoxContainer/HeatBar/HeatLogo
 onready var HeatCounter: Label = $VBoxContainer/HeatBar/Counter
+onready var HeatPercent: Label = $VBoxContainer/HeatBar/PercentSymbol
 
 # Resources
 onready var _hitpoint_texture := preload("res://assets/ui/power_unit.png")
@@ -23,8 +24,8 @@ const POWER_BLINKING_THRESHOLD := 10
 
 func set_minerals_goal(goal_number: int) -> void:
 	MineralsGoal.text = str(goal_number)
-	
-	
+
+
 func reset_hitpoints() -> void:
 	for i in HitpointsHolder.get_child_count():
 		var child: TextureRect = HitpointsHolder.get_child(i)
@@ -42,7 +43,7 @@ func _ready() -> void:
 
 	PlayerStats.connect("hitpoints_changed", self, "_on_hitpoints_changed")
 	PlayerStats.connect("minerals_changed", self, "_on_minerals_changed")
-	
+
 	PlayerStats.connect("weapon_overheated", self, "_on_weapon_overheated")
 	PlayerStats.connect("weapon_cooled", self, "_on_weapon_cooled")
 	PlayerStats.connect("heat_value_changed", self, "_on_heat_value_changed")
@@ -67,17 +68,19 @@ func _on_heat_value_changed(value: float) -> void:
 	if value >= 30 and value < 70:
 		HeatLogo.texture = _heat_med_texture
 	if value >= 80:
-		HeatLogo.texture = _heat_high_texture	
-	
+		HeatLogo.texture = _heat_high_texture
+
 	HeatCounter.text = str(value)
 
 
 func _on_weapon_overheated() -> void:
 	HeatCounter.modulate = Color.red
+	HeatPercent.modulate = Color.red
 
 
 func _on_weapon_cooled() -> void:
 	HeatCounter.modulate = Color.white
+	HeatPercent.modulate = Color.white
 
 
 func _start_power_blinking() -> void:

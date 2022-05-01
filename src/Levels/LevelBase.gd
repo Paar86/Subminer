@@ -8,7 +8,7 @@ onready var ObjectsTilemap := $ObjectsTileMap
 onready var HUDNode := $Level_UI/HUD
 onready var LevelNameLabel := $Level_UI/LevelName
 
-var level_id := "default_name"
+var level_id := "default"
 var _player_folder_name := "PlayerStart"
 var _pickups_folder_name := "Pickups"
 var _enemies_folder_name := "Enemies"
