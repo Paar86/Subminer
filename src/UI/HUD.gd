@@ -6,11 +6,17 @@ onready var MineralsCounter: Label = $VBoxContainer/MineralsBar/Counter
 onready var MineralsGoal: Label = $VBoxContainer/MineralsBar/GoalNumber
 onready var PowerLogo: TextureRect = $VBoxContainer/LifeBar/PowerLogo
 onready var HitpointsHolder: Control = $VBoxContainer/LifeBar/HitpointsMargin/HitpointsHolder
+onready var HeatLogo: TextureRect = $VBoxContainer/HeatBar/HeatLogo
+onready var HeatCounter: Label = $VBoxContainer/HeatBar/Counter
 
 # Resources
 onready var _hitpoint_texture := preload("res://assets/ui/power_unit.png")
 onready var _power_texture := preload("res://assets/ui/power_symbol_yellow.png")
 onready var _blinking_power_texture := preload("res://assets/ui/PowerBlinkingAnimatedTexture.tres")
+
+onready var _heat_low_texture := preload("res://assets/ui/heat_low_symbol.png")
+onready var _heat_med_texture := preload("res://assets/ui/heat_med_symbol.png")
+onready var _heat_high_texture := preload("res://assets/ui/heat_high_symbol.png")
 
 const POWER_BLINKING_THRESHOLD := 10
 
@@ -36,6 +42,10 @@ func _ready() -> void:
 
 	PlayerStats.connect("hitpoints_changed", self, "_on_hitpoints_changed")
 	PlayerStats.connect("minerals_changed", self, "_on_minerals_changed")
+	
+	PlayerStats.connect("weapon_overheated", self, "_on_weapon_overheated")
+	PlayerStats.connect("weapon_cooled", self, "_on_weapon_cooled")
+	PlayerStats.connect("heat_value_changed", self, "_on_heat_value_changed")
 
 
 func _on_hitpoints_changed(hitpoints: int) -> void:
@@ -49,6 +59,25 @@ func _on_hitpoints_changed(hitpoints: int) -> void:
 
 func _on_minerals_changed(minerals: int) -> void:
 	MineralsCounter.text = str(minerals)
+
+
+func _on_heat_value_changed(value: float) -> void:
+	if value < 30:
+		HeatLogo.texture = _heat_low_texture
+	if value >= 30 and value < 70:
+		HeatLogo.texture = _heat_med_texture
+	if value >= 80:
+		HeatLogo.texture = _heat_high_texture	
+	
+	HeatCounter.text = str(value)
+
+
+func _on_weapon_overheated() -> void:
+	HeatCounter.modulate = Color.red
+
+
+func _on_weapon_cooled() -> void:
+	HeatCounter.modulate = Color.white
 
 
 func _start_power_blinking() -> void:

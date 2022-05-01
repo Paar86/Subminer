@@ -5,7 +5,6 @@
 [node name="Level1" type="Node"]
 
 [node name="LevelBase" parent="." instance=ExtResource( 1 )]
-level_id = "level1"
 minerals_goal = 60
 
 [node name="WallsTileMap" parent="LevelBase" index="0"]

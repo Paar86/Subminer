@@ -2,13 +2,13 @@ extends Node
 
 signal level_finished
 
-export var level_id := "default_name"
 export var minerals_goal := 50
 
 onready var ObjectsTilemap := $ObjectsTileMap
 onready var HUDNode := $Level_UI/HUD
 onready var LevelNameLabel := $Level_UI/LevelName
 
+var level_id := "default_name"
 var _player_folder_name := "PlayerStart"
 var _pickups_folder_name := "Pickups"
 var _enemies_folder_name := "Enemies"

@@ -1,15 +1,22 @@
 extends GameActor
 
+signal weapon_overheated
+
 enum States { IDLE, MOVE, DRIFT }
 
-export var _gravity_max := 30.0
-export var _gravity_accel := 10.0
-export var _dash_power := 160.0
-export var _thrust_power_max := 90.0
-export var _thrust_accel := 150.0
-export var _friction := 90.0
-export var _rate_of_fire := 0.1
-export var _dash_timeout := 1.5
+var _gravity_max := 30.0
+var _gravity_accel := 10.0
+var _dash_power := 160.0
+var _thrust_power_max := 90.0
+var _thrust_accel := 150.0
+var _friction := 90.0
+var _rate_of_fire := 0.1
+var _dash_timeout := 1.5
+
+var _heat_increment := 2.0
+var _heat_cooldown_interval := _rate_of_fire / 1.5
+var _heat_timer := 0.0
+var _is_overheated := false
 
 var _player_stats := PlayerStats
 var _is_invincible: bool setget _set_invincibility, _get_invincibility
@@ -33,6 +40,24 @@ var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
 var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
 
 
+# Properties
+func _set_invincibility(value: bool) -> void:
+	_is_invincible = value
+	var collision_layer_value = 0 if value else 1
+	HurtBox.set_deferred("collision_layer", collision_layer_value)
+
+
+func _get_invincibility() -> bool:
+	return _is_invincible
+
+
+func _get_direction() -> Vector2:
+	var horizontal_direction = Input.get_action_strength("right") - Input.get_action_strength("left")
+	var vertical_direction = Input.get_action_strength("down") - Input.get_action_strength("up")
+	return Vector2(horizontal_direction, vertical_direction).normalized()
+
+
+# Functions
 func propagate_effects(effects: Dictionary = {}) -> void:
 	if !_is_invincible:
 		if Enums.Effects.DAMAGE in effects:
@@ -42,12 +67,14 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 			var push_velocity: Vector2 = effects[Enums.Effects.PUSH]
 			_velocity = push_velocity
 			_state = States.DRIFT
-			
+
 	if Enums.Effects.MINERALS in effects:
 			PlayerStats.minerals += effects[Enums.Effects.MINERALS]
 
 
 func _ready() -> void:
+	PlayerStats.connect("weapon_overheated", self, "_on_weapon_overheated")
+	PlayerStats.connect("weapon_cooled", self, "_on_weapon_cooled")
 	PlayerStats.connect("hitpoints_depleted", self, "_on_hitpoints_depleted")
 
 
@@ -91,28 +118,19 @@ func _physics_process(delta: float) -> void:
 			_apply_friction(true, true, delta)
 			if (_velocity.length() < _thrust_power_max):
 				_state = States.MOVE
-	
+
 	_velocity = move_and_slide(_velocity)
 
 	# We should be able to fire anytime
-	if Input.is_action_pressed("fire") and !_is_firing:
+	if Input.is_action_pressed("fire") and !_is_firing and !_is_overheated:
 		_fire_cannons()
 
-
-func _set_invincibility(value: bool) -> void:
-	_is_invincible = value
-	var collision_layer_value = 0 if value else 1
-	HurtBox.set_deferred("collision_layer", collision_layer_value)
-
-
-func _get_invincibility() -> bool:
-	return _is_invincible
-
-
-func _get_direction() -> Vector2:
-	var horizontal_direction = Input.get_action_strength("right") - Input.get_action_strength("left")
-	var vertical_direction = Input.get_action_strength("down") - Input.get_action_strength("up")
-	return Vector2(horizontal_direction, vertical_direction).normalized()
+	# Weapon cooldown
+	if !_is_firing and PlayerStats.heat_value > 0.0:
+		_heat_timer += delta
+		if _heat_timer >= _heat_cooldown_interval:
+			PlayerStats.heat_value -= _heat_increment
+			_heat_timer = 0.0
 
 
 func _apply_friction(x_axis: bool, y_axis: bool, delta: float) -> void:
@@ -132,9 +150,11 @@ func _apply_friction(x_axis: bool, y_axis: bool, delta: float) -> void:
 func _fire_cannons() -> void:
 	_is_firing = true
 	_spawn_projectile(LeftCannonPoint.global_position, LeftCannon.rotation)
+	PlayerStats.heat_value += _heat_increment
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
 	AudioStreamManager.play_sound(_shoot_sfx_path)
 	_spawn_projectile(RightCannonPoint.global_position, RightCannon.rotation)
+	PlayerStats.heat_value += _heat_increment
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
 	AudioStreamManager.play_sound(_shoot_sfx_path)
 	_is_firing = false
@@ -169,3 +189,10 @@ func _on_hitpoints_depleted() -> void:
 	$Hurtbox.set_deferred("monitorable", false)
 	set_physics_process(false)
 
+
+func _on_weapon_overheated() -> void:
+	_is_overheated = true
+
+
+func _on_weapon_cooled() -> void:
+	_is_overheated = false

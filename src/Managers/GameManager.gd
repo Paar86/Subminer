@@ -47,9 +47,12 @@ func _on_level_finished() -> void:
 	_load_next_level()
 
 
+# Loading the actual level, after a dialogue scene
 func _on_dialogue_ended(dict_key: String) -> void:
 	_clear_current_scene()
 	var new_level = load(_levels_dict[dict_key]).instance()
-	new_level.get_node("LevelBase").connect("level_finished", self, "_on_level_finished")
+	var level_base = new_level.get_node("LevelBase")
+	level_base.level_id = dict_key
+	level_base.connect("level_finished", self, "_on_level_finished")
 	PlayerStats.reset()
 	CurrentScene.call_deferred("add_child", new_level)
