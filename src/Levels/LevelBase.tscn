@@ -532,6 +532,8 @@ format = 1
 
 [node name="PlayerStart" type="Node" parent="."]
 
+[node name="Obstacles" type="Node" parent="."]
+
 [node name="Level_UI" type="CanvasLayer" parent="."]
 pause_mode = 2
 

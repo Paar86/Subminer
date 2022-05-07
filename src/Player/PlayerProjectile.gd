@@ -28,5 +28,4 @@ func _on_Projectile_area_entered(area: Area2D):
 
 # For world tiles
 func _on_Projectile_body_entered(body):
-	if body is TileMap:
-		_create_explosion(global_position)
+	_create_explosion(global_position)

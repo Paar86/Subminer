@@ -21,6 +21,9 @@ onready var DelayTimer := $DelayTimer
 onready var PrepareTimer := $PrepareTimer
 onready var ShootTimer := $ShootTimer
 
+var _laser_animatedtexture := preload("res://assets/laser_animatedtexture.tres")
+var _laser_tele_animatedtexture := preload("res://assets/laser_tele_animatedtexture.tres")
+
 
 func _ready() -> void:
 	if Engine.editor_hint:
@@ -72,13 +75,15 @@ func _on_DelayTimer_timeout() -> void:
 
 func _on_IntervalTimer_timeout() -> void:
 	# Telegraph a beam effect
+	LaserLine.texture = _laser_tele_animatedtexture
+	LaserLine.show()
 	PrepareTimer.start()
 
 
 func _on_PrepareTimer_timeout() -> void:
 	# Hide telegraphing effect and activate the beam itself
 	LaserRayCast.set_deferred("enabled", true)
-	LaserLine.show()
+	LaserLine.texture = _laser_animatedtexture
 	ShootTimer.start()
 
 

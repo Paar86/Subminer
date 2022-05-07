@@ -21,7 +21,14 @@ var _is_overheated := false
 var _player_stats := PlayerStats
 var _is_invincible: bool setget _set_invincibility, _get_invincibility
 var _dash_enabled := true
+# Final velocity (primary and secondary combined)
 var _velocity := Vector2(0.0, 0.0)
+# Primary velocity for player movement based on pressed keys
+var _velocity_primary := Vector2(0.0, 0.0)
+# Secondary velocity for water currents
+var _velocity_secondary := Vector2(0.0, 0.0)
+# All constant effects
+var _constant_velocity_buffer := []
 var _is_firing := false
 var _state: int = States.IDLE
 var _input_direction = Vector2.ZERO
@@ -65,11 +72,15 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 			PlayerStats.hitpoints -= effects[Enums.Effects.DAMAGE]
 		if Enums.Effects.PUSH in effects:
 			var push_velocity: Vector2 = effects[Enums.Effects.PUSH]
-			_velocity = push_velocity
+			_velocity_primary = push_velocity
 			_state = States.DRIFT
 
 	if Enums.Effects.MINERALS in effects:
-			PlayerStats.minerals += effects[Enums.Effects.MINERALS]
+		PlayerStats.minerals += effects[Enums.Effects.MINERALS]
+	if Enums.Effects.ADD_CONSTANT_PUSH in effects:
+		_add_constant_effect(effects[Enums.Effects.ADD_CONSTANT_PUSH])
+	if Enums.Effects.REMOVE_CONSTANT_PUSH in effects:
+		_remove_constant_effect(effects[Enums.Effects.REMOVE_CONSTANT_PUSH])
 
 
 func _ready() -> void:
@@ -81,7 +92,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and _state == States.MOVE and _dash_enabled):
 		_dash_enabled = false
-		_velocity = _input_direction * _dash_power
+		_velocity_primary = _input_direction * _dash_power
 		_state = States.DRIFT
 		yield(get_tree().create_timer(_dash_timeout), "timeout")
 		_dash_enabled = true
@@ -92,20 +103,21 @@ func _physics_process(delta: float) -> void:
 
 	match _state:
 		States.IDLE:
-			if _input_direction != Vector2.ZERO:
+			# Either players presses a direction key or gets into a water current
+			if _input_direction != Vector2.ZERO or _velocity_secondary != Vector2.ZERO:
 				_state = States.MOVE
 
-			_velocity.y += _gravity_accel * delta
-			if _velocity.y > _gravity_max:
-				_velocity.y = _gravity_max
+			_velocity_primary.y += _gravity_accel * delta
+			if _velocity_primary.y > _gravity_max:
+				_velocity_primary.y = _gravity_max
 
 			# Threshold to allow sliding on corners
-			if _velocity.length() > _gravity_max:
+			if _velocity_primary.length() > _gravity_max:
 				_apply_friction(true, true, delta)
 		States.MOVE:
-			_velocity += _thrust_accel * _input_direction * delta
-			if (_velocity.length() > _thrust_power_max):
-				_velocity = _velocity.normalized() * _thrust_power_max
+			_velocity_primary += _thrust_accel * _input_direction * delta
+			if _velocity_primary.length() > _thrust_power_max:
+				_velocity_primary = _velocity_primary.normalized() * _thrust_power_max
 
 			var friction_on_x = true if _input_direction.x == 0.0 else false
 			var friction_on_y = true if _input_direction.y == 0.0 else false
@@ -116,10 +128,16 @@ func _physics_process(delta: float) -> void:
 		States.DRIFT:
 			# We only need to apply friction in this state
 			_apply_friction(true, true, delta)
-			if (_velocity.length() < _thrust_power_max):
+			if (_velocity_primary.length() < _thrust_power_max):
 				_state = States.MOVE
 
-	_velocity = move_and_slide(_velocity)
+	_velocity = move_and_slide(_velocity_primary + _velocity_secondary)
+	
+	# To remove stickiness when hitting a wall
+	if _velocity.x == 0.0:
+		_velocity_primary.x = _velocity.x
+	if _velocity.y == 0.0:
+		_velocity_primary.y = _velocity.y
 
 	# We should be able to fire anytime
 	if Input.is_action_pressed("fire") and !_is_firing and !_is_overheated:
@@ -136,15 +154,15 @@ func _physics_process(delta: float) -> void:
 func _apply_friction(x_axis: bool, y_axis: bool, delta: float) -> void:
 	# Calculate horizontal friction; both axes need to be calculated separatedly
 	if x_axis:
-		_velocity.x += -1.0 * sign(_velocity.x) * _friction * delta
+		_velocity_primary.x += -1.0 * sign(_velocity_primary.x) * _friction * delta
 		# For situations when applying friction would change a sign of the x axis
-		if abs(_velocity.x) < _friction * delta:
-			_velocity.x = 0.0
+		if abs(_velocity_primary.x) < _friction * delta:
+			_velocity_primary.x = 0.0
 	# Calculate vertical friction
 	if y_axis:
-		_velocity.y += -1.0 * sign(_velocity.y) * _friction * delta
-		if abs(_velocity.y) < _friction * delta:
-			_velocity.y = 0.0
+		_velocity_primary.y += -1.0 * sign(_velocity_primary.y) * _friction * delta
+		if abs(_velocity_primary.y) < _friction * delta:
+			_velocity_primary.y = 0.0
 
 
 func _fire_cannons() -> void:
@@ -196,3 +214,29 @@ func _on_weapon_overheated() -> void:
 
 func _on_weapon_cooled() -> void:
 	_is_overheated = false
+
+
+func _add_constant_effect(velocity: Vector2) -> void:
+	_constant_velocity_buffer.append(velocity)
+	_recalculate_velocity_secondary()
+
+
+func _remove_constant_effect(velocity: Vector2) -> void:
+	if _constant_velocity_buffer.has(velocity):
+		_constant_velocity_buffer.erase(velocity)
+	_recalculate_velocity_secondary()
+
+
+# If there are duplicate contants effects, we will apply them only once
+func _recalculate_velocity_secondary() -> void:
+	var constant_velocity_buffer_unique = []
+
+	for value in _constant_velocity_buffer:
+		if !constant_velocity_buffer_unique.has(value):
+			constant_velocity_buffer_unique.append(value)
+
+	var new_velocity_secondary = Vector2()
+	for value in constant_velocity_buffer_unique:
+		new_velocity_secondary += value
+
+	_velocity_secondary = new_velocity_secondary

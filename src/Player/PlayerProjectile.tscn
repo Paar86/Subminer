@@ -9,7 +9,6 @@ extents = Vector2( 3.5, 1 )
 [node name="PlayerProjectile" type="Area2D"]
 collision_layer = 0
 collision_mask = 14
-monitorable = false
 script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""

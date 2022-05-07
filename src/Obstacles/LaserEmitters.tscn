@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/laser_emitter.png" type="Texture" id=1]
-[ext_resource path="res://src/Enemies/LaserEmitters.gd" type="Script" id=2]
+[ext_resource path="res://src/Obstacles/LaserEmitters.gd" type="Script" id=2]
 [ext_resource path="res://assets/laser_animatedtexture.tres" type="Texture" id=3]
 
 [node name="LaserEmitters" type="Node2D"]
@@ -9,6 +9,8 @@ script = ExtResource( 2 )
 
 [node name="EmitterA" type="StaticBody2D" parent="."]
 position = Vector2( 0, -8 )
+collision_layer = 8
+collision_mask = 0
 
 [node name="Sprite" type="Sprite" parent="EmitterA"]
 texture = ExtResource( 1 )
@@ -22,6 +24,8 @@ polygon = PoolVector2Array( -8, 8, -8, 0, -4, -4, 4, -4, 8, 0, 8, 8 )
 
 [node name="EmitterB" type="StaticBody2D" parent="."]
 position = Vector2( 0, -24 )
+collision_layer = 8
+collision_mask = 0
 
 [node name="Sprite" type="Sprite" parent="EmitterB"]
 rotation = 3.14159
