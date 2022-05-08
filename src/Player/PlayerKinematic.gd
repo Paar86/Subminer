@@ -113,7 +113,7 @@ func _physics_process(delta: float) -> void:
 
 			# Threshold to allow sliding on corners
 			if _velocity_primary.length() > _gravity_max:
-				_apply_friction(true, true, delta)
+				_velocity_primary = _apply_friction(_velocity_primary, true, true, delta)
 		States.MOVE:
 			_velocity_primary += _thrust_accel * _input_direction * delta
 			if _velocity_primary.length() > _thrust_power_max:
@@ -121,13 +121,13 @@ func _physics_process(delta: float) -> void:
 
 			var friction_on_x = true if _input_direction.x == 0.0 else false
 			var friction_on_y = true if _input_direction.y == 0.0 else false
-			_apply_friction(friction_on_x, friction_on_y, delta)
+			_velocity_primary = _apply_friction(_velocity_primary, friction_on_x, friction_on_y, delta)
 
 			if _velocity == Vector2.ZERO:
 				_state = States.IDLE
 		States.DRIFT:
 			# We only need to apply friction in this state
-			_apply_friction(true, true, delta)
+			_velocity_primary = _apply_friction(_velocity_primary, true, true, delta)
 			if (_velocity_primary.length() < _thrust_power_max):
 				_state = States.MOVE
 
@@ -138,6 +138,10 @@ func _physics_process(delta: float) -> void:
 		_velocity_primary.x = _velocity.x
 	if _velocity.y == 0.0:
 		_velocity_primary.y = _velocity.y
+	
+	# To leave water currents more smoothly
+	if _velocity_secondary != Vector2.ZERO and _constant_velocity_buffer.size() == 0:
+		_velocity_secondary = _apply_friction(_velocity_secondary, true, true, delta)
 
 	# We should be able to fire anytime
 	if Input.is_action_pressed("fire") and !_is_firing and !_is_overheated:
@@ -151,18 +155,20 @@ func _physics_process(delta: float) -> void:
 			_heat_timer = 0.0
 
 
-func _apply_friction(x_axis: bool, y_axis: bool, delta: float) -> void:
+func _apply_friction(velocity: Vector2, x_axis: bool, y_axis: bool, delta: float) -> Vector2:
 	# Calculate horizontal friction; both axes need to be calculated separatedly
 	if x_axis:
-		_velocity_primary.x += -1.0 * sign(_velocity_primary.x) * _friction * delta
+		velocity.x += -1.0 * sign(velocity.x) * _friction * delta
 		# For situations when applying friction would change a sign of the x axis
-		if abs(_velocity_primary.x) < _friction * delta:
-			_velocity_primary.x = 0.0
+		if abs(velocity.x) < _friction * delta:
+			velocity.x = 0.0
 	# Calculate vertical friction
 	if y_axis:
-		_velocity_primary.y += -1.0 * sign(_velocity_primary.y) * _friction * delta
-		if abs(_velocity_primary.y) < _friction * delta:
-			_velocity_primary.y = 0.0
+		velocity.y += -1.0 * sign(velocity.y) * _friction * delta
+		if abs(velocity.y) < _friction * delta:
+			velocity.y = 0.0
+			
+	return velocity
 
 
 func _fire_cannons() -> void:
@@ -229,6 +235,10 @@ func _remove_constant_effect(velocity: Vector2) -> void:
 
 # If there are duplicate contants effects, we will apply them only once
 func _recalculate_velocity_secondary() -> void:
+	# We want the remnant of the secondary velocity to by removed by friction
+	if _constant_velocity_buffer.size() == 0:
+		return
+	
 	var constant_velocity_buffer_unique = []
 
 	for value in _constant_velocity_buffer:
