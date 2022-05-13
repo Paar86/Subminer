@@ -2,13 +2,14 @@ tool
 extends Area2D
 
 export var direction := Vector2.RIGHT setget _set_direction
+export var push_force := 80.0 setget _set_push_force
 
 onready var ParticlesNode: Particles2D = $Particles2D
 onready var CollisionShapeNode: CollisionShape2D = $CollisionShape2D
 
 # Number of particles is emitter surface (x * y) devided by this modifier (smaller number means more particles)
 var _particles_density_modifier := 12.0
-var _push_force := 80.0
+var _particles_speed_modifier := 20.0
 
 
 # Properties
@@ -18,6 +19,11 @@ func _set_direction(value: Vector2) -> void:
 	direction = value
 
 
+func _set_push_force(value: float) -> void:
+	push_force = value
+	get_node("Particles2D").speed_scale = push_force / _particles_speed_modifier
+
+# Functions
 func _process(delta: float) -> void:
 	# To set and see the particles in the editor
 	if Engine.editor_hint:
@@ -46,9 +52,9 @@ func _process(delta: float) -> void:
 
 func _on_WaterCurrent_body_entered(body: Node) -> void:
 	if body is GameActor:
-		body.propagate_effects({Enums.Effects.ADD_CONSTANT_PUSH: direction * _push_force})
+		body.propagate_effects({Enums.Effects.ADD_CONSTANT_PUSH: direction * push_force})
 
 
 func _on_WaterCurrent_body_exited(body: Node) -> void:
 	if body is GameActor:
-		body.propagate_effects({Enums.Effects.REMOVE_CONSTANT_PUSH: direction * _push_force})
+		body.propagate_effects({Enums.Effects.REMOVE_CONSTANT_PUSH: direction * push_force})

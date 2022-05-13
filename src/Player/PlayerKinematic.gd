@@ -133,11 +133,13 @@ func _physics_process(delta: float) -> void:
 
 	_velocity = move_and_slide(_velocity_primary + _velocity_secondary)
 	
-	# To remove stickiness when hitting a wall
-	if _velocity.x == 0.0:
+	# To remove stickiness when hitting a wall and not in a current
+	if _velocity.x == 0.0 and _constant_velocity_buffer.size() == 0:
 		_velocity_primary.x = _velocity.x
-	if _velocity.y == 0.0:
+		_velocity_secondary.x = _velocity.x
+	if _velocity.y == 0.0 and _constant_velocity_buffer.size() == 0:
 		_velocity_primary.y = _velocity.y
+		_velocity_secondary.y = _velocity.y
 	
 	# To leave water currents more smoothly
 	if _velocity_secondary != Vector2.ZERO and _constant_velocity_buffer.size() == 0:
@@ -235,14 +237,23 @@ func _remove_constant_effect(velocity: Vector2) -> void:
 
 # If there are duplicate contants effects, we will apply them only once
 func _recalculate_velocity_secondary() -> void:
-	# We want the remnant of the secondary velocity to by removed by friction
+	# We want the remnant of the secondary velocity to by removed by friction for smooth effect
 	if _constant_velocity_buffer.size() == 0:
 		return
 	
 	var constant_velocity_buffer_unique = []
 
 	for value in _constant_velocity_buffer:
-		if !constant_velocity_buffer_unique.has(value):
+		var unique_value_found = false
+		# We allow only one unique direction, but will always pick the bigger length
+		for unique_value in constant_velocity_buffer_unique:
+			if value.normalized() == unique_value.normalized():
+				constant_velocity_buffer_unique.erase(unique_value)
+				var new_unique_value = unique_value.normalized() * max(value.length(), unique_value.length())
+				constant_velocity_buffer_unique.append(new_unique_value)
+				unique_value_found = true
+		
+		if !unique_value_found:
 			constant_velocity_buffer_unique.append(value)
 
 	var new_velocity_secondary = Vector2()
@@ -250,3 +261,4 @@ func _recalculate_velocity_secondary() -> void:
 		new_velocity_secondary += value
 
 	_velocity_secondary = new_velocity_secondary
+	print(str(_velocity_secondary))
