@@ -3,7 +3,7 @@ extends GameActor
 onready var AnimPlayer: AnimationPlayer = $AnimationPlayer
 onready var SplashDamageArea: Area2D = $SplashDamageArea
 
-onready var _explosion_scene: PackedScene = preload("res://src/Enemies/MineExplosion.tscn")
+onready var _mine_explosion_scene: PackedScene = preload("res://src/Enemies/MineExplosion.tscn")
 
 # To every mine to oscillate a little differently
 onready var _time: float = position.x + position.y
@@ -38,7 +38,7 @@ func _on_PlayerDetector_body_exited(body: GameActor) -> void:
 
 
 func explode() -> void:
-	var new_explosion = _explosion_scene.instance()
+	var new_explosion = _mine_explosion_scene.instance()
 	new_explosion.global_position = global_position
 	get_parent().call_deferred("add_child", new_explosion)
 	queue_free()

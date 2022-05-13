@@ -132,7 +132,7 @@ func _physics_process(delta: float) -> void:
 				_state = States.MOVE
 
 	_velocity = move_and_slide(_velocity_primary + _velocity_secondary)
-	
+
 	# To remove stickiness when hitting a wall and not in a current
 	if _velocity.x == 0.0 and _constant_velocity_buffer.size() == 0:
 		_velocity_primary.x = _velocity.x
@@ -140,7 +140,7 @@ func _physics_process(delta: float) -> void:
 	if _velocity.y == 0.0 and _constant_velocity_buffer.size() == 0:
 		_velocity_primary.y = _velocity.y
 		_velocity_secondary.y = _velocity.y
-	
+
 	# To leave water currents more smoothly
 	if _velocity_secondary != Vector2.ZERO and _constant_velocity_buffer.size() == 0:
 		_velocity_secondary = _apply_friction(_velocity_secondary, true, true, delta)
@@ -169,7 +169,7 @@ func _apply_friction(velocity: Vector2, x_axis: bool, y_axis: bool, delta: float
 		velocity.y += -1.0 * sign(velocity.y) * _friction * delta
 		if abs(velocity.y) < _friction * delta:
 			velocity.y = 0.0
-			
+
 	return velocity
 
 
@@ -240,7 +240,7 @@ func _recalculate_velocity_secondary() -> void:
 	# We want the remnant of the secondary velocity to by removed by friction for smooth effect
 	if _constant_velocity_buffer.size() == 0:
 		return
-	
+
 	var constant_velocity_buffer_unique = []
 
 	for value in _constant_velocity_buffer:
@@ -252,7 +252,7 @@ func _recalculate_velocity_secondary() -> void:
 				var new_unique_value = unique_value.normalized() * max(value.length(), unique_value.length())
 				constant_velocity_buffer_unique.append(new_unique_value)
 				unique_value_found = true
-		
+
 		if !unique_value_found:
 			constant_velocity_buffer_unique.append(value)
 
@@ -261,4 +261,3 @@ func _recalculate_velocity_secondary() -> void:
 		new_velocity_secondary += value
 
 	_velocity_secondary = new_velocity_secondary
-	print(str(_velocity_secondary))

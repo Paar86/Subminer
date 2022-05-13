@@ -1,6 +1,6 @@
 extends GameActor
 
-var _hitpoints_override := 40
+var _hitpoints_override := 20
 var _damage := 5
 var _push_strength := 150.0
 
@@ -50,8 +50,8 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 	.propagate_effects(effects)
 	if _hitpoints == 0:
 		_prepare_death_state()
-		yield(get_tree().create_timer(1), "timeout")
-		flash_before_vanish()
+#		yield(get_tree().create_timer(1), "timeout")
+#		flash_before_vanish()
 
 
 func flip_horizontally() -> void:
@@ -150,23 +150,12 @@ func _rest_state(delta: float) -> void:
 
 
 func _death_state(delta: float) -> void:
-	_velocity += Vector2.DOWN * _death_acceleration * delta
-	_velocity.y = clamp(_velocity.y, -_max_speed, _max_speed)
-	move_and_collide(_velocity * delta)
+	queue_free()
 
 
 func _prepare_death_state() -> void:
-	_sprite.flip_v = true
-	_velocity = Vector2.ZERO
+	.create_explosion()
 	_state = States.DEATH
-
-	$Hurtbox.set_deferred("monitorable", false)
-	$Hitbox.set_deferred("monitoring", false)
-	_charge_detector_high.set_deferred("enabled", false)
-	_charge_detector_low.set_deferred("enabled", false)
-
-	# Disable KinematicBody collision with the player layer
-	call_deferred("set_collision_mask_bit", 0, false)
 
 
 func _set_sprite_orientation(direction_basic: Vector2) -> void:

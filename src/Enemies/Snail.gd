@@ -1,6 +1,6 @@
 extends GameActor
 
-var hitpoints_override := 40
+var hitpoints_override := 15
 
 onready var CliffDetector := $CliffDetector
 onready var WallDetector := $WallDetector
@@ -43,14 +43,12 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 	if _hitpoints == 0:
 		_state = States.DEATH
 		_prepare_death_state()
-		yield(get_tree().create_timer(1), "timeout")
-		flash_before_vanish()
 
 
 func flip_horizontally() -> void:
 	set_deferred("scale", Vector2(scale.x * -1.0, scale.y))
-	
-	
+
+
 func flip_vertically() -> void:
 	set_deferred("scale", Vector2(scale.x, scale.y * -1.0))
 
@@ -105,15 +103,9 @@ func _patrol_state(delta: float) -> void:
 
 
 func _prepare_death_state() -> void:
-	_velocity = Vector2.ZERO
-	_state = States.DEATH
-	
-	$Hurtbox.set_deferred("monitorable", false)
-	$Hitbox.set_deferred("monitoring", false)
-
-	# Disable KinematicBody collision with the player layer
-	call_deferred("set_collision_mask_bit", 0, false)
 	_deal_with_projectiles()
+	.create_explosion($CollisionShape2D.global_position)
+	_state = States.DEATH
 
 
 func _shoot_prepare_state(delta: float) -> void:
@@ -125,15 +117,13 @@ func _shoot_prepare_state(delta: float) -> void:
 func _shoot_state(delta: float) -> void:
 	for projectile in _projectiles_container_array:
 		projectile.fire()
-		
+
 	_projectiles_container_array.clear()
 	_state = States.REST
 
 
 func _death_state(delta: float) -> void:
-	_velocity += Vector2.DOWN * _fall_acceleration * delta
-	_velocity.y = clamp(_velocity.y, 0.0, _fall_max_speed)
-	_velocity = move_and_slide(_velocity)
+	queue_free()
 
 
 func _on_Hitbox_area_entered(area: Area2D) -> void:
@@ -161,16 +151,16 @@ func _load_projectiles() -> void:
 func _tween_projectiles() -> void:
 	for projectile in _projectiles_container_array:
 		ProjectilesTween.interpolate_property(projectile, "modulate", Color(1, 1, 1, 0), Color(1, 1, 1, 1), 1.0, Tween.TRANS_LINEAR)
-	
+
 	ProjectilesTween.start()
 
 
 func _on_all_tweens_finished() -> void:
 	_loading_projectiles = false
-	
+
 	for projectile in _projectiles_container_array:
 		projectile.ready_to_fire = true
-	
+
 	_state = States.SHOOT
 
 
@@ -180,5 +170,5 @@ func _deal_with_projectiles() -> void:
 			projectile.fire()
 		else:
 			projectile.queue_free()
-			
+
 	_projectiles_container_array = []

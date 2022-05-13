@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name GameActor
 
+onready var _explosion_scene := preload("res://src/Enemies/ActorExplosion.tscn")
+
 var _hitpoints: int
 var _blinking := false
 
@@ -19,6 +21,12 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 	if Enums.Effects.PUSH in effects:
 		# Every object needs to implement it differently
 		pass
+
+
+func create_explosion(spawn_position: Vector2 = Vector2.ZERO) -> void:
+	var explosion_scene = _explosion_scene.instance()
+	explosion_scene.global_position = spawn_position if spawn_position != Vector2.ZERO else global_position
+	get_parent().call_deferred("add_child", explosion_scene)
 
 
 func blink() -> void:
@@ -42,16 +50,6 @@ func flip_horizontally() -> void:
 
 func flip_vertically() -> void:
 	pass
-	
-	
-func flash_before_vanish(number_of_flashes: int = 5) -> void:
-	for i in number_of_flashes:
-		hide()
-		yield(get_tree().create_timer(0.05), "timeout")
-		show()
-		yield(get_tree().create_timer(0.05), "timeout")
-
-	queue_free()
 
 
 func _on_blink_finished() -> void:
