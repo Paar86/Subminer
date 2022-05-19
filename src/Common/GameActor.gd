@@ -1,7 +1,7 @@
 extends KinematicBody2D
 class_name GameActor
 
-onready var _explosion_scene := preload("res://src/Enemies/ActorExplosion.tscn")
+onready var _explosion_scene := preload("res://src/Common/ActorExplosion.tscn")
 
 var _hitpoints: int
 var _blinking := false

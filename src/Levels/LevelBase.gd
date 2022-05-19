@@ -15,7 +15,7 @@ var _enemies_folder_name := "Enemies"
 
 var _player_tile_name := "player_start"
 var _mine_tile_name := "mine"
-var _mineral_ground_name := "mineral_ground"
+var _mineral_ground_name := "mineral_boulder"
 var _fragment_tile_name := "mineral_fragment"
 var _hammer_fish_tile_name := "hammer_fish"
 var _seaweed_tile_name := "seaweed"
@@ -24,7 +24,7 @@ var _snail_tile_name := "snail"
 var _objects_dictionary = {
 	_player_tile_name: "res://src/Player/PlayerKinematic.tscn",
 	_mine_tile_name: "res://src/Enemies/Mine.tscn",
-	_mineral_ground_name: "res://src/Pickups/MineralBodyHorizontal.tscn",
+	_mineral_ground_name: "res://src/Pickups/MineralBodyBase.tscn",
 	_fragment_tile_name: "res://src/Pickups/Fragment.tscn",
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
 	_seaweed_tile_name: "res://src/Enemies/Seaweed.tscn",

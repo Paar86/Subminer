@@ -43,6 +43,7 @@ onready var LeftCannonPoint: Position2D = $CannonLeftPivot/CannonLeft/BulletSpaw
 onready var RightCannonPoint: Position2D = $CannonRightPivot/CannonRight/BulletSpawnPoint
 onready var HurtBox := $Hurtbox
 
+var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
 var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
 
@@ -214,6 +215,10 @@ func _on_hitpoints_depleted() -> void:
 	$BodyCollision.set_deferred("disabled", true)
 	$Hurtbox.set_deferred("monitorable", false)
 	set_physics_process(false)
+	
+	var explosion = _big_explosion_scene.instance()
+	explosion.global_position = global_position
+	get_parent().add_child(explosion)
 
 
 func _on_weapon_overheated() -> void:

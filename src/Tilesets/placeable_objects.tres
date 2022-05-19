@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
 [ext_resource path="res://assets/mineral_fragment.png" type="Texture" id=3]
 [ext_resource path="res://assets/fish.png" type="Texture" id=4]
-[ext_resource path="res://assets/mineral_ground.png" type="Texture" id=5]
+[ext_resource path="res://assets/mineral_boulder_sheet.png" type="Texture" id=5]
 [ext_resource path="res://assets/seaweed_sheet.png" type="Texture" id=6]
 [ext_resource path="res://assets/snail_sheet.png" type="Texture" id=7]
 
@@ -65,20 +65,6 @@
 3/shape_one_way_margin = 0.0
 3/shapes = [  ]
 3/z_index = 0
-4/name = "mineral_ground"
-4/texture = ExtResource( 5 )
-4/tex_offset = Vector2( 0, 0 )
-4/modulate = Color( 1, 1, 1, 1 )
-4/region = Rect2( 0, 0, 30, 16 )
-4/tile_mode = 0
-4/occluder_offset = Vector2( 0, 0 )
-4/navigation_offset = Vector2( 0, 0 )
-4/shape_offset = Vector2( 0, 0 )
-4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-4/shape_one_way = false
-4/shape_one_way_margin = 0.0
-4/shapes = [  ]
-4/z_index = 0
 5/name = "seaweed"
 5/texture = ExtResource( 6 )
 5/tex_offset = Vector2( 0, 0 )
@@ -107,3 +93,17 @@
 6/shape_one_way_margin = 0.0
 6/shapes = [  ]
 6/z_index = 0
+7/name = "mineral_boulder"
+7/texture = ExtResource( 5 )
+7/tex_offset = Vector2( 0, 0 )
+7/modulate = Color( 1, 1, 1, 1 )
+7/region = Rect2( 0, 0, 32, 16 )
+7/tile_mode = 0
+7/occluder_offset = Vector2( 0, 0 )
+7/navigation_offset = Vector2( 0, 0 )
+7/shape_offset = Vector2( 0, 0 )
+7/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+7/shape_one_way = false
+7/shape_one_way_margin = 0.0
+7/shapes = [  ]
+7/z_index = 0

@@ -7,9 +7,9 @@ onready var SpriteNode: Sprite = $Sprite
 onready var SmokeParticlesOrigin: Position2D = $SmokeParticlesOrigin
 onready var FragmentSpawnPoint: Position2D = $FragmentSpawnOrigin
 
+var _hitpoints_override := 45
 var _smoke_particles_scene := preload("res://src/Common/SmokeParticles.tscn")
 var _fragment_scene := preload("res://src/Pickups/Fragment.tscn")
-var _hitpoints_override := 60
 var _fragment_impulse_force_min := 20.0
 var _fragment_impulse_force_max := 60.0
 
