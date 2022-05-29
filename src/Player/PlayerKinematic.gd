@@ -42,6 +42,7 @@ onready var RightCannon: Position2D = $CannonRightPivot
 onready var LeftCannonPoint: Position2D = $CannonLeftPivot/CannonLeft/BulletSpawnPoint
 onready var RightCannonPoint: Position2D = $CannonRightPivot/CannonRight/BulletSpawnPoint
 onready var HurtBox := $Hurtbox
+onready var DebrisSpawner := $DebrisSpawner
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
@@ -215,7 +216,9 @@ func _on_hitpoints_depleted() -> void:
 	$BodyCollision.set_deferred("disabled", true)
 	$Hurtbox.set_deferred("monitorable", false)
 	set_physics_process(false)
-	
+
+	DebrisSpawner.launch_debris()
+
 	var explosion = _big_explosion_scene.instance()
 	explosion.global_position = global_position
 	get_parent().add_child(explosion)

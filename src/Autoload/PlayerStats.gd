@@ -7,7 +7,7 @@ signal weapon_overheated
 signal weapon_cooled
 signal heat_value_changed
 
-const STARTING_HITPOINTS := 15
+const STARTING_HITPOINTS := 1
 
 var hitpoints := STARTING_HITPOINTS setget _set_hitpoints
 var minerals := 0 setget _set_minerals

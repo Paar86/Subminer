@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/Player/PlayerDebrisFragment.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 1.0
+
+[sub_resource type="StreamTexture" id=2]
+
+[node name="PlayerDebrisFragment" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 10
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = -1
+texture = SubResource( 2 )
+
+[node name="FadeOutTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="FadeOutTween" type="Tween" parent="."]
+
+[connection signal="timeout" from="FadeOutTimer" to="." method="_on_FadeOutTimer_timeout"]

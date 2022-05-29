@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends FloatingObject
 
 onready var AnimPlayer := $AnimationPlayer
 onready var _pickup_sfx_path := "res://assets/sfx/pickup2.wav"
@@ -7,8 +7,6 @@ enum States { IDLE, FOLLOW, TRAVEL }
 
 var _state: int = States.TRAVEL
 var _rotation_speed_rad := 2.0
-var _velocity := Vector2()
-var _damping := 25.0
 var _max_speed := 150.0
 var _target_body: KinematicBody2D = null
 
@@ -35,15 +33,7 @@ func _physics_process(delta: float) -> void:
 			if distance_to_target < 5.0:
 				global_position = _target_body.global_position
 		States.TRAVEL:
-			var direction = _velocity.normalized()
-			_velocity -= direction * _damping * delta
-			
-			var collision := move_and_collide(_velocity * delta)
-			if collision:
-				_velocity = _velocity.bounce(collision.normal)
-
-			if _velocity.length() < _damping * delta:
-				_velocity = Vector2.ZERO
+			._physics_process(delta)
 
 			if _velocity == Vector2.ZERO:
 				$CollisionShape2D.set_deferred("disabled", true)
@@ -51,10 +41,6 @@ func _physics_process(delta: float) -> void:
 				return
 
 	rotation += _rotation_speed_rad * delta
-
-
-func give_impulse(impulse_velocity: Vector2) -> void:
-	_velocity = impulse_velocity
 
 
 func _on_PickupBox_body_entered(body: GameActor) -> void:

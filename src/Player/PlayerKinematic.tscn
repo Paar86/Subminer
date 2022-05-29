@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Player/PlayerKinematic.gd" type="Script" id=1]
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
 [ext_resource path="res://assets/cannon.png" type="Texture" id=3]
 [ext_resource path="res://src/Player/CannonBase.gd" type="Script" id=4]
+[ext_resource path="res://src/Player/DebrisSpawner.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 11.0
@@ -69,3 +70,15 @@ position = Vector2( 0, 8 )
 current = true
 process_mode = 0
 smoothing_enabled = true
+
+[node name="DebrisSpawner" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="PositionUp" type="Position2D" parent="DebrisSpawner"]
+position = Vector2( 0, -5 )
+
+[node name="PositionLeft" type="Position2D" parent="DebrisSpawner"]
+position = Vector2( -8, 4 )
+
+[node name="PositionRight" type="Position2D" parent="DebrisSpawner"]
+position = Vector2( 8, 2 )
