@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Levels/DialogueScene.gd" type="Script" id=2]
 [ext_resource path="res://assets/ui/border_box.png" type="Texture" id=3]
-[ext_resource path="res://assets/ui/walkie_talkie.png" type="Texture" id=4]
 [ext_resource path="res://assets/ui/continued_text_symbol.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -46,31 +45,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
 
-[node name="RadioBorder" type="NinePatchRect" parent="."]
-margin_left = 27.0
-margin_top = 144.0
-margin_right = 76.0
-margin_bottom = 225.0
-size_flags_vertical = 3
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 16, 16 )
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
-
-[node name="RadioTexture" type="TextureRect" parent="RadioBorder"]
-margin_left = 10.0
-margin_top = 17.0
-margin_right = 39.0
-margin_bottom = 61.0
-texture = ExtResource( 4 )
-
 [node name="BorderRect" type="NinePatchRect" parent="."]
-margin_left = 77.0
-margin_top = 144.0
-margin_right = 294.0
-margin_bottom = 225.0
+margin_left = 72.0
+margin_top = 127.0
+margin_right = 256.0
+margin_bottom = 208.0
 size_flags_vertical = 3
 texture = ExtResource( 3 )
 region_rect = Rect2( 0, 0, 16, 16 )
@@ -82,8 +61,8 @@ patch_margin_bottom = 10
 [node name="DialogueText" type="Label" parent="BorderRect"]
 margin_left = 8.0
 margin_top = 5.0
-margin_right = 209.0
-margin_bottom = 70.0
+margin_right = 180.0
+margin_bottom = 76.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "{no data}"
@@ -92,9 +71,9 @@ max_lines_visible = 4
 
 [node name="Indicator" type="TextureRect" parent="BorderRect"]
 visible = false
-margin_left = 196.0
+margin_left = 162.0
 margin_top = 69.0
-margin_right = 212.0
+margin_right = 178.0
 margin_bottom = 77.0
 texture = ExtResource( 5 )
 
