@@ -65,7 +65,7 @@ func _physics_process(delta: float) -> void:
 	if LaserRayCast.is_colliding():
 		var collider = LaserRayCast.get_collider()
 		if collider.owner is GameActor:
-			collider.owner.propagate_effects({Enums.Effects.DAMAGE: 2})
+			collider.owner.propagate_effects({Enums.Effects.DAMAGE: 10})
 
 
 func _on_DelayTimer_timeout() -> void:

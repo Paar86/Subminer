@@ -7,13 +7,14 @@ signal weapon_overheated
 signal weapon_cooled
 signal heat_value_changed
 
-const STARTING_HITPOINTS := 1
+const STARTING_HITPOINTS := 15
 
 var hitpoints := STARTING_HITPOINTS setget _set_hitpoints
 var minerals := 0 setget _set_minerals
 var heat_value := 0.0 setget _set_heat_value
 
 var _heat_threshold := 100.0
+
 
 func reset() -> void:
 	hitpoints = STARTING_HITPOINTS
@@ -27,7 +28,7 @@ func _ready() -> void:
 func _set_hitpoints(new_value: int) -> void:
 	hitpoints = clamp(new_value, 0, STARTING_HITPOINTS)
 	emit_signal("hitpoints_changed", hitpoints)
-	
+
 	if hitpoints == 0:
 		emit_signal("hitpoints_depleted")
 
