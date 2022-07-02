@@ -1,6 +1,22 @@
 {
   "text_strings": [
     {
+      "id": "new_game_title",
+      "languages":
+        {
+          "cz": "Nová hra",
+          "en": "New Game"
+        }
+    },
+    {
+      "id": "how_to_title",
+      "languages":
+        {
+          "cz": "Jak hrát",
+          "en": "How To Play"
+        }
+    },
+    {
       "id": "level1_name",
       "languages":
         {

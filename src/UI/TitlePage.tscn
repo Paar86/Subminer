@@ -1,0 +1,89 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/UI/TitlePage.gd" type="Script" id=1]
+[ext_resource path="res://src/UI/LanguageButtonGroup.tres" type="ButtonGroup" id=2]
+[ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=3]
+[ext_resource path="res://assets/ui/buttons/english_unpressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/ui/buttons/czech_unpressed.png" type="Texture" id=5]
+[ext_resource path="res://assets/ui/buttons/czech_pressed.png" type="Texture" id=6]
+[ext_resource path="res://assets/ui/buttons/english_hover.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/buttons/czech_hover.png" type="Texture" id=8]
+[ext_resource path="res://assets/ui/buttons/english_pressed.png" type="Texture" id=9]
+
+[node name="TitlePage" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="GameLogo" type="TextureRect" parent="VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 118.0
+size_flags_vertical = 3
+
+[node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 122.0
+margin_right = 320.0
+margin_bottom = 240.0
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="NewGameButton" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 113.0
+margin_right = 207.0
+margin_bottom = 25.0
+focus_mode = 0
+size_flags_horizontal = 4
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "{NewGameTitle}"
+
+[node name="HowToButton" type="Button" parent="VBoxContainer/Buttons"]
+margin_left = 109.0
+margin_top = 35.0
+margin_right = 211.0
+margin_bottom = 60.0
+focus_mode = 0
+size_flags_horizontal = 4
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "{HowToPlayTitle}"
+
+[node name="LanguageButtons" type="HBoxContainer" parent="VBoxContainer/Buttons"]
+margin_top = 70.0
+margin_right = 320.0
+margin_bottom = 88.0
+alignment = 1
+
+[node name="ButtonENG" type="TextureButton" parent="VBoxContainer/Buttons/LanguageButtons"]
+margin_left = 132.0
+margin_right = 158.0
+margin_bottom = 18.0
+focus_mode = 0
+toggle_mode = true
+enabled_focus_mode = 0
+group = ExtResource( 2 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 9 )
+texture_hover = ExtResource( 7 )
+
+[node name="ButtonCZE" type="TextureButton" parent="VBoxContainer/Buttons/LanguageButtons"]
+margin_left = 162.0
+margin_right = 188.0
+margin_bottom = 18.0
+focus_mode = 0
+toggle_mode = true
+pressed = true
+enabled_focus_mode = 0
+group = ExtResource( 2 )
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 8 )
+
+[connection signal="pressed" from="VBoxContainer/Buttons/NewGameButton" to="." method="_on_NewGameButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Buttons/HowToButton" to="." method="_on_HowToButton_pressed"]
+[connection signal="toggled" from="VBoxContainer/Buttons/LanguageButtons/ButtonENG" to="." method="_on_ButtonENG_toggled"]
+[connection signal="toggled" from="VBoxContainer/Buttons/LanguageButtons/ButtonCZE" to="." method="_on_ButtonCZE_toggled"]
