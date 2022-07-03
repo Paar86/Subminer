@@ -1,12 +1,14 @@
 extends Node
 
 signal level_finished
+signal restart_level_request
 
 export var minerals_goal := 50
 
 onready var ObjectsTilemap := $ObjectsTileMap
-onready var HUDNode := $Level_UI/HUD
-onready var LevelNameLabel := $Level_UI/LevelName
+onready var HUDNode := $LevelUI/HUD
+onready var LevelNameLabel := $LevelUI/LevelName
+onready var PauseScreen := $PauseScreen/PauseScreen
 
 var level_id := "default"
 var _player_folder_name := "PlayerStart"
@@ -92,9 +94,24 @@ func place_objects() -> void:
 
 func unpause() -> void:
 	get_tree().paused = false
+	
+	
+func _show_pause_screen() -> void:
+	get_tree().paused = true
+	PauseScreen.visible = true
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause"):
+		if !get_tree().paused:
+			_show_pause_screen()
 
 
 func _ready() -> void:
+	
+	PauseScreen.connect("back_pressed", self, "_on_pause_back_pressed")
+	PauseScreen.connect("restart_pressed", self, "_on_pause_restart_pressed")
+	
 	# Object Placer TileMap's tile graphics are only handy in the editor,
 	# therefore we must hide it when running the game
 	ObjectsTilemap.hide()
@@ -106,4 +123,13 @@ func _ready() -> void:
 	LevelNameLabel.text = TextManager.get_string_by_key(level_id + "_name")
 
 	get_tree().paused = true
-	$Level_UI/UIAnimationPlayer.play("INTRO")
+	$LevelUI/UIAnimationPlayer.play("INTRO")
+
+
+func _on_pause_back_pressed() -> void:
+	get_tree().paused = false
+	PauseScreen.visible = false
+
+
+func _on_pause_restart_pressed() -> void:
+	emit_signal("restart_level_request")

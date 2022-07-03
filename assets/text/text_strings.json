@@ -17,6 +17,30 @@
         }
     },
     {
+      "id": "pause_text",
+      "languages":
+        {
+          "cz": "pauza",
+          "en": "pause"
+        }
+    },
+    {
+      "id": "restart_text",
+      "languages":
+        {
+          "cz": "Restartovat",
+          "en": "Restart"
+        }
+    },
+    {
+      "id": "back_text",
+      "languages":
+        {
+          "cz": "Zpět",
+          "en": "Back"
+        }
+    },
+    {
       "id": "level1_name",
       "languages":
         {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=2]
+[gd_scene load_steps=104 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_base.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://src/Tilesets/placeable_objects.tres" type="TileSet" id=4]
 [ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/tilemap_ground.png" type="Texture" id=6]
+[ext_resource path="res://src/UI/PauseScreen.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -973,18 +974,18 @@ format = 1
 
 [node name="PlayerStart" type="Node" parent="."]
 
-[node name="Level_UI" type="CanvasLayer" parent="."]
+[node name="LevelUI" type="CanvasLayer" parent="."]
 pause_mode = 2
 
-[node name="HUD" parent="Level_UI" instance=ExtResource( 3 )]
+[node name="HUD" parent="LevelUI" instance=ExtResource( 3 )]
 
-[node name="FadeOutRect" type="ColorRect" parent="Level_UI"]
+[node name="FadeOutRect" type="ColorRect" parent="LevelUI"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
 
-[node name="LevelName" type="Label" parent="Level_UI"]
+[node name="LevelName" type="Label" parent="LevelUI"]
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -993,6 +994,11 @@ text = "ÚROVEŇ 1 "
 align = 1
 valign = 1
 
-[node name="UIAnimationPlayer" type="AnimationPlayer" parent="Level_UI"]
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="LevelUI"]
 anims/INTRO = SubResource( 50 )
 anims/RESET = SubResource( 51 )
+
+[node name="PauseScreen" type="CanvasLayer" parent="."]
+
+[node name="PauseScreen" parent="PauseScreen" instance=ExtResource( 7 )]
+visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/UI/TitlePage.gd" type="Script" id=1]
 [ext_resource path="res://src/UI/LanguageButtonGroup.tres" type="ButtonGroup" id=2]
@@ -9,6 +9,69 @@
 [ext_resource path="res://assets/ui/buttons/english_hover.png" type="Texture" id=7]
 [ext_resource path="res://assets/ui/buttons/czech_hover.png" type="Texture" id=8]
 [ext_resource path="res://assets/ui/buttons/english_pressed.png" type="Texture" id=9]
+[ext_resource path="res://fonts/Born2bSportyV10.ttf" type="DynamicFontData" id=10]
+
+[sub_resource type="DynamicFont" id=3]
+size = 64
+font_data = ExtResource( 10 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("FadeOutRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FadeOutRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_out"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("FadeOutRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("FadeOutRect:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="TitlePage" type="Control"]
 anchor_right = 1.0
@@ -19,17 +82,25 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="GameLogo" type="TextureRect" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 320.0
-margin_bottom = 118.0
+margin_bottom = 128.0
 size_flags_vertical = 3
+theme = SubResource( 4 )
+text = "SUBMINER"
+align = 1
+valign = 1
+
+[node name="GameLogo" type="TextureRect" parent="VBoxContainer"]
+margin_top = 132.0
+margin_right = 320.0
+margin_bottom = 132.0
 
 [node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 122.0
+margin_top = 136.0
 margin_right = 320.0
-margin_bottom = 240.0
-size_flags_vertical = 3
-custom_constants/separation = 10
+margin_bottom = 216.0
+custom_constants/separation = 6
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer/Buttons"]
 margin_left = 113.0
@@ -43,19 +114,20 @@ text = "{NewGameTitle}"
 
 [node name="HowToButton" type="Button" parent="VBoxContainer/Buttons"]
 margin_left = 109.0
-margin_top = 35.0
+margin_top = 31.0
 margin_right = 211.0
-margin_bottom = 60.0
+margin_bottom = 56.0
 focus_mode = 0
 size_flags_horizontal = 4
 theme = ExtResource( 3 )
+disabled = true
 enabled_focus_mode = 0
 text = "{HowToPlayTitle}"
 
 [node name="LanguageButtons" type="HBoxContainer" parent="VBoxContainer/Buttons"]
-margin_top = 70.0
+margin_top = 62.0
 margin_right = 320.0
-margin_bottom = 88.0
+margin_bottom = 80.0
 alignment = 1
 
 [node name="ButtonENG" type="TextureButton" parent="VBoxContainer/Buttons/LanguageButtons"]
@@ -82,6 +154,25 @@ group = ExtResource( 2 )
 texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 8 )
+
+[node name="MadeByLabel" type="Label" parent="VBoxContainer"]
+margin_top = 220.0
+margin_right = 320.0
+margin_bottom = 240.0
+rect_min_size = Vector2( 0, 20 )
+theme = ExtResource( 3 )
+text = "2022 Josef Šustek"
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 1 )
+anims/fade_out = SubResource( 2 )
+
+[node name="FadeOutRect" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 1, 1, 1, 0 )
 
 [connection signal="pressed" from="VBoxContainer/Buttons/NewGameButton" to="." method="_on_NewGameButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/HowToButton" to="." method="_on_HowToButton_pressed"]

@@ -1,8 +1,11 @@
 extends Control
 
+signal new_game_pressed
+
 
 onready var NewGameButton = $VBoxContainer/Buttons/NewGameButton
 onready var HowToButton = $VBoxContainer/Buttons/HowToButton
+onready var AnimationPlayerScene = $AnimationPlayer
 
 
 func _ready() -> void:
@@ -15,7 +18,9 @@ func _refresh_text() -> void:
 
 
 func _on_NewGameButton_pressed() -> void:
-	pass # Replace with function body.
+	AnimationPlayerScene.play("fade_out")
+	yield(AnimationPlayerScene, "animation_finished")
+	emit_signal("new_game_pressed")
 
 
 func _on_HowToButton_pressed() -> void:
