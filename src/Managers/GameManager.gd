@@ -9,7 +9,6 @@ var _current_level_number := 0
 var _current_level_id := ""
 
 onready var CurrentScene: Node = $CurrentScene
-onready var MenuManager := $MenuManager
 
 
 func _ready() -> void:
@@ -33,6 +32,8 @@ func _prepare_level(level_number: int) -> void:
 	var dict_key = "level" + str(level_number)
 
 	var dialogue_scene = load(_dialogue_scene_path).instance()
+	dialogue_scene.level_id = dict_key
+	
 	CurrentScene.add_child(dialogue_scene)
 	dialogue_scene.set_dialogue(dict_key + "_dialogue")
 	dialogue_scene.start_dialogue()

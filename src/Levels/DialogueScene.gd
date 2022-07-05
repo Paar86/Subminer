@@ -4,7 +4,7 @@ signal dialogue_ended
 enum States { PAGE_LOADING, PAGE_LOADED, LAST_PAGE_LOADED }
 
 onready var DialogueTextLabel: Label = $BorderRect/DialogueText
-onready var AnimationPlayerNode: AnimationPlayer = $AnimationPlayer
+onready var AnimationPlayerNode: AnimationPlayer = $IndicatorAnimationPlayer
 
 var _voice_sfx := "res://assets/sfx/voice.wav"
 var _is_dialogue_finished := false setget , _get_is_dialogue_finished
@@ -12,7 +12,10 @@ var _state = States.PAGE_LOADING
 var _pages: PoolStringArray = PoolStringArray()
 var _current_page := -1
 
+var level_id = "default"
 
+
+# Properties
 func _get_is_dialogue_finished() -> bool:
 	var all_lines_count = DialogueTextLabel.get_line_count()
 	var skipped_lines_count = DialogueTextLabel.lines_skipped
@@ -34,7 +37,7 @@ func set_dialogue(dialogue_key: String) -> void:
 func start_dialogue() -> void:
 	# A little of breathing room before showing the dialogue
 	yield(get_tree().create_timer(2.0), "timeout")
-	show()
+	$BorderRect.show()
 	_load_next_page()
 
 
@@ -48,8 +51,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				_load_next_page()
 				return
 			States.LAST_PAGE_LOADED:
-				emit_signal("dialogue_ended")
+				$LevelNameAnimationPlayer.play("SHOW_LEVEL_NAME")
 
+
+func _ready() -> void:
+	$LevelName.text = TextManager.get_string_by_key(level_id + "_name")
+	
 
 func _load_next_page() -> void:
 	_current_page += 1
@@ -118,3 +125,7 @@ func _create_pages(text: String) -> PoolStringArray:
 	DialogueTextLabel.text = initial_text
 
 	return pages
+
+
+func _on_LevelNameAnimationPlayer_animation_finished(anim_name: String) -> void:
+	emit_signal("dialogue_ended")

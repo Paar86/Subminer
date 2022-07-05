@@ -1,12 +1,48 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Levels/DialogueScene.gd" type="Script" id=2]
 [ext_resource path="res://assets/ui/border_box.png" type="Texture" id=3]
+[ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/ui/continued_text_symbol.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+
+[sub_resource type="Animation" id=5]
+resource_name = "SHOW_LEVEL_NAME"
+length = 7.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("LevelName:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2.5, 4, 5.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("BorderRect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "INDICATOR_BLINKING"
@@ -40,12 +76,12 @@ tracks/0/keys = {
 }
 
 [node name="DialogueControl" type="Control"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
 
 [node name="BorderRect" type="NinePatchRect" parent="."]
+visible = false
 margin_left = 72.0
 margin_top = 127.0
 margin_right = 256.0
@@ -73,10 +109,27 @@ max_lines_visible = 4
 visible = false
 margin_left = 162.0
 margin_top = 69.0
-margin_right = 178.0
+margin_right = 170.0
 margin_bottom = 77.0
 texture = ExtResource( 5 )
+expand = true
+stretch_mode = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="LevelName" type="Label" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "{level_name}"
+align = 1
+valign = 1
+
+[node name="LevelNameAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 6 )
+anims/SHOW_LEVEL_NAME = SubResource( 5 )
+
+[node name="IndicatorAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/INDICATOR_BLINKING = SubResource( 2 )
 anims/RESET = SubResource( 3 )
+
+[connection signal="animation_finished" from="LevelNameAnimationPlayer" to="." method="_on_LevelNameAnimationPlayer_animation_finished"]

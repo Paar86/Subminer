@@ -1,6 +1,7 @@
 extends GameActor
 
 signal weapon_overheated
+signal player_ready
 
 enum States { IDLE, MOVE, DRIFT }
 
@@ -43,6 +44,7 @@ onready var LeftCannonPoint: Position2D = $CannonLeftPivot/CannonLeft/BulletSpaw
 onready var RightCannonPoint: Position2D = $CannonRightPivot/CannonRight/BulletSpawnPoint
 onready var HurtBox := $Hurtbox
 onready var DebrisSpawner := $DebrisSpawner
+onready var TeleportEffect := $TeleportEffect
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
@@ -67,6 +69,18 @@ func _get_direction() -> Vector2:
 
 
 # Functions
+func show_player() -> void:
+	MainSprite.show()
+	CannonLeftSprite.show()
+	CannonRightSprite.show()
+
+
+func hide_player() -> void:
+	MainSprite.hide()
+	CannonLeftSprite.hide()
+	CannonRightSprite.hide()
+
+
 func propagate_effects(effects: Dictionary = {}) -> void:
 	if !_is_invincible:
 		if Enums.Effects.DAMAGE in effects:
@@ -86,6 +100,11 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 
 
 func _ready() -> void:
+	hide_player()
+
+	TeleportEffect.connect("teleport_in_finished", self, "_on_teleport_in_finished")
+	TeleportEffect.connect("teleport_out_finished", self, "_on_teleport_out_finished")
+
 	PlayerStats.connect("weapon_overheated", self, "_on_weapon_overheated")
 	PlayerStats.connect("weapon_cooled", self, "_on_weapon_cooled")
 	PlayerStats.connect("hitpoints_depleted", self, "_on_hitpoints_depleted")
@@ -269,3 +288,11 @@ func _recalculate_velocity_secondary() -> void:
 		new_velocity_secondary += value
 
 	_velocity_secondary = new_velocity_secondary
+
+
+func _on_teleport_in_finished() -> void:
+	emit_signal("player_ready")
+
+
+func _on_teleport_out_finished() -> void:
+	pass

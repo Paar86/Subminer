@@ -7,7 +7,6 @@ export var minerals_goal := 50
 
 onready var ObjectsTilemap := $ObjectsTileMap
 onready var HUDNode := $LevelUI/HUD
-onready var LevelNameLabel := $LevelUI/LevelName
 onready var PauseScreen := $PauseScreen/PauseScreen
 
 var level_id := "default"
@@ -72,6 +71,9 @@ func place_objects() -> void:
 			var scene: PackedScene = load(node_path)
 			var instance: Node2D = scene.instance()
 			instance.position = pos
+			
+			if instance.is_in_group("Player"):
+				instance.connect("player_ready", self, "_on_unpause_request")
 
 			var is_cell_x_flipped: bool = ObjectsTilemap.is_cell_x_flipped(cell.x, cell.y)
 			var is_cell_y_flipped: bool = ObjectsTilemap.is_cell_y_flipped(cell.x, cell.y)
@@ -94,10 +96,14 @@ func place_objects() -> void:
 
 func unpause() -> void:
 	get_tree().paused = false
-	
-	
-func _show_pause_screen() -> void:
+
+
+func pause() -> void:
 	get_tree().paused = true
+
+
+func _show_pause_screen() -> void:
+	pause()
 	PauseScreen.visible = true
 
 
@@ -108,10 +114,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _ready() -> void:
-	
+
+	get_tree().paused = true
 	PauseScreen.connect("back_pressed", self, "_on_pause_back_pressed")
 	PauseScreen.connect("restart_pressed", self, "_on_pause_restart_pressed")
-	
+
 	# Object Placer TileMap's tile graphics are only handy in the editor,
 	# therefore we must hide it when running the game
 	ObjectsTilemap.hide()
@@ -120,10 +127,6 @@ func _ready() -> void:
 
 	HUDNode.reset_hitpoints()
 	HUDNode.set_minerals_goal(minerals_goal)
-	LevelNameLabel.text = TextManager.get_string_by_key(level_id + "_name")
-
-	get_tree().paused = true
-	$LevelUI/UIAnimationPlayer.play("INTRO")
 
 
 func _on_pause_back_pressed() -> void:
@@ -133,3 +136,7 @@ func _on_pause_back_pressed() -> void:
 
 func _on_pause_restart_pressed() -> void:
 	emit_signal("restart_level_request")
+
+
+func _on_unpause_request() -> void:
+	unpause()
