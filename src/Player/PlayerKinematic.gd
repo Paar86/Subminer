@@ -49,6 +49,8 @@ onready var TeleportEffect := $TeleportEffect
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
+var _player_default_texture := preload("res://assets/player_sprite.png")
+var _player_overheated_texture := preload("res://assets/player_overheated.tres")
 var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
 
 
@@ -249,10 +251,12 @@ func _on_hitpoints_depleted() -> void:
 
 
 func _on_weapon_overheated() -> void:
+	MainSprite.texture = _player_overheated_texture
 	_is_overheated = true
 
 
 func _on_weapon_cooled() -> void:
+	MainSprite.texture = _player_default_texture
 	_is_overheated = false
 
 
