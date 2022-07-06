@@ -19,7 +19,8 @@ onready var _heat_low_texture := preload("res://assets/ui/heat_low_symbol.png")
 onready var _heat_med_texture := preload("res://assets/ui/heat_med_symbol.png")
 onready var _heat_high_texture := preload("res://assets/ui/heat_high_symbol.png")
 
-const POWER_BLINKING_THRESHOLD := 10
+# Blinking when hitting 30 % of the max health
+const POWER_BLINKING_THRESHOLD := ceil(PlayerStats.STARTING_HITPOINTS * 0.3)
 
 
 func set_minerals_goal(goal_number: int) -> void:

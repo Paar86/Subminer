@@ -934,7 +934,7 @@ custom_fonts/font = SubResource( 98 )
 text = "{restart_text}"
 align = 1
 
-[node name="RestartNoticitaionTimer" type="Timer" parent="LevelUI"]
+[node name="RestartNotificationTimer" type="Timer" parent="LevelUI"]
 wait_time = 2.0
 
 [node name="PauseScreen" type="CanvasLayer" parent="."]
@@ -942,4 +942,4 @@ wait_time = 2.0
 [node name="PauseScreen" parent="PauseScreen" instance=ExtResource( 7 )]
 visible = false
 
-[connection signal="timeout" from="LevelUI/RestartNoticitaionTimer" to="." method="_on_RestartNoticitaionTimer_timeout"]
+[connection signal="timeout" from="LevelUI/RestartNotificationTimer" to="." method="_on_RestartNoticitaionTimer_timeout"]

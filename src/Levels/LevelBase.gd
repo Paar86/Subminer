@@ -152,7 +152,8 @@ func _on_unpause_request() -> void:
 
 
 func _on_player_death() -> void:
-	$LevelUI/RestartNoticitaionTimer.start()
+	# Delay for notification to show
+	$LevelUI/RestartNotificationTimer.start()
 
 
 func _on_RestartNoticitaionTimer_timeout() -> void:
