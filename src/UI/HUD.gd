@@ -11,16 +11,16 @@ onready var HeatCounter: Label = $VBoxContainer/HeatBar/Counter
 onready var HeatPercent: Label = $VBoxContainer/HeatBar/PercentSymbol
 
 # Resources
-onready var _hitpoint_texture := preload("res://assets/ui/power_unit.png")
-onready var _power_texture := preload("res://assets/ui/power_symbol_yellow.png")
-onready var _blinking_power_texture := preload("res://assets/ui/PowerBlinkingAnimatedTexture.tres")
+var _hitpoint_texture := preload("res://assets/ui/power_unit.png")
+var _power_texture := preload("res://assets/ui/power_symbol_yellow.png")
+var _blinking_power_texture := preload("res://assets/ui/PowerBlinkingAnimatedTexture.tres")
 
-onready var _heat_low_texture := preload("res://assets/ui/heat_low_symbol.png")
-onready var _heat_med_texture := preload("res://assets/ui/heat_med_symbol.png")
-onready var _heat_high_texture := preload("res://assets/ui/heat_high_symbol.png")
+var _heat_low_texture := preload("res://assets/ui/heat_low_symbol.png")
+var _heat_med_texture := preload("res://assets/ui/heat_med_symbol.png")
+var _heat_high_texture := preload("res://assets/ui/heat_high_symbol.png")
 
 # Blinking when hitting 30 % of the max health
-const POWER_BLINKING_THRESHOLD := ceil(PlayerStats.STARTING_HITPOINTS * 0.3)
+var power_blinking_threshold := ceil(PlayerStats.STARTING_HITPOINTS * 0.3)
 
 
 func set_minerals_goal(goal_number: int) -> void:
@@ -55,7 +55,7 @@ func _on_hitpoints_changed(hitpoints: int) -> void:
 		var child: TextureRect = HitpointsHolder.get_child(i)
 		child.visible = i < hitpoints
 
-	if hitpoints <= POWER_BLINKING_THRESHOLD:
+	if hitpoints <= power_blinking_threshold:
 		_start_power_blinking()
 
 
