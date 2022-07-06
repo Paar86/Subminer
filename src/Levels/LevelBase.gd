@@ -8,6 +8,9 @@ export var minerals_goal := 50
 onready var ObjectsTilemap := $ObjectsTileMap
 onready var HUDNode := $LevelUI/HUD
 onready var PauseScreen := $PauseScreen/PauseScreen
+onready var RestartNotification := $LevelUI/RestartNotification
+
+var _restart_level_by_any_key := false
 
 var level_id := "default"
 var _player_folder_name := "PlayerStart"
@@ -71,9 +74,10 @@ func place_objects() -> void:
 			var scene: PackedScene = load(node_path)
 			var instance: Node2D = scene.instance()
 			instance.position = pos
-			
+
 			if instance.is_in_group("Player"):
 				instance.connect("player_ready", self, "_on_unpause_request")
+				instance.connect("player_died", self, "_on_player_death")
 
 			var is_cell_x_flipped: bool = ObjectsTilemap.is_cell_x_flipped(cell.x, cell.y)
 			var is_cell_y_flipped: bool = ObjectsTilemap.is_cell_y_flipped(cell.x, cell.y)
@@ -108,12 +112,17 @@ func _show_pause_screen() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _restart_level_by_any_key:
+		emit_signal("restart_level_request")
+
 	if event.is_action_pressed("pause"):
 		if !get_tree().paused:
 			_show_pause_screen()
 
 
 func _ready() -> void:
+
+	RestartNotification.text = TextManager.get_string_by_key("restart_notification")
 
 	get_tree().paused = true
 	PauseScreen.connect("back_pressed", self, "_on_pause_back_pressed")
@@ -140,3 +149,12 @@ func _on_pause_restart_pressed() -> void:
 
 func _on_unpause_request() -> void:
 	unpause()
+
+
+func _on_player_death() -> void:
+	$LevelUI/RestartNoticitaionTimer.start()
+
+
+func _on_RestartNoticitaionTimer_timeout() -> void:
+	RestartNotification.visible = true
+	_restart_level_by_any_key = true

@@ -2,6 +2,7 @@ extends GameActor
 
 signal weapon_overheated
 signal player_ready
+signal player_died
 
 enum States { IDLE, MOVE, DRIFT, DEATH }
 
@@ -243,6 +244,8 @@ func _on_hitpoints_depleted() -> void:
 	var explosion = _big_explosion_scene.instance()
 	explosion.global_position = global_position
 	get_parent().add_child(explosion)
+
+	emit_signal("player_died")
 
 
 func _on_weapon_overheated() -> void:

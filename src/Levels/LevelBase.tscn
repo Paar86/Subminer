@@ -1,9 +1,10 @@
-[gd_scene load_steps=100 format=2]
+[gd_scene load_steps=102 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_base.png" type="Texture" id=2]
 [ext_resource path="res://src/UI/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Tilesets/placeable_objects.tres" type="TileSet" id=4]
+[ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/tilemap_ground.png" type="Texture" id=6]
 [ext_resource path="res://src/UI/PauseScreen.tscn" type="PackedScene" id=7]
 
@@ -885,6 +886,11 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 } ]
 1/z_index = 0
 
+[sub_resource type="DynamicFont" id=98]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 5 )
+
 [node name="LevelBase" type="Node"]
 script = ExtResource( 1 )
 
@@ -917,7 +923,23 @@ pause_mode = 2
 
 [node name="HUD" parent="LevelUI" instance=ExtResource( 3 )]
 
+[node name="RestartNotification" type="Label" parent="LevelUI"]
+visible = false
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -13.0
+margin_bottom = 13.0
+custom_fonts/font = SubResource( 98 )
+text = "{restart_text}"
+align = 1
+
+[node name="RestartNoticitaionTimer" type="Timer" parent="LevelUI"]
+wait_time = 2.0
+
 [node name="PauseScreen" type="CanvasLayer" parent="."]
 
 [node name="PauseScreen" parent="PauseScreen" instance=ExtResource( 7 )]
 visible = false
+
+[connection signal="timeout" from="LevelUI/RestartNoticitaionTimer" to="." method="_on_RestartNoticitaionTimer_timeout"]

@@ -41,6 +41,14 @@
         }
     },
     {
+      "id": "restart_notification",
+      "languages":
+        {
+          "cz": "Stiskni jakoukoli klávesu pro restart",
+          "en": "Press any key to restart"
+        }
+    },
+    {
       "id": "level1_name",
       "languages":
         {
