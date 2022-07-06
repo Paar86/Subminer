@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=2]
+[gd_scene load_steps=103 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_base.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/tilemap_ground.png" type="Texture" id=6]
 [ext_resource path="res://src/UI/PauseScreen.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -941,5 +942,55 @@ wait_time = 2.0
 
 [node name="PauseScreen" parent="PauseScreen" instance=ExtResource( 7 )]
 visible = false
+
+[node name="Debug" type="CanvasLayer" parent="."]
+
+[node name="DebugBackground" type="ColorRect" parent="Debug"]
+margin_right = 81.0
+margin_bottom = 62.0
+color = Color( 0, 0, 0, 0.705882 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Debug"]
+margin_right = 40.0
+margin_bottom = 40.0
+theme = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="Debug/VBoxContainer"]
+margin_right = 59.0
+margin_bottom = 13.0
+text = "Minerals"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Debug/VBoxContainer"]
+margin_top = 17.0
+margin_right = 59.0
+margin_bottom = 30.0
+
+[node name="Goal" type="Label" parent="Debug/VBoxContainer/HBoxContainer"]
+margin_right = 29.0
+margin_bottom = 13.0
+text = "Goal: "
+
+[node name="GoalCount" type="Label" parent="Debug/VBoxContainer/HBoxContainer"]
+margin_left = 33.0
+margin_right = 45.0
+margin_bottom = 13.0
+text = "50"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Debug/VBoxContainer"]
+margin_top = 34.0
+margin_right = 59.0
+margin_bottom = 47.0
+
+[node name="Current" type="Label" parent="Debug/VBoxContainer/HBoxContainer2"]
+margin_right = 49.0
+margin_bottom = 13.0
+text = "Current: "
+
+[node name="CurrentCount" type="Label" parent="Debug/VBoxContainer/HBoxContainer2"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 53.0
+margin_right = 59.0
+margin_bottom = 13.0
+text = "0"
 
 [connection signal="timeout" from="LevelUI/RestartNotificationTimer" to="." method="_on_RestartNoticitaionTimer_timeout"]

@@ -239,6 +239,23 @@ wait_time = 3.0
 [node name="ShootTimer" parent="LevelBase/Enemies/LaserEmitters2" index="7"]
 wait_time = 2.0
 
+[node name="Label" parent="LevelBase/Debug/VBoxContainer" index="0"]
+margin_right = 65.0
+
+[node name="HBoxContainer" parent="LevelBase/Debug/VBoxContainer" index="1"]
+margin_right = 65.0
+
+[node name="GoalCount" parent="LevelBase/Debug/VBoxContainer/HBoxContainer" index="1"]
+text = "60"
+
+[node name="HBoxContainer2" parent="LevelBase/Debug/VBoxContainer" index="2"]
+margin_right = 65.0
+
+[node name="CurrentCount" parent="LevelBase/Debug/VBoxContainer/HBoxContainer2" index="1"]
+modulate = Color( 1, 1, 1, 1 )
+margin_right = 65.0
+text = "60"
+
 [editable path="LevelBase"]
 [editable path="LevelBase/Obstacles/WaterCurrent"]
 [editable path="LevelBase/Obstacles/WaterCurrent2"]

@@ -1,3 +1,4 @@
+tool
 extends Node
 
 signal level_finished
@@ -9,6 +10,9 @@ onready var ObjectsTilemap := $ObjectsTileMap
 onready var HUDNode := $LevelUI/HUD
 onready var PauseScreen := $PauseScreen/PauseScreen
 onready var RestartNotification := $LevelUI/RestartNotification
+onready var DebugSection := $Debug/VBoxContainer
+
+onready var _available_minerals_count := get_minerals_count()
 
 var _restart_level_by_any_key := false
 
@@ -43,6 +47,17 @@ func clean_player_tiles() -> void:
 	for i in player_tiles.size():
 		if i > 0:
 			ObjectsTilemap.set_cell(player_tiles[i].x, player_tiles[i].y, -1)
+
+# Debug function
+func get_minerals_count() -> int:
+	var object_tile_map = get_node("ObjectsTileMap")
+	var fragment_tile_id = object_tile_map.tile_set.find_tile_by_name(_fragment_tile_name)
+	var mineral_lump_id = object_tile_map.tile_set.find_tile_by_name(_mineral_ground_name)
+
+	var mineral_fragments_tiles = object_tile_map.get_used_cells_by_id(fragment_tile_id)
+	var mineral_lump_tiles = object_tile_map.get_used_cells_by_id(mineral_lump_id)
+
+	return mineral_fragments_tiles.size() + (mineral_lump_tiles.size() * 6)
 
 
 func place_objects() -> void:
@@ -121,6 +136,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _ready() -> void:
+	if Engine.editor_hint:
+		_update_debug_window()
+
+	if !Engine.editor_hint:
+		DebugSection.hide()
 
 	RestartNotification.text = TextManager.get_string_by_key("restart_notification")
 
@@ -136,6 +156,26 @@ func _ready() -> void:
 
 	HUDNode.reset_hitpoints()
 	HUDNode.set_minerals_goal(minerals_goal)
+
+
+# Process used only for debug purposes
+func _process(delta: float) -> void:
+	if !Engine.editor_hint:
+		return
+
+	_update_debug_window()
+
+
+# Debug
+func _update_debug_window() -> void:
+	var minerals_count := get_minerals_count()
+	get_node("Debug/VBoxContainer/HBoxContainer/GoalCount").text = str(minerals_goal)
+	get_node("Debug/VBoxContainer/HBoxContainer2/CurrentCount").text = str(minerals_count)
+	
+	if minerals_count < minerals_goal:
+		get_node("Debug/VBoxContainer/HBoxContainer2/CurrentCount").modulate = Color.red
+	else:
+		get_node("Debug/VBoxContainer/HBoxContainer2/CurrentCount").modulate = Color.white
 
 
 func _on_pause_back_pressed() -> void:
