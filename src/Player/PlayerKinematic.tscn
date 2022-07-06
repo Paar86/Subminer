@@ -117,6 +117,7 @@ position = Vector2( 0, 8 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 process_mode = 0
+limit_smoothed = true
 smoothing_enabled = true
 
 [node name="DebrisSpawner" type="Node2D" parent="."]

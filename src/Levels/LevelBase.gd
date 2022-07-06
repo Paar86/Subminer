@@ -7,10 +7,11 @@ signal restart_level_request
 export var minerals_goal := 50
 
 onready var ObjectsTilemap := $ObjectsTileMap
+onready var WorldTilemap := $WallsTileMap
 onready var HUDNode := $LevelUI/HUD
 onready var PauseScreen := $PauseScreen/PauseScreen
 onready var RestartNotification := $LevelUI/RestartNotification
-onready var DebugSection := $Debug/VBoxContainer
+onready var DebugControl := $Debug/DebugControl
 
 onready var _available_minerals_count := get_minerals_count()
 
@@ -91,7 +92,7 @@ func place_objects() -> void:
 			instance.position = pos
 
 			if instance.is_in_group("Player"):
-				instance.connect("player_ready", self, "_on_unpause_request")
+				instance.connect("player_ready", self, "_on_player_ready")
 				instance.connect("player_died", self, "_on_player_death")
 
 			var is_cell_x_flipped: bool = ObjectsTilemap.is_cell_x_flipped(cell.x, cell.y)
@@ -138,10 +139,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _ready() -> void:
 	if Engine.editor_hint:
 		_update_debug_window()
+		return
 
-	if !Engine.editor_hint:
-		DebugSection.hide()
-
+	DebugControl.hide()
 	RestartNotification.text = TextManager.get_string_by_key("restart_notification")
 
 	get_tree().paused = true
@@ -169,13 +169,13 @@ func _process(delta: float) -> void:
 # Debug
 func _update_debug_window() -> void:
 	var minerals_count := get_minerals_count()
-	get_node("Debug/VBoxContainer/HBoxContainer/GoalCount").text = str(minerals_goal)
-	get_node("Debug/VBoxContainer/HBoxContainer2/CurrentCount").text = str(minerals_count)
-	
+	get_node("Debug/DebugControl/VBoxContainer/HBoxContainer/GoalCount").text = str(minerals_goal)
+	get_node("Debug/DebugControl/VBoxContainer/HBoxContainer2/CurrentCount").text = str(minerals_count)
+
 	if minerals_count < minerals_goal:
-		get_node("Debug/VBoxContainer/HBoxContainer2/CurrentCount").modulate = Color.red
+		get_node("Debug/DebugControl/VBoxContainer/HBoxContainer2/CurrentCount").modulate = Color.red
 	else:
-		get_node("Debug/VBoxContainer/HBoxContainer2/CurrentCount").modulate = Color.white
+		get_node("Debug/DebugControl/VBoxContainer/HBoxContainer2/CurrentCount").modulate = Color.white
 
 
 func _on_pause_back_pressed() -> void:
@@ -187,7 +187,20 @@ func _on_pause_restart_pressed() -> void:
 	emit_signal("restart_level_request")
 
 
-func _on_unpause_request() -> void:
+func _on_player_ready(camera: Camera2D) -> void:
+	var world_rect = WorldTilemap.get_used_rect()
+	
+	var cell_size = WorldTilemap.cell_size.x
+	var pixel_rect = Rect2(
+		world_rect.position.x * cell_size,
+		world_rect.position.y * cell_size,
+		world_rect.size.x * cell_size,
+		world_rect.size.y * cell_size
+	)
+	camera.limit_left = pixel_rect.position.x
+	camera.limit_top = pixel_rect.position.y
+	camera.limit_right = pixel_rect.position.x + pixel_rect.size.x
+	camera.limit_bottom = pixel_rect.position.y + pixel_rect.size.y
 	unpause()
 
 

@@ -46,6 +46,7 @@ onready var RightCannonPoint: Position2D = $CannonRightPivot/CannonRight/BulletS
 onready var HurtBox := $Hurtbox
 onready var DebrisSpawner := $DebrisSpawner
 onready var TeleportEffect := $TeleportEffect
+onready var CameraScene := $Camera2D
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
@@ -300,7 +301,7 @@ func _recalculate_velocity_secondary() -> void:
 
 
 func _on_teleport_in_finished() -> void:
-	emit_signal("player_ready")
+	emit_signal("player_ready", CameraScene)
 
 
 func _on_teleport_out_finished() -> void:
