@@ -3,7 +3,7 @@ extends GameActor
 signal weapon_overheated
 signal player_ready
 
-enum States { IDLE, MOVE, DRIFT }
+enum States { IDLE, MOVE, DRIFT, DEATH }
 
 var _gravity_max := 30.0
 var _gravity_accel := 10.0
@@ -82,10 +82,11 @@ func hide_player() -> void:
 
 
 func propagate_effects(effects: Dictionary = {}) -> void:
-	if !_is_invincible:
+	if _state != States.DEATH and !_is_invincible:
 		if Enums.Effects.DAMAGE in effects:
-			_start_damage_flashing()
 			PlayerStats.hitpoints -= effects[Enums.Effects.DAMAGE]
+			if PlayerStats.hitpoints > 0:
+				_start_damage_flashing()
 		if Enums.Effects.PUSH in effects:
 			var push_velocity: Vector2 = effects[Enums.Effects.PUSH]
 			_velocity_primary = push_velocity
@@ -231,9 +232,10 @@ func _start_damage_flashing() -> void:
 
 
 func _on_hitpoints_depleted() -> void:
+	_state = States.DEATH
 	visible = false
 	$BodyCollision.set_deferred("disabled", true)
-	$Hurtbox.set_deferred("monitorable", false)
+	HurtBox.set_deferred("collision_layer", 0)
 	set_physics_process(false)
 
 	DebrisSpawner.launch_debris()
