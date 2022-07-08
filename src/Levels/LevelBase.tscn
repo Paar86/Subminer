@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=2]
+[gd_scene load_steps=107 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_base.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/tilemap_ground.png" type="Texture" id=6]
 [ext_resource path="res://src/UI/PauseScreen.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=8]
+[ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=2]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -892,6 +893,43 @@ outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 5 )
 
+[sub_resource type="DynamicFont" id=99]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 9 )
+
+[sub_resource type="Animation" id=100]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("GreatJobLabel:custom_fonts/font:extra_spacing_char")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=101]
+resource_name = "SHOW_GREAT_JOB"
+length = 4.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("GreatJobLabel:custom_fonts/font:extra_spacing_char")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 4, 4.5 ),
+"transitions": PoolRealArray( 0.287175, 1, 4.59479, 1 ),
+"update": 0,
+"values": [ 600, 0, 0, 600 ]
+}
+
 [node name="LevelBase" type="Node"]
 script = ExtResource( 1 )
 
@@ -937,6 +975,22 @@ align = 1
 
 [node name="RestartNotificationTimer" type="Timer" parent="LevelUI"]
 wait_time = 2.0
+
+[node name="GreatJobLabel" type="Label" parent="LevelUI"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -14.0
+margin_bottom = 14.0
+grow_horizontal = 2
+custom_fonts/font = SubResource( 99 )
+text = "{finishing_text}"
+align = 1
+
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="LevelUI"]
+autoplay = "SHOW_GREAT_JOB"
+anims/RESET = SubResource( 100 )
+anims/SHOW_GREAT_JOB = SubResource( 101 )
 
 [node name="PauseScreen" type="CanvasLayer" parent="."]
 

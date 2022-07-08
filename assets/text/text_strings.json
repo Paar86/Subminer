@@ -49,6 +49,14 @@
         }
     },
     {
+      "id": "great_job",
+      "languages":
+        {
+          "cz": "Skvělá práce!",
+          "en": "Great job!"
+        }
+    },
+    {
       "id": "level1_name",
       "languages":
         {

@@ -8,8 +8,10 @@ export var minerals_goal := 50
 
 onready var ObjectsTilemap := $ObjectsTileMap
 onready var WorldTilemap := $WallsTileMap
+
 onready var HUDNode := $LevelUI/HUD
 onready var PauseScreen := $PauseScreen/PauseScreen
+onready var GreatJobLabel: Label = $LevelUI/GreatJobLabel
 onready var RestartNotification := $LevelUI/RestartNotification
 onready var DebugControl := $Debug/DebugControl
 
@@ -143,6 +145,7 @@ func _ready() -> void:
 
 	DebugControl.hide()
 	RestartNotification.text = TextManager.get_string_by_key("restart_notification")
+	GreatJobLabel.text = TextManager.get_string_by_key("great_job")
 
 	get_tree().paused = true
 	PauseScreen.connect("back_pressed", self, "_on_pause_back_pressed")
