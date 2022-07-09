@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "BubbleGenerator",
+"language": "GDScript",
+"path": "res://src/Common/BubbleGenerator.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "FloatingObject",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://src/UI/HUD.gd"
 } ]
 _global_script_class_icons={
+"BubbleGenerator": "",
 "FloatingObject": "",
 "GameActor": "",
 "HUD": ""
@@ -42,6 +48,7 @@ PlayerStats="*res://src/Autoload/PlayerStats.gd"
 YieldHandler="*res://src/Autoload/YieldHandler.gd"
 AudioStreamManager="*res://src/Autoload/AudioStreamManager.gd"
 TextManager="*res://src/Autoload/TextManager.gd"
+BubbleGenerator="*res://src/Autoload/BubbleGenerator.gd"
 
 [display]
 

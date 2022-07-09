@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=2]
+[gd_scene load_steps=107 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://assets/tilemap_base.png" type="Texture" id=2]
@@ -900,10 +900,6 @@ outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_char = 600
 font_data = ExtResource( 9 )
 
-[sub_resource type="Animation" id=102]
-resource_name = "FADE_OUT"
-length = 5.0
-
 [sub_resource type="Animation" id=100]
 length = 0.001
 tracks/0/type = "value"
@@ -921,7 +917,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=101]
 resource_name = "SHOW_GREAT_JOB"
-length = 4.5
+length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("GreatJobLabel:custom_fonts/font:extra_spacing_char")
 tracks/0/interp = 1
@@ -929,7 +925,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 4, 4.5 ),
+"times": PoolRealArray( 0, 0.5, 2.5, 3 ),
 "transitions": PoolRealArray( 0.287175, 1, 4.59479, 1 ),
 "update": 0,
 "values": [ 600, 0, 0, 600 ]
@@ -993,7 +989,6 @@ text = "{finishing_text}"
 align = 1
 
 [node name="UIAnimationPlayer" type="AnimationPlayer" parent="LevelUI"]
-anims/FADE_OUT = SubResource( 102 )
 anims/RESET = SubResource( 100 )
 anims/SHOW_GREAT_JOB = SubResource( 101 )
 
@@ -1007,7 +1002,6 @@ visible = false
 [node name="Debug" type="CanvasLayer" parent="."]
 
 [node name="DebugControl" type="Control" parent="Debug"]
-visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
