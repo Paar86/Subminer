@@ -68,7 +68,7 @@ extents = Vector2( 56, 24 )
 [node name="Level1" type="Node"]
 
 [node name="LevelBase" parent="." instance=ExtResource( 1 )]
-minerals_goal = 60
+minerals_goal = 5
 
 [node name="WaterCurrent" parent="LevelBase/Obstacles" index="0" instance=ExtResource( 3 )]
 position = Vector2( 616, 160 )
@@ -240,7 +240,7 @@ wait_time = 3.0
 wait_time = 2.0
 
 [node name="GoalCount" parent="LevelBase/Debug/DebugControl/VBoxContainer/HBoxContainer" index="1"]
-text = "60"
+text = "5"
 
 [node name="CurrentCount" parent="LevelBase/Debug/DebugControl/VBoxContainer/HBoxContainer2" index="1"]
 modulate = Color( 1, 1, 1, 1 )

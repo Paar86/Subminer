@@ -3,6 +3,7 @@ extends GameActor
 signal weapon_overheated
 signal player_ready
 signal player_died
+signal player_teleported_away
 
 enum States { IDLE, MOVE, DRIFT, DEATH }
 
@@ -85,6 +86,10 @@ func hide_player() -> void:
 	CannonRightSprite.hide()
 
 
+func start_teleport_away_animation() -> void:
+	TeleportEffect.start_teleport_away_animation()
+
+
 func propagate_effects(effects: Dictionary = {}) -> void:
 	if _state != States.DEATH and !_is_invincible:
 		if Enums.Effects.DAMAGE in effects:
@@ -113,6 +118,7 @@ func _ready() -> void:
 	PlayerStats.connect("weapon_overheated", self, "_on_weapon_overheated")
 	PlayerStats.connect("weapon_cooled", self, "_on_weapon_cooled")
 	PlayerStats.connect("hitpoints_depleted", self, "_on_hitpoints_depleted")
+	PlayerStats.connect("minerals_goal_achieved", self, "_on_minerals_goal_achieved")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -305,4 +311,9 @@ func _on_teleport_in_finished() -> void:
 
 
 func _on_teleport_out_finished() -> void:
-	pass
+	emit_signal("player_teleported_away")
+
+
+# To not pickup any more fragments when the level has been finished
+func _on_minerals_goal_achieved() -> void:
+	set_deferred("collision_layer", 0)

@@ -96,6 +96,7 @@ tracks/1/keys = {
 radius = 24.0
 
 [node name="Fragment" type="KinematicBody2D"]
+z_index = 1
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 2 )

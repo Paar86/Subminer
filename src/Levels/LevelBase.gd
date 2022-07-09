@@ -14,10 +14,13 @@ onready var PauseScreen := $PauseScreen/PauseScreen
 onready var GreatJobLabel: Label = $LevelUI/GreatJobLabel
 onready var RestartNotification := $LevelUI/RestartNotification
 onready var DebugControl := $Debug/DebugControl
+onready var PlayerEndLevelCanvas := $PlayerEndLevelLayer
+onready var UIAnimationPlayer := $LevelUI/UIAnimationPlayer
 
 onready var _available_minerals_count := get_minerals_count()
 
 var _restart_level_by_any_key := false
+var _player_node_reference: GameActor = null
 
 var level_id := "default"
 var _player_folder_name := "PlayerStart"
@@ -96,6 +99,7 @@ func place_objects() -> void:
 			if instance.is_in_group("Player"):
 				instance.connect("player_ready", self, "_on_player_ready")
 				instance.connect("player_died", self, "_on_player_death")
+				_player_node_reference = instance
 
 			var is_cell_x_flipped: bool = ObjectsTilemap.is_cell_x_flipped(cell.x, cell.y)
 			var is_cell_y_flipped: bool = ObjectsTilemap.is_cell_y_flipped(cell.x, cell.y)
@@ -147,6 +151,10 @@ func _ready() -> void:
 	RestartNotification.text = TextManager.get_string_by_key("restart_notification")
 	GreatJobLabel.text = TextManager.get_string_by_key("great_job")
 
+	PlayerStats.reset()
+	PlayerStats.minerals_goal = minerals_goal
+	PlayerStats.connect("minerals_goal_achieved", self, "_on_minerals_goal_achieved")
+
 	get_tree().paused = true
 	PauseScreen.connect("back_pressed", self, "_on_pause_back_pressed")
 	PauseScreen.connect("restart_pressed", self, "_on_pause_restart_pressed")
@@ -192,7 +200,7 @@ func _on_pause_restart_pressed() -> void:
 
 func _on_player_ready(camera: Camera2D) -> void:
 	var world_rect = WorldTilemap.get_used_rect()
-	
+
 	var cell_size = WorldTilemap.cell_size.x
 	var pixel_rect = Rect2(
 		world_rect.position.x * cell_size,
@@ -204,6 +212,7 @@ func _on_player_ready(camera: Camera2D) -> void:
 	camera.limit_top = pixel_rect.position.y
 	camera.limit_right = pixel_rect.position.x + pixel_rect.size.x
 	camera.limit_bottom = pixel_rect.position.y + pixel_rect.size.y
+
 	unpause()
 
 
@@ -215,3 +224,20 @@ func _on_player_death() -> void:
 func _on_RestartNoticitaionTimer_timeout() -> void:
 	RestartNotification.visible = true
 	_restart_level_by_any_key = true
+
+
+func _on_minerals_goal_achieved() -> void:
+	get_tree().paused = true
+	UIAnimationPlayer.play("SHOW_GREAT_JOB")
+	HUDNode.hide()
+
+
+func _on_UIAnimationPlayer_animation_finished(anim_name: String) -> void:
+	match anim_name:
+		"SHOW_GREAT_JOB":
+			_player_node_reference.connect("player_teleported_away", self, "_on_player_teleported_away")
+			_player_node_reference.start_teleport_away_animation()
+
+
+func _on_player_teleported_away() -> void:
+	emit_signal("level_finished")

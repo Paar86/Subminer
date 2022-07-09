@@ -88,8 +88,9 @@ animations = [ {
 } ]
 
 [node name="Seaweed" type="AnimatedSprite"]
+z_index = 1
 frames = SubResource( 21 )
-frame = 7
+frame = 2
 playing = true
 script = ExtResource( 2 )
 
@@ -102,6 +103,7 @@ shape = SubResource( 3 )
 
 [node name="HitEffect" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -4 )
+z_index = 1
 frames = SubResource( 6 )
 
 [node name="HitEffectTimer" type="Timer" parent="."]

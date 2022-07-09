@@ -33,7 +33,7 @@ func _prepare_level(level_number: int) -> void:
 
 	var dialogue_scene = load(_dialogue_scene_path).instance()
 	dialogue_scene.level_id = dict_key
-	
+
 	CurrentScene.add_child(dialogue_scene)
 	dialogue_scene.set_dialogue(dict_key + "_dialogue")
 	dialogue_scene.start_dialogue()
@@ -48,11 +48,13 @@ func _load_level(dict_key: String) -> void:
 	level_base.level_id = dict_key
 	level_base.connect("level_finished", self, "_on_level_finished")
 	level_base.connect("restart_level_request", self, "_on_restart_level_request")
-	PlayerStats.reset()
+
 	CurrentScene.call_deferred("add_child", new_level)
 
 
 func _load_next_level() -> void:
+	# To be certain the tree has not gotten paused in some point of the time
+	get_tree().paused = false
 	_prepare_level(_current_level_number + 1)
 
 

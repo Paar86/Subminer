@@ -56,3 +56,6 @@ func _on_AutoPickupDetector_body_entered(body: GameActor) -> void:
 	_target_body = body
 	$CollisionShape2D.set_deferred("disabled", true)
 	_state = States.FOLLOW
+	
+	# Folow animation cannot be paused when the tree has been paused
+	pause_mode = Node.PAUSE_MODE_PROCESS

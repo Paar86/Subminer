@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/Player/PlayerKinematic.gd" type="Script" id=1]
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
@@ -7,12 +7,89 @@
 [ext_resource path="res://src/Player/DebrisSpawner.gd" type="Script" id=5]
 [ext_resource path="res://src/Player/TeleportEffect.gd" type="Script" id=6]
 [ext_resource path="res://assets/player_teleport_sheet.png" type="Texture" id=7]
+[ext_resource path="res://assets/ui/black_rect.png" type="Texture" id=8]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 11.0
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 12.0104
+
+[sub_resource type="Animation" id=8]
+resource_name = "BLACKOUT_START"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Camera2D/BlackoutRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Sprite:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../CannonLeftPivot/CannonLeft:z_index")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../CannonRightPivot/CannonRight:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../Camera2D/BlackoutRect:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../Camera2D/BlackoutRect:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=5]
 length = 0.001
@@ -28,10 +105,70 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Camera2D/BlackoutRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sprite:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../CannonLeftPivot/CannonLeft:z_index")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../CannonRightPivot/CannonRight:z_index")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [sub_resource type="Animation" id=6]
-resource_name = "TELEPORT_START"
-length = 2.3
+resource_name = "TELEPORT_START_OLD"
+length = 3.0
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -40,7 +177,50 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.7, 1.75, 1.8, 1.85, 1.9, 1.95, 2 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 14, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide_player"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "TELEPORT_START"
+length = 2.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.9, 1.95, 2, 2.05, 2.1, 2.15, 2.2 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 2, 1, 0, 4, 5, 6, 7, 8, 9, 9, 10, 11, 12, 13, 14, 0 ]
@@ -52,12 +232,24 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.5 ),
+"times": PoolRealArray( 1.7 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "show_player"
 } ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [node name="PlayerKinematic" type="KinematicBody2D" groups=["Player"]]
@@ -65,12 +257,27 @@ collision_mask = 10
 collision/safe_margin = 0.16
 script = ExtResource( 1 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+process_mode = 0
+limit_smoothed = true
+smoothing_enabled = true
+
+[node name="BlackoutRect" type="Sprite" parent="Camera2D"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+scale = Vector2( 12, 12 )
+z_index = 2
+z_as_relative = false
+texture = ExtResource( 8 )
+offset = Vector2( 0.200001, -0.933332 )
+
 [node name="Sprite" type="Sprite" parent="."]
-z_index = -1
 z_as_relative = false
 texture = ExtResource( 2 )
 
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
+pause_mode = 2
 position = Vector2( 0, 2 )
 shape = SubResource( 3 )
 
@@ -89,7 +296,6 @@ script = ExtResource( 4 )
 
 [node name="CannonLeft" type="Sprite" parent="CannonLeftPivot"]
 rotation = -1.5708
-z_index = -1
 z_as_relative = false
 texture = ExtResource( 3 )
 offset = Vector2( 0, 3 )
@@ -104,7 +310,6 @@ script = ExtResource( 4 )
 
 [node name="CannonRight" type="Sprite" parent="CannonRightPivot"]
 rotation = -1.5708
-z_index = -1
 z_as_relative = false
 texture = ExtResource( 3 )
 offset = Vector2( 0.5, 3 )
@@ -113,12 +318,6 @@ offset = Vector2( 0.5, 3 )
 position = Vector2( 0, 8 )
 
 [node name="BulletsContainer" type="Node" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-process_mode = 0
-limit_smoothed = true
-smoothing_enabled = true
 
 [node name="DebrisSpawner" type="Node2D" parent="."]
 script = ExtResource( 5 )
@@ -134,15 +333,19 @@ position = Vector2( 8, 2 )
 
 [node name="TeleportEffect" type="Node2D" parent="."]
 pause_mode = 2
+z_index = 3
 script = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="TeleportEffect"]
+visible = false
 texture = ExtResource( 7 )
 hframes = 15
 
 [node name="TeleportAnimationPlayer" type="AnimationPlayer" parent="TeleportEffect"]
+anims/BLACKOUT_START = SubResource( 8 )
 anims/RESET = SubResource( 5 )
-anims/TELEPORT_START = SubResource( 6 )
+anims/TELEPORT_END = SubResource( 6 )
+anims/TELEPORT_START = SubResource( 7 )
 
 [node name="TeleportInDelay" type="Timer" parent="TeleportEffect"]
 one_shot = true
