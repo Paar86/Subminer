@@ -23,6 +23,8 @@ func _physics_process(delta: float) -> void:
 				return
 
 			# Maybe do it with steering behaviour in the future?
+			var target_global = _target_body.global_position
+			var global = global_position
 			var to_target: Vector2 = _target_body.global_position - global_position
 			var distance_to_target: float = to_target.length()
 			var direction_to_target: Vector2 = to_target.normalized()
@@ -57,5 +59,5 @@ func _on_AutoPickupDetector_body_entered(body: GameActor) -> void:
 	$CollisionShape2D.set_deferred("disabled", true)
 	_state = States.FOLLOW
 	
-	# Folow animation cannot be paused when the tree has been paused
+	# Follow animation cannot be paused when the tree has been paused
 	pause_mode = Node.PAUSE_MODE_PROCESS

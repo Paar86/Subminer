@@ -228,6 +228,7 @@ func _on_RestartNoticitaionTimer_timeout() -> void:
 
 func _on_minerals_goal_achieved() -> void:
 	get_tree().paused = true
+	Physics2DServer.set_active(true)
 	UIAnimationPlayer.play("SHOW_GREAT_JOB")
 	HUDNode.hide()
 

@@ -118,7 +118,6 @@ func _ready() -> void:
 	PlayerStats.connect("weapon_overheated", self, "_on_weapon_overheated")
 	PlayerStats.connect("weapon_cooled", self, "_on_weapon_cooled")
 	PlayerStats.connect("hitpoints_depleted", self, "_on_hitpoints_depleted")
-	PlayerStats.connect("minerals_goal_achieved", self, "_on_minerals_goal_achieved")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -312,8 +311,3 @@ func _on_teleport_in_finished() -> void:
 
 func _on_teleport_out_finished() -> void:
 	emit_signal("player_teleported_away")
-
-
-# To not pickup any more fragments when the level has been finished
-func _on_minerals_goal_achieved() -> void:
-	set_deferred("collision_layer", 0)
