@@ -124,6 +124,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and _state == States.MOVE and _dash_enabled):
 		_dash_enabled = false
 		_velocity_primary = _input_direction * _dash_power
+		BubbleGenerator.generate_bubbles_in_rect_with_delay(
+			self,
+			8.0,
+			8.0,
+			get_parent(),
+			10,
+			0.03
+		)
 		_state = States.DRIFT
 		yield(get_tree().create_timer(_dash_timeout), "timeout")
 		_dash_enabled = true

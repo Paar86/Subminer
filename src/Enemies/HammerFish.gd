@@ -119,6 +119,14 @@ func _roar_state(delta: float) -> void:
 		_direction = self._direction_basic
 		_time = 0.0
 		_state = States.CHARGE
+		BubbleGenerator.generate_bubbles_in_rect_with_delay(
+			self,
+			8.0,
+			8.0,
+			get_parent(),
+			10,
+			0.03
+		)
 		return
 
 

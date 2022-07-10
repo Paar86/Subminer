@@ -174,7 +174,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 1, 1, 1, 0 )
 
+[node name="BubbleTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="pressed" from="VBoxContainer/Buttons/NewGameButton" to="." method="_on_NewGameButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/HowToButton" to="." method="_on_HowToButton_pressed"]
 [connection signal="toggled" from="VBoxContainer/Buttons/LanguageButtons/ButtonENG" to="." method="_on_ButtonENG_toggled"]
 [connection signal="toggled" from="VBoxContainer/Buttons/LanguageButtons/ButtonCZE" to="." method="_on_ButtonCZE_toggled"]
+[connection signal="timeout" from="BubbleTimer" to="." method="_on_BubbleTimer_timeout"]
