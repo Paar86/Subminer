@@ -5,9 +5,9 @@ var _bubble_medium_scene := preload("res://src/Common/Bubbles/BubbleMedium.tscn"
 var _bubble_big_scene := preload("res://src/Common/Bubbles/BubbleBig.tscn")
 
 var _bubbles_weights := {
-	_bubble_small_scene: 70.0,
+	_bubble_small_scene: 80.0,
 	_bubble_medium_scene: 20.0,
-	_bubble_big_scene: 5.0
+	_bubble_big_scene: 0.0
 }
 
 var _cumulative_weight = 0.0
@@ -72,7 +72,7 @@ func generate_bubbles_in_rect_with_delay(
 	delay: float
 ):
 	for i in bubbles_count:
-		if !emittor_object || !parent_node:
+		if !is_instance_valid(emittor_object) || !is_instance_valid(parent_node):
 			return
 
 		generate_bubbles_to_rect(
