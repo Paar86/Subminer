@@ -2,6 +2,7 @@ extends KinematicBody2D
 class_name GameActor
 
 onready var _explosion_scene := preload("res://src/Common/ActorExplosion.tscn")
+onready var _random_bubble_generator := preload("res://src/Common/RandomBubbleSpawner.tscn")
 
 var _hitpoints: int
 var _blinking := false
@@ -37,6 +38,12 @@ func blink() -> void:
 		# the GameActor object is deleted before it could be finished
 		var function: FuncRef = funcref(self, "unblink")
 		YieldHandler.run_with_delay_frames(function, 1)
+
+
+func _ready() -> void:
+	var bubble_generator = _random_bubble_generator.instance()
+	call_deferred("add_child", bubble_generator)
+	bubble_generator.set_deferred("owner", self)
 
 
 func unblink() -> void:

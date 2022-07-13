@@ -8,7 +8,7 @@ var _rnd := RandomNumberGenerator.new()
 
 func _ready() -> void:
 	_rnd.randomize()
-	_time_goal = _rnd.randf_range(4.0, 8.0)
+	_time_goal = _rnd.randf_range(4.0, 15.0)
 	_randomize_time_goal()
 
 
@@ -18,10 +18,10 @@ func _physics_process(delta: float) -> void:
 	if _time_current >= _time_goal:
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
 			self,
-			8.0,
-			8.0,
+			4.0,
+			4.0,
 			owner.get_parent(),
-			_rnd.randi_range(1, 3),
+			_rnd.randi_range(1, 2),
 			0.03
 		)
 

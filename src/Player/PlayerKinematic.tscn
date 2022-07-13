@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/Player/PlayerKinematic.gd" type="Script" id=1]
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
@@ -8,7 +8,6 @@
 [ext_resource path="res://src/Player/TeleportEffect.gd" type="Script" id=6]
 [ext_resource path="res://assets/player_teleport_sheet.png" type="Texture" id=7]
 [ext_resource path="res://assets/ui/black_rect.png" type="Texture" id=8]
-[ext_resource path="res://src/Player/RandomBubbleSpawner.gd" type="Script" id=9]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 11.0
@@ -350,9 +349,6 @@ anims/TELEPORT_START = SubResource( 7 )
 [node name="TeleportInDelay" type="Timer" parent="TeleportEffect"]
 one_shot = true
 autostart = true
-
-[node name="RandomBubbleSpawner" type="Node2D" parent="."]
-script = ExtResource( 9 )
 
 [connection signal="animation_finished" from="TeleportEffect/TeleportAnimationPlayer" to="TeleportEffect" method="_on_TeleportAnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TeleportEffect/TeleportInDelay" to="TeleportEffect" method="_on_TeleportInDelay_timeout"]
