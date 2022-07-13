@@ -11,7 +11,7 @@ func _ready() -> void:
 		12.0,
 		12.0,
 		get_parent(),
-		rand_range(4.0, 6.0)
+		rand_range(6.0, 8.9)
 	)
 
 

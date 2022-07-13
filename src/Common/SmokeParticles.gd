@@ -8,7 +8,7 @@ func _ready() -> void:
 		8.0,
 		4.0,
 		get_parent(),
-		rand_range(3.0, 5.9)
+		rand_range(4.0, 6.9)
 	)
 	
 	var function: FuncRef = funcref(self, "_destroy")

@@ -129,7 +129,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			8.0,
 			8.0,
 			get_parent(),
-			10,
+			15,
 			0.03
 		)
 		_state = States.DRIFT

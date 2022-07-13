@@ -1,13 +1,17 @@
 extends Node
 
 var _bubble_small_scene := preload("res://src/Common/Bubbles/BubbleSmall.tscn")
+var _bubble_small2_scene := preload("res://src/Common/Bubbles/BubbleSmall2.tscn")
+var _bubble_small3_scene := preload("res://src/Common/Bubbles/BubbleSmall3.tscn")
 var _bubble_medium_scene := preload("res://src/Common/Bubbles/BubbleMedium.tscn")
 var _bubble_big_scene := preload("res://src/Common/Bubbles/BubbleBig.tscn")
 
 var _bubbles_weights := {
-	_bubble_small_scene: 80.0,
-	_bubble_medium_scene: 20.0,
-	_bubble_big_scene: 0.0
+	_bubble_small_scene: 40.0,
+	_bubble_small2_scene: 50.0,
+	_bubble_small3_scene: 60.0,
+#	_bubble_medium_scene: 20.0,
+#	_bubble_big_scene: 0.0
 }
 
 var _cumulative_weight = 0.0
@@ -94,4 +98,4 @@ func _pick_random_bubble() -> Node2D:
 			if random_value >= local_cumul:
 				return bubble_key.instance()
 
-	return _bubbles_weights.values()[0].instance()
+	return _bubbles_weights.keys()[0].instance()
