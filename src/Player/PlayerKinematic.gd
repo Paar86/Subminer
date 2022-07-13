@@ -48,6 +48,7 @@ onready var HurtBox := $Hurtbox
 onready var DebrisSpawner := $DebrisSpawner
 onready var TeleportEffect := $TeleportEffect
 onready var CameraScene := $Camera2D
+onready var RandomBubbleSpawner := $RandomBubbleSpawner
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
@@ -122,6 +123,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (event.is_action_pressed("dash") and _state == States.MOVE and _dash_enabled):
+		RandomBubbleSpawner.set_physics_process(false)
 		_dash_enabled = false
 		_velocity_primary = _input_direction * _dash_power
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
@@ -135,6 +137,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_state = States.DRIFT
 		yield(get_tree().create_timer(_dash_timeout), "timeout")
 		_dash_enabled = true
+		RandomBubbleSpawner.set_physics_process(true)
 
 
 func _physics_process(delta: float) -> void:
