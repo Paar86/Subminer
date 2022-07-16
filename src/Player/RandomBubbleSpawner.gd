@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 			4.0,
 			4.0,
 			owner.get_parent(),
-			_rnd.randi_range(1, 2),
+			1,
 			0.03
 		)
 

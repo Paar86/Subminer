@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/UI/TitlePage.gd" type="Script" id=1]
 [ext_resource path="res://src/UI/LanguageButtonGroup.tres" type="ButtonGroup" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/ui/buttons/czech_hover.png" type="Texture" id=8]
 [ext_resource path="res://assets/ui/buttons/english_pressed.png" type="Texture" id=9]
 [ext_resource path="res://fonts/Born2bSportyV10.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://assets/ui/title_logo.png" type="Texture" id=11]
 
 [sub_resource type="DynamicFont" id=3]
 size = 64
@@ -82,7 +83,16 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 128.0
+size_flags_vertical = 3
+texture = ExtResource( 11 )
+stretch_mode = 4
+
 [node name="Label" type="Label" parent="VBoxContainer"]
+visible = false
+margin_top = 4.0
 margin_right = 320.0
 margin_bottom = 128.0
 size_flags_vertical = 3
