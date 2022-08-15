@@ -9,6 +9,7 @@ onready var ProjectileSpawnPoint2 := $ProjectileSpawnPoint2
 onready var ProjectileSpawnPoint3 := $ProjectileSpawnPoint3
 onready var ProjectileSpawnPivot := $ProjectileSpawnPivot
 onready var ProjectilesTween := $ProjectilesTween
+onready var AnimationPlayerScene := $AnimationPlayer
 onready var _projectile_spawns_array = [ProjectileSpawnPoint1,
 										ProjectileSpawnPoint2,
 										ProjectileSpawnPoint3]
@@ -85,6 +86,7 @@ func _rest_state(delta: float) -> void:
 	if _rest_current >= _rest_duration:
 		_rest_current = 0.0
 		_state = States.PATROL
+		AnimationPlayerScene.play("MOVE")
 
 
 func _patrol_state(delta: float) -> void:
@@ -93,6 +95,7 @@ func _patrol_state(delta: float) -> void:
 	if _shoot_interval_counter >= _shoot_interval:
 		_shoot_interval_counter = 0.0
 		_state = States.SHOOT_PREPARE
+		AnimationPlayerScene.play("SHOOT")
 		return
 
 	_velocity = move_and_slide(transform.x * _patrol_speed, Vector2.UP)
@@ -100,6 +103,7 @@ func _patrol_state(delta: float) -> void:
 	if !CliffDetector.is_colliding() or WallDetector.is_colliding():
 		_change_direction = true
 		_state = States.REST
+		AnimationPlayerScene.play("IDLE")
 
 
 func _prepare_death_state() -> void:
@@ -162,6 +166,7 @@ func _on_all_tweens_finished() -> void:
 		projectile.ready_to_fire = true
 
 	_state = States.SHOOT
+	AnimationPlayerScene.play("IDLE")
 
 
 func _deal_with_projectiles() -> void:
