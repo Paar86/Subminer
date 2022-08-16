@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://assets/fish.png" type="Texture" id=1]
+[ext_resource path="res://assets/fish_sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/Enemies/HammerFish.gd" type="Script" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -16,6 +16,73 @@ height = 8.0
 [sub_resource type="CircleShape2D" id=4]
 radius = 136.235
 
+[sub_resource type="Animation" id=8]
+resource_name = "CHARGE"
+length = 0.2
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "IDLE"
+length = 1.6
+loop = true
+step = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.8, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "PREPARE_CHARGE"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
 [node name="HammerFish" type="KinematicBody2D"]
 collision_layer = 4
 collision_mask = 3
@@ -23,6 +90,7 @@ script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+hframes = 8
 
 [node name="ChargeDetectorHigh" type="RayCast2D" parent="."]
 position = Vector2( 0, -7 )
@@ -73,6 +141,13 @@ collision_mask = 2
 
 [node name="ChargeCooldown" type="Timer" parent="."]
 wait_time = 3.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "IDLE"
+anims/CHARGE = SubResource( 8 )
+anims/IDLE = SubResource( 5 )
+anims/PREPARE_CHARGE = SubResource( 7 )
+anims/RESET = SubResource( 6 )
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]

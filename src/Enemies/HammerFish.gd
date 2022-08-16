@@ -7,11 +7,12 @@ var _push_strength := 150.0
 enum States { IDLE, FOLLOW, ROAR, CHARGE, REST, DEATH }
 var _state = States.IDLE
 
-onready var _sprite: Sprite = $Sprite
-onready var _charge_detector_high: RayCast2D = $ChargeDetectorHigh
-onready var _charge_detector_low: RayCast2D = $ChargeDetectorLow
-onready var _raycast_visibility: RayCast2D = $RayCastVisibility
-onready var _charge_timer: Timer = $ChargeCooldown
+onready var SpriteNode: Sprite = $Sprite
+onready var ChargeDetectorHigh: RayCast2D = $ChargeDetectorHigh
+onready var ChargeDetectorLow: RayCast2D = $ChargeDetectorLow
+onready var RaycastVisibility: RayCast2D = $RayCastVisibility
+onready var ChargeTimer: Timer = $ChargeCooldown
+onready var AnimationPlayerNode = $AnimationPlayer
 
 var _smoke_effect := preload("res://src/Common/SmokeParticles.tscn")
 
@@ -50,8 +51,6 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 	.propagate_effects(effects)
 	if _hitpoints == 0:
 		_prepare_death_state()
-#		yield(get_tree().create_timer(1), "timeout")
-#		flash_before_vanish()
 
 
 func flip_horizontally() -> void:
@@ -59,7 +58,7 @@ func flip_horizontally() -> void:
 
 
 func _ready() -> void:
-	_shake_default_position =  _sprite.position
+	_shake_default_position =  SpriteNode.position
 	_hitpoints = _hitpoints_override
 	_set_sprite_orientation(_direction_basic)
 
@@ -82,10 +81,10 @@ func _physics_process(delta: float) -> void:
 
 func _idle_state(delta: float) -> void:
 	_time += delta
-	_sprite.position.y = _starting_position.y + sin(_time * _move_frequency) * _move_distance
+	SpriteNode.position.y = _starting_position.y + sin(_time * _move_frequency) * _move_distance
 
 	if _is_target_body_visible():
-		_sprite.position.y = _starting_position.y
+		SpriteNode.position.y = _starting_position.y
 		_time = 0.0
 		_state = States.FOLLOW
 
@@ -93,6 +92,7 @@ func _idle_state(delta: float) -> void:
 func _follow_state(delta: float) -> void:
 	if !_is_target_body_visible():
 		_state = States.IDLE
+		AnimationPlayerNode.play("IDLE")
 		return
 
 	_check_charge_detectors_colliding()
@@ -109,7 +109,7 @@ func _follow_state(delta: float) -> void:
 
 func _roar_state(delta: float) -> void:
 	_time += delta
-	_sprite.position.y = _shake_default_position.y + sin(_time * _shake_frequency) * _shake_distance
+	SpriteNode.position.y = _shake_default_position.y + sin(_time * _shake_frequency) * _shake_distance
 	_shake_distance -= delta * 5.0
 	# Transition to CHARGE state at the end of shake animation
 	if _shake_distance <= 0.0:
@@ -119,6 +119,7 @@ func _roar_state(delta: float) -> void:
 		_direction = self._direction_basic
 		_time = 0.0
 		_state = States.CHARGE
+		AnimationPlayerNode.play("CHARGE")
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
 			self,
 			8.0,
@@ -140,10 +141,12 @@ func _charge_state(delta: float) -> void:
 			smoke_instance.global_position = collision.position
 			get_parent().call_deferred("add_child", smoke_instance)
 			_state = States.REST
+			AnimationPlayerNode.play("IDLE")
 			return
 
 	if collisions_number > 0:
 		_state = States.IDLE
+		AnimationPlayerNode.play("IDLE")
 		return
 
 
@@ -154,6 +157,7 @@ func _rest_state(delta: float) -> void:
 		_set_sprite_orientation(_direction)
 		_rested_time = 0.0
 		_state = States.IDLE
+		AnimationPlayerNode.play("IDLE")
 		return
 
 
@@ -167,33 +171,34 @@ func _prepare_death_state() -> void:
 
 
 func _set_sprite_orientation(direction_basic: Vector2) -> void:
-	_sprite.flip_h = true if direction_basic.x < 0 else false
+	SpriteNode.flip_h = true if direction_basic.x < 0 else false
 
 	var _player_detector_scale := Vector2(direction_basic.x, 0.0)
-	_charge_detector_high.set_deferred("scale", _player_detector_scale)
-	_charge_detector_low.set_deferred("scale", _player_detector_scale)
+	ChargeDetectorHigh.set_deferred("scale", _player_detector_scale)
+	ChargeDetectorLow.set_deferred("scale", _player_detector_scale)
 
 
 func _check_charge_detectors_colliding() -> void:
-	var high_collider = _charge_detector_high.get_collider()
-	var low_collider = _charge_detector_low.get_collider()
+	var high_collider = ChargeDetectorHigh.get_collider()
+	var low_collider = ChargeDetectorLow.get_collider()
 	var collider = high_collider if high_collider else low_collider
 	if collider:
-		var destination = collider.global_position - _raycast_visibility.global_position
-		_raycast_visibility.cast_to = destination
-		if !_raycast_visibility.is_colliding() and _can_charge:
+		var destination = collider.global_position - RaycastVisibility.global_position
+		RaycastVisibility.cast_to = destination
+		if !RaycastVisibility.is_colliding() and _can_charge:
 			_can_charge = false
-			_charge_timer.start()
+			ChargeTimer.start()
 			_state = States.ROAR
+			AnimationPlayerNode.play("PREPARE_CHARGE")
 
 
 func _is_target_body_visible() -> bool:
 	if !_target_body:
 		return false
 
-	var to_target = _target_body.global_position - _raycast_visibility.global_position
-	_raycast_visibility.cast_to = to_target
-	if _raycast_visibility.is_colliding():
+	var to_target = _target_body.global_position - RaycastVisibility.global_position
+	RaycastVisibility.cast_to = to_target
+	if RaycastVisibility.is_colliding():
 		return false
 
 	return true
