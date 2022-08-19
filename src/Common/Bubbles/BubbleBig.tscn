@@ -35,15 +35,10 @@ animations = [ {
 resource_local_to_scene = true
 radius = 8.0
 
-[node name="BubbleBig" type="Node2D"]
+[node name="BubbleBase" instance=ExtResource( 1 )]
 
-[node name="BubbleBase" parent="." instance=ExtResource( 1 )]
-
-[node name="AnimatedSprite" parent="BubbleBase" index="0"]
+[node name="AnimatedSprite" parent="." index="0"]
 frames = SubResource( 6 )
-frame = 3
 
-[node name="CollisionShape2D" parent="BubbleBase" index="1"]
+[node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 7 )
-
-[editable path="BubbleBase"]
