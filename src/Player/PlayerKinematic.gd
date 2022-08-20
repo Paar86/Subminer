@@ -94,6 +94,7 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 	if _state != States.DEATH and !_is_invincible:
 		if Enums.Effects.DAMAGE in effects:
 			PlayerStats.hitpoints -= effects[Enums.Effects.DAMAGE]
+			EventProvider.request_shake(Enums.Events.SHAKE_MEDIUM)
 			if PlayerStats.hitpoints > 0:
 				_start_damage_flashing()
 		if Enums.Effects.PUSH in effects:

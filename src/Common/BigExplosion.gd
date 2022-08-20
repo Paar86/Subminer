@@ -13,6 +13,8 @@ func _ready() -> void:
 		get_parent(),
 		rand_range(6.0, 8.9)
 	)
+	
+	EventProvider.request_shake(Enums.Events.SHAKE_BIG)
 
 
 func _on_AnimatedSprite_animation_finished() -> void:

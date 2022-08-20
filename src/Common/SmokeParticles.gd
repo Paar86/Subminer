@@ -10,9 +10,11 @@ func _ready() -> void:
 		get_parent(),
 		rand_range(4.0, 6.9)
 	)
-	
+
 	var function: FuncRef = funcref(self, "_destroy")
 	YieldHandler.run_with_delay_time(function, lifetime * (2 - explosiveness))
+
+	EventProvider.request_shake(Enums.Events.SHAKE_MEDIUM)
 
 
 func _destroy() -> void:
