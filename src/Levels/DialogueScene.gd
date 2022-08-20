@@ -111,8 +111,9 @@ func _create_pages(text: String) -> PoolStringArray:
 		if (DialogueTextLabel.max_lines_visible >= 0 and
 				DialogueTextLabel.get_line_count() > DialogueTextLabel.max_lines_visible):
 			pages.append(page_string)
-			DialogueTextLabel.text = ""
-			page_string = ""
+			# We need to save the overflown token to next page string
+			DialogueTextLabel.text = token
+			page_string = token
 			continue
 
 		page_string = page_string_temp

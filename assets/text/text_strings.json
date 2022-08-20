@@ -61,15 +61,15 @@
       "languages":
         {
           "cz": "Testovací úroveň",
-          "en": "The First Level"
+          "en": "The Test Level"
         }
     },
     {
       "id": "level1_dialogue",
       "languages":
         {
-          "cz": "Tady Anya, operátorka... Haló? Slyšíme se? Takže ty jsi ten nový? Prý jsi super extra třída nebo co, nejlepší pilot od dob Quinna Floyda... To jo, a já jsem malá mořská víla... Víš, kolikrát jsem tohle už slyšela? No nic, nejprve si tě trochu proklepnu, uvidíme, jestli jsi aspoň trochu použitelný. Našla jsem docela klidné místečko, sice tam moc rudy není, ale aspoň si hned první den nenaděláš do gatí.",
-          "en": "{level1_en}"
+          "cz": "Český text pro testovací úroveň. Měl by být spravně organizován do stránek. Na všech stránkách, kromé té poslední, by měl blikat kurzor indikující možnost pokračovat na další stránku.",
+          "en": "English text for the test level. It should be properly organized to multiple pages. All pages, excluding the last one, should have blinking cursor indicating the option to navigate to the next page."
         }
     },
     {
