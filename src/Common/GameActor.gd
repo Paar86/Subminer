@@ -51,6 +51,10 @@ func unblink() -> void:
 	visible = true
 
 
+func transpose() -> void:
+	pass
+
+
 func flip_horizontally() -> void:
 	pass
 

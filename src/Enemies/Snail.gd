@@ -46,12 +46,27 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		_prepare_death_state()
 
 
+func transpose() -> void:
+	var transform_x: Vector2 = transform.x
+	transform.x = transform.y
+	transform.y = transform_x
+
+
 func flip_horizontally() -> void:
-	set_deferred("scale", Vector2(scale.x * -1.0, scale.y))
+#	We must take into a condsideration local transform (when x axis is in fact y)
+	if rotation:
+		scale.y *= -1.0
+		return
+
+	scale.x *= -1.0
 
 
 func flip_vertically() -> void:
-	set_deferred("scale", Vector2(scale.x, scale.y * -1.0))
+	if rotation:
+		scale.x *= -1.0
+		return
+
+	scale.y *= -1.0
 
 
 func _ready() -> void:

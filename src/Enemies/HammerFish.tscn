@@ -14,7 +14,7 @@ height = 8.0
 height = 8.0
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 180.0
+radius = 155.0
 
 [sub_resource type="Animation" id=8]
 resource_name = "CHARGE"
@@ -95,12 +95,12 @@ hframes = 8
 [node name="ChargeDetectorHigh" type="RayCast2D" parent="."]
 position = Vector2( 0, -7 )
 enabled = true
-cast_to = Vector2( 280, 0 )
+cast_to = Vector2( 135, 0 )
 
 [node name="ChargeDetectorLow" type="RayCast2D" parent="."]
 position = Vector2( 0, 7 )
 enabled = true
-cast_to = Vector2( 280, 0 )
+cast_to = Vector2( 135, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

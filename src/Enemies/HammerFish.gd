@@ -114,7 +114,6 @@ func _roar_state(delta: float) -> void:
 	# Transition to CHARGE state at the end of shake animation
 	if _shake_distance <= 0.0:
 		_shake_distance = _shake_default_distance
-		# TODO: Change sprite
 		# TODO: Make a sound
 		_direction = self._direction_basic
 		_time = 0.0
