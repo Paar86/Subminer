@@ -167,6 +167,7 @@ func _ready() -> void:
 
 	HUDNode.reset_hitpoints()
 	HUDNode.set_minerals_goal(minerals_goal)
+	HUDNode.show()
 
 
 # Process used only for debug purposes
