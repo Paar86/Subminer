@@ -16,6 +16,6 @@ These are the main things/features that I have implemeted or am planning to impl
 * Open level design which will allow player to finish it have he/she seem fit.
 * Some kind of audio service (with use of autoload) which will allow to easily play sounds from every node without the need to insert AudioPlayer to every scene.
 
-Made in Godot 3.4.x.
+Made in Godot 3.5.
 
 ![subminer_billboard](https://user-images.githubusercontent.com/34010694/169639002-6c97e726-ca0b-4e69-8b35-b6028729f659.png)
