@@ -20,7 +20,7 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 
 
 func _ready() -> void:
-	_hitpoints = 10
+	_hitpoints = 5
 	_starting_position = position
 
 
