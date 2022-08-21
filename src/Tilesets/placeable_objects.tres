@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=2]
+[gd_resource type="TileSet" load_steps=9 format=2]
 
 [ext_resource path="res://assets/mine_sheet.png" type="Texture" id=1]
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/mineral_boulder_sheet.png" type="Texture" id=5]
 [ext_resource path="res://assets/seaweed_sheet.png" type="Texture" id=6]
 [ext_resource path="res://assets/snail_sheet.png" type="Texture" id=7]
+[ext_resource path="res://assets/stalactite.png" type="Texture" id=8]
 
 [resource]
 0/name = "mine"
@@ -107,3 +108,17 @@
 7/shape_one_way_margin = 0.0
 7/shapes = [  ]
 7/z_index = 0
+8/name = "stalactite"
+8/texture = ExtResource( 8 )
+8/tex_offset = Vector2( 0, 0 )
+8/modulate = Color( 1, 1, 1, 1 )
+8/region = Rect2( 0, 0, 16, 32 )
+8/tile_mode = 0
+8/occluder_offset = Vector2( 0, 0 )
+8/navigation_offset = Vector2( 0, 0 )
+8/shape_offset = Vector2( 0, 0 )
+8/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+8/shape_one_way = false
+8/shape_one_way_margin = 0.0
+8/shapes = [  ]
+8/z_index = 0

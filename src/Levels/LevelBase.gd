@@ -34,6 +34,7 @@ var _fragment_tile_name := "mineral_fragment"
 var _hammer_fish_tile_name := "hammer_fish"
 var _seaweed_tile_name := "seaweed"
 var _snail_tile_name := "snail"
+var _stalactite_tile_name := "stalactite"
 
 var _objects_dictionary = {
 	_player_tile_name: "res://src/Player/PlayerKinematic.tscn",
@@ -43,6 +44,7 @@ var _objects_dictionary = {
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
 	_seaweed_tile_name: "res://src/Enemies/Seaweed.tscn",
 	_snail_tile_name: "res://src/Enemies/Snail.tscn",
+	_stalactite_tile_name: "res://src/Enemies/Stalactite.tscn"
 }
 
 
@@ -88,6 +90,8 @@ func place_objects() -> void:
 			_seaweed_tile_name:
 				folder_name = _enemies_folder_name
 			_snail_tile_name:
+				folder_name = _enemies_folder_name
+			_stalactite_tile_name:
 				folder_name = _enemies_folder_name
 
 		var node_path = _objects_dictionary.get(type)

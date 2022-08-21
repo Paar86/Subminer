@@ -1,6 +1,6 @@
 extends Node
 
-var _levels_dict = { "level1": "res://src/Levels/LevelTest.tscn" }
+var _levels_dict = { "level1": "res://src/Levels/Level1.tscn" }
 
 var _title_screen_path := "res://src/UI/TitlePage.tscn"
 var _dialogue_scene_path := "res://src/Levels/DialogueScene.tscn"
@@ -43,11 +43,10 @@ func _prepare_level(level_number: int) -> void:
 func _load_level(dict_key: String) -> void:
 	_clear_current_scene()
 	var new_level = load(_levels_dict[dict_key]).instance()
-	var level_base = new_level.get_node("LevelBase")
 	_current_level_id = dict_key
-	level_base.level_id = dict_key
-	level_base.connect("level_finished", self, "_on_level_finished")
-	level_base.connect("restart_level_request", self, "_on_restart_level_request")
+	new_level.level_id = dict_key
+	new_level.connect("level_finished", self, "_on_level_finished")
+	new_level.connect("restart_level_request", self, "_on_restart_level_request")
 
 	CurrentScene.call_deferred("add_child", new_level)
 
