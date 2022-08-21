@@ -65,7 +65,7 @@ func get_minerals_count() -> int:
 	var mineral_fragments_tiles = object_tile_map.get_used_cells_by_id(fragment_tile_id)
 	var mineral_lump_tiles = object_tile_map.get_used_cells_by_id(mineral_lump_id)
 
-	return mineral_fragments_tiles.size() + (mineral_lump_tiles.size() * 6)
+	return mineral_fragments_tiles.size() + (mineral_lump_tiles.size() * 8)
 
 
 func place_objects() -> void:
