@@ -133,7 +133,7 @@ collision_mask = 2
 
 [node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
 position = Vector2( 0, 8 )
-rect = Rect2( -150, -150, 300, 300 )
+rect = Rect2( -100, -100, 200, 200 )
 physics_process_parent = true
 
 [node name="ProjectilesTween" type="Tween" parent="."]

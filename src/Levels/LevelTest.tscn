@@ -257,7 +257,7 @@ margin_right = 65.0
 [node name="CurrentCount" parent="LevelBase/Debug/DebugControl/VBoxContainer/HBoxContainer2" index="1"]
 modulate = Color( 1, 1, 1, 1 )
 margin_right = 65.0
-text = "60"
+text = "72"
 
 [editable path="LevelBase"]
 [editable path="LevelBase/Obstacles/WaterCurrent"]
