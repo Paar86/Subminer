@@ -276,7 +276,7 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 1/autotile/spacing = 0
 1/autotile/occluder_map = [  ]
 1/autotile/navpoly_map = [  ]
-1/autotile/priority_map = [ Vector3( 10, 1, 3 ) ]
+1/autotile/priority_map = [ Vector3( 10, 1, 5 ) ]
 1/autotile/z_index_map = [  ]
 1/occluder_offset = Vector2( 0, 0 )
 1/navigation_offset = Vector2( 0, 0 )
@@ -708,6 +708,7 @@ anims/SHOW_GREAT_JOB = SubResource( 101 )
 visible = false
 
 [node name="Debug" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="DebugControl" type="Control" parent="Debug"]
 margin_right = 40.0
