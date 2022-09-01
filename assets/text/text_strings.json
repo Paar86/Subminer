@@ -60,23 +60,39 @@
       "id": "level1_name",
       "languages":
         {
-          "cz": "Testovací úroveň",
-          "en": "The Test Level"
+          "cz": "Šnečí stezka",
+          "en": "Snail Path"
+        }
+    },
+    {
+      "id": "level2_name",
+      "languages":
+        {
+          "cz": "Zrádné vody",
+          "en": "Treacherous Waters"
+        }
+    },
+    {
+      "id": "level3_name",
+      "languages":
+        {
+          "cz": "Triky a pasti",
+          "en": "Tricks and Traps"
         }
     },
     {
       "id": "level1_dialogue",
       "languages":
         {
-          "cz": "Český text pro testovací úroveň. Měl by být spravně organizován do stránek. Na všech stránkách, kromé té poslední, by měl blikat kurzor indikující možnost pokračovat na další stránku.",
+          "cz": "Tak, mělo by to fungovat. Raz, dva, tři... Haló, slyšíme se? Výborně. Jsem Anya, tvoje operátorka. Těší mě. Koukla jsem do tvé složky a musím uznat, že tvé skóre z univerzity je... impozantní. Říkají o tobě, že máš potenciál být nejlepší pilot od dob Quinna Floyda. Upřímně, to dneska říkají o každém druhém. Musím tě rozhodně upozornit, že tvé dosavadní zkušenosti ze simulátoru ti tady moc nepomohou. Najít dobrá ložiska je těžší a těžší, musíme stále hlouběji a hlouběji, kde ještě nikdo nebyl. Pro začátek jsem ti našla docela klidné místečko, aby ses trochu rozcvičil. Moc rudy tady není, ale aspoň si hned první den nenaděláš do gatí.",
           "en": "English text for the test level. It should be properly organized to multiple pages. All pages, excluding the last one, should have blinking cursor indicating the option to navigate to the next page."
         }
     },
     {
-      "id": "level2",
+      "id": "level2_dialogue",
       "languages":
         {
-          "cz": "{level2_cz}",
+          "cz": "Hotovo? Ani jsem nestihla dopít kafe. Krapet tedy přitvrdíme, ať to není úplná nuda... Takže co tu máme? Hmm... Hektorské jeskyně jsou blízko. Dobrá lokace, kdyby to tam lidi z Marinetechu komplet nezaminovali. Teď tam nemůžeme ani my, ani oni. Je to banda bláznů, to ti povím, není divu, že jim komise vzala licenci. Víš co, zkusíme jeskyni v sektoru 26, dvacet kilometrů na sever. Dlouho tam nikdo nebyl a sondy nahlásily pozitivní nálezy. Voda tam je trochu zrádná, to je pravda... Ale nic, s čím by sis neporadil. Takže je rozhodnuto, máš zelenou. Pořádně to tam vymeť, ať mají kraváťáci radost.",
           "en": "{level2_en}"
         }
     },
@@ -84,7 +100,7 @@
       "id": "level3",
       "languages":
         {
-          "cz": "{level3_cz}",
+          "cz": "To nebylo špatné, vážně ne. S takovou budeme mít za chvíli splněnou normu a ještě dosáhnem na prémie. Super, jedeme dál. Myslím, že rozehřívací kolo máme za sebou, takže půjdeme o něco hlouběji, ať je trochu legrace. Nezapomeň, že čím hlouběji jdeme, tím větší bude zastoupení tamní fauny. Plus zase detekuju nějaké signály Marinetechu, asi miny. Ach jo. Měj oči na šťopkách, ať tě nic nepřekvapí. Byla by škoda o tebe přijít hned první den, zvláště když se ti tak daří.",
           "en": "{level3_en}"
         }
     },
