@@ -103,6 +103,7 @@ func _on_ShakeDuration_timeout() -> void:
 	ShakeFrequency.stop()
 	_new_shake(true)
 	_state = States.FALLING
+	Hitbox.set_deferred("monitoring", true)
 
 
 func _on_HitBox_area_entered(area: Area2D) -> void:

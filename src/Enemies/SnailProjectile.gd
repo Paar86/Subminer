@@ -4,7 +4,7 @@ enum States { WAIT, TRAVEL }
 
 var ready_to_fire := false
 
-var _speed := 80.0
+var _speed := 60.0
 var _projectile_damage := 3
 var _projectile_push_strength := 50.0
 var _rotation_speed_rad := 8.0
