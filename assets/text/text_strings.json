@@ -81,6 +81,14 @@
         }
     },
     {
+      "id": "level4_name",
+      "languages":
+        {
+          "cz": "Klesání",
+          "en": "Descent"
+        }
+    },
+    {
       "id": "level1_dialogue",
       "languages":
         {
@@ -108,7 +116,7 @@
       "id": "level4",
       "languages":
         {
-          "cz": "{level4_cz}",
+          "cz": "Máš pevné nervy, to se musí nechat. Poslední člověk, kterého jsem tady dolů poslala, to vzdal po necelých deseti minutách. Přes noc si ho nechali na pozorování, další den nám na stole nechal papíry a odešel. Prý už nikdy v životě nechce vidět ani jednu rybí ploutev, to raději bude nadosmrti drhnout špinavá záchodová prkýnka. Ty to tam dole viditelně snášíš o něco lépe. Nevím, kde ses naučil ty svoje manévry, ale funguje to. Teď jen doufat, že ti štěstí vydrží.",
           "en": "{level4_en}"
         }
     },
