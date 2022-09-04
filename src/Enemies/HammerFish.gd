@@ -210,8 +210,9 @@ func _get_direction_basic() -> Vector2:
 
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
+		var calculated_damage = _damage if _state == States.CHARGE else _damage / 2
 		var direction = (area.owner.global_position - global_position).normalized()
-		area.owner.propagate_effects({Enums.Effects.DAMAGE: _damage, Enums.Effects.PUSH: direction * _push_strength })
+		area.owner.propagate_effects({Enums.Effects.DAMAGE: calculated_damage, Enums.Effects.PUSH: direction * _push_strength })
 
 
 func _on_PlayerDetector_body_entered(body: KinematicBody2D) -> void:

@@ -38,4 +38,4 @@ func _on_explosion_animation_finished():
 func _on_MineExplosion_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var direction = (area.owner.global_position - global_position).normalized()
-		area.owner.propagate_effects({Enums.Effects.DAMAGE: 10, Enums.Effects.PUSH: direction * 200.0})
+		area.owner.propagate_effects({Enums.Effects.DAMAGE: 10, Enums.Effects.PUSH: direction * 150.0})
