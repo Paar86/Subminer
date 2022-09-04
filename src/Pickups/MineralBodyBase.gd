@@ -1,6 +1,6 @@
 extends GameActor
 
-var fragment_spawn_direction := Vector2.UP
+onready var _fragment_spawn_direction = transform.x if rotation else transform.y
 
 # These nodes need to be present in the inheriting scene otherwise error will be logged
 onready var SpriteNode: Sprite = $Sprite
@@ -19,14 +19,27 @@ var _damage_phase_threshold: int
 var _damage_threshold_modifier: int
 
 
-func flip_vertically() -> void:
-	scale.y *= -1
-	fragment_spawn_direction.y *= -1
-	
-	
+func transpose() -> void:
+	var transform_x: Vector2 = transform.x
+	transform.x = transform.y
+	transform.y = transform_x
+
+
 func flip_horizontally() -> void:
-	scale.x *= -1
-	fragment_spawn_direction.x *= -1
+#	We must take into a condsideration local transform (when x axis is in fact y)
+	if rotation:
+		scale.y *= -1.0
+		return
+
+	scale.x *= -1.0
+
+
+func flip_vertically() -> void:
+	if rotation:
+		scale.x *= -1.0
+		return
+
+	scale.y *= -1.0
 
 
 func _ready() -> void:
@@ -76,7 +89,7 @@ func spawn_fragments(number_of_fragments: int) -> void:
 	for i in number_of_fragments:
 		var fragment_instance = _fragment_scene.instance()
 		fragment_instance.global_position = FragmentSpawnPoint.global_position
-		var impulse_direction = fragment_spawn_direction.rotated(rand_range(deg2rad(-45.0), deg2rad(45.0)))
+		var impulse_direction = (-transform.y).rotated(rand_range(deg2rad(-45.0), deg2rad(45.0)))
 		var impulse_force = rand_range(_fragment_impulse_force_min, _fragment_impulse_force_max)
 		fragment_instance.give_impulse(impulse_direction * impulse_force)
 		get_parent().call_deferred("add_child", fragment_instance)
