@@ -6,7 +6,9 @@ export var beam_longetivity := 2.0
 # Delay after which the beam begins to be active
 export var beam_delay := 0.0
 # How long the beam has to be inactive before activating again
-export var beam_interval := 3.0
+export var beam_interval := 1.0
+# How long prepare phase lasts
+export var prepare_time := 1.0
 
 onready var LaserLine := $LaserLine
 onready var LaserRayCast := $LaserRayCast
@@ -37,8 +39,9 @@ func _ready() -> void:
 	LaserLine.points[0] = $EmitterA.position + EmitterPointA.position
 	LaserLine.points[1] = $EmitterB.position + EmitterPointB.position
 	
-	IntervalTimer.wait_time = beam_interval
-	ShootTimer.wait_time = beam_longetivity
+	IntervalTimer.wait_time = max(beam_interval, 0.25)
+	ShootTimer.wait_time = max(beam_longetivity, 0.25)
+	PrepareTimer.wait_time = max(prepare_time, 0.25)
 	
 	LaserLine.hide()
 	
@@ -84,7 +87,10 @@ func _on_PrepareTimer_timeout() -> void:
 	# Hide telegraphing effect and activate the beam itself
 	LaserRayCast.set_deferred("enabled", true)
 	LaserLine.texture = _laser_animatedtexture
-	ShootTimer.start()
+	
+	# Support for inifinite laser time
+	if beam_longetivity > 0:
+		ShootTimer.start()
 
 
 func _on_ShootTimer_timeout() -> void:

@@ -4,7 +4,8 @@ var _levels_dict = {
 	"level1": "res://src/Levels/Level1.tscn",
 	"level2": "res://src/Levels/Level2.tscn",
 	"level3": "res://src/Levels/Level3.tscn",
-	"level4": "res://src/Levels/Level4.tscn"
+	"level4": "res://src/Levels/Level4.tscn",
+	"level5": "res://src/Levels/Level5.tscn",
 }
 
 var _title_screen_path := "res://src/UI/TitlePage.tscn"
