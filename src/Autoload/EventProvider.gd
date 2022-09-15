@@ -1,9 +1,10 @@
 extends Node
 
 signal shake_requested
+signal level_fade_out_white_requested
 
 
-func request_shake(shake_type: int):
+func request_shake(shake_type: int) -> void:
 	var amplitude := 0.0
 	var duration := 0.0
 	var priority := 0
@@ -22,3 +23,7 @@ func request_shake(shake_type: int):
 			priority = 2
 
 	emit_signal("shake_requested", amplitude, duration, priority)
+
+
+func request_level_fade_out_white() -> void:
+	emit_signal("level_fade_out_white_requested")

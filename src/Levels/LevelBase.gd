@@ -2,7 +2,6 @@ tool
 extends Node
 
 signal level_finished
-signal restart_level_request
 
 export var minerals_goal := 50
 
@@ -19,8 +18,11 @@ onready var UIAnimationPlayer := $LevelUI/UIAnimationPlayer
 
 onready var _available_minerals_count := get_minerals_count()
 
-var _restart_level_by_any_key := false
+var _can_user_pause := false
 var _player_node_reference: GameActor = null
+
+var _level_end_requested := false
+var _player_death_requested := false
 
 var level_id := "default"
 var _player_folder_name := "PlayerStart"
@@ -29,6 +31,7 @@ var _enemies_folder_name := "Enemies"
 
 var _player_tile_name := "player_start"
 var _mine_tile_name := "mine"
+var _mine_fatal_tile_name := "mine_fatal"
 var _mineral_ground_name := "mineral_boulder"
 var _fragment_tile_name := "mineral_fragment"
 var _hammer_fish_tile_name := "hammer_fish"
@@ -39,6 +42,7 @@ var _stalactite_tile_name := "stalactite"
 var _objects_dictionary = {
 	_player_tile_name: "res://src/Player/PlayerKinematic.tscn",
 	_mine_tile_name: "res://src/Enemies/Mine.tscn",
+	_mine_fatal_tile_name: "res://src/Enemies/MineFatal.tscn",
 	_mineral_ground_name: "res://src/Pickups/MineralBodyBase.tscn",
 	_fragment_tile_name: "res://src/Pickups/Fragment.tscn",
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
@@ -80,6 +84,8 @@ func place_objects() -> void:
 			_player_tile_name:
 				folder_name = _player_folder_name
 			_mine_tile_name:
+				folder_name = _enemies_folder_name
+			_mine_fatal_tile_name:
 				folder_name = _enemies_folder_name
 			_mineral_ground_name:
 				folder_name = _pickups_folder_name
@@ -125,25 +131,18 @@ func place_objects() -> void:
 
 
 func unpause() -> void:
+	_can_user_pause = true
 	get_tree().paused = false
 
 
 func pause() -> void:
+	_can_user_pause = false
 	get_tree().paused = true
 
 
 func _show_pause_screen() -> void:
 	pause()
 	PauseScreen.visible = true
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if _restart_level_by_any_key:
-		emit_signal("restart_level_request")
-
-	if event.is_action_pressed("pause"):
-		if !get_tree().paused:
-			_show_pause_screen()
 
 
 func _ready() -> void:
@@ -159,7 +158,7 @@ func _ready() -> void:
 	PlayerStats.minerals_goal = minerals_goal
 	PlayerStats.connect("minerals_goal_achieved", self, "_on_minerals_goal_achieved")
 
-	get_tree().paused = true
+	pause()
 	PauseScreen.connect("back_pressed", self, "_on_pause_back_pressed")
 	PauseScreen.connect("restart_pressed", self, "_on_pause_restart_pressed")
 
@@ -169,9 +168,17 @@ func _ready() -> void:
 	clean_player_tiles()
 	place_objects()
 
+	EventProvider.connect("level_fade_out_white_requested", self, "_on_level_fade_out_request")
+
 	HUDNode.reset_hitpoints()
 	HUDNode.set_minerals_goal(minerals_goal)
 	HUDNode.show()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("pause") and _can_user_pause:
+		if !get_tree().paused:
+			_show_pause_screen()
 
 
 # Process used only for debug purposes
@@ -195,12 +202,12 @@ func _update_debug_window() -> void:
 
 
 func _on_pause_back_pressed() -> void:
-	get_tree().paused = false
+	unpause()
 	PauseScreen.visible = false
 
 
 func _on_pause_restart_pressed() -> void:
-	emit_signal("restart_level_request")
+	$LevelRestarter.request_restart()
 
 
 func _on_player_ready(camera: Camera2D) -> void:
@@ -222,13 +229,18 @@ func _on_player_ready(camera: Camera2D) -> void:
 
 
 func _on_player_death() -> void:
+	if _player_death_requested:
+		return
+
+	_player_death_requested = true
+
 	# Delay for notification to show
 	$LevelUI/RestartNotificationTimer.start()
 
 
 func _on_RestartNoticitaionTimer_timeout() -> void:
 	RestartNotification.visible = true
-	_restart_level_by_any_key = true
+	$LevelRestarter.restart_level_by_any_key = true
 
 
 func _on_minerals_goal_achieved() -> void:
@@ -243,7 +255,18 @@ func _on_UIAnimationPlayer_animation_finished(anim_name: String) -> void:
 		"SHOW_GREAT_JOB":
 			_player_node_reference.connect("player_teleported_away", self, "_on_player_teleported_away")
 			_player_node_reference.start_teleport_away_animation()
+		"FADE_OUT_WHITE":
+			pause()
+			_on_player_death()
 
 
 func _on_player_teleported_away() -> void:
 	emit_signal("level_finished")
+
+
+func _on_level_fade_out_request() -> void:
+	if _level_end_requested:
+		return
+
+	_level_end_requested = true
+	UIAnimationPlayer.play("FADE_OUT_WHITE")

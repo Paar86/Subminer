@@ -52,7 +52,7 @@ func _load_level(dict_key: String) -> void:
 	_current_level_id = dict_key
 	new_level.level_id = dict_key
 	new_level.connect("level_finished", self, "_on_level_finished")
-	new_level.connect("restart_level_request", self, "_on_restart_level_request")
+	new_level.get_node("LevelRestarter").connect("restart_level_request", self, "_on_restart_level_request")
 
 	CurrentScene.call_deferred("add_child", new_level)
 

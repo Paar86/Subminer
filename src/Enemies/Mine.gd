@@ -1,5 +1,8 @@
 extends GameActor
 
+
+export var request_level_end := false
+
 onready var AnimPlayer: AnimationPlayer = $AnimationPlayer
 onready var SplashDamageArea: Area2D = $SplashDamageArea
 
@@ -42,6 +45,9 @@ func explode() -> void:
 	new_explosion.global_position = global_position
 	get_parent().call_deferred("add_child", new_explosion)
 	queue_free()
+
+	if request_level_end:
+		EventProvider.request_level_fade_out_white()
 
 
 func _on_TriggerArea_body_entered(body: Node) -> void:
