@@ -55,4 +55,7 @@ animations = [ {
 frames = SubResource( 11 )
 script = ExtResource( 2 )
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+rect = Rect2( -40, -40, 80, 80 )
+
 [connection signal="animation_finished" from="." to="." method="_on_AnimatedSprite_animation_finished"]

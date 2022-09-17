@@ -1,6 +1,6 @@
 extends Area2D
 
-var _splash_damage_extents_max := 29.0
+var _splash_damage_extents_max := 48.0
 var _splash_damage_area_growth: float
 var _animation_duration: float
 
