@@ -97,6 +97,30 @@
         }
     },
     {
+      "id": "level6_name",
+      "languages":
+        {
+          "cz": "?",
+          "en": "?"
+        }
+    },
+    {
+      "id": "level7_name",
+      "languages":
+        {
+          "cz": "?",
+          "en": "?"
+        }
+    },
+    {
+      "id": "level8_name",
+      "languages":
+        {
+          "cz": "?",
+          "en": "?"
+        }
+    },
+    {
       "id": "level1_dialogue",
       "languages":
         {
