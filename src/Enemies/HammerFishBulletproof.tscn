@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/Enemies/HammerFish.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/fish_bulletproof_sheet.png" type="Texture" id=2]
+
+[node name="HammerFishBulletproof" instance=ExtResource( 1 )]
+is_bulletproof = true
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=9 format=2]
+[gd_resource type="TileSet" load_steps=10 format=2]
 
 [ext_resource path="res://assets/mine_sheet.png" type="Texture" id=1]
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/seaweed_sheet.png" type="Texture" id=6]
 [ext_resource path="res://assets/snail_sheet.png" type="Texture" id=7]
 [ext_resource path="res://assets/stalactite.png" type="Texture" id=8]
+[ext_resource path="res://assets/fish_bulletproof_sheet.png" type="Texture" id=9]
 
 [resource]
 0/name = "mine"
@@ -136,3 +137,17 @@
 9/shape_one_way_margin = 0.0
 9/shapes = [  ]
 9/z_index = 0
+10/name = "fish_bulletproof"
+10/texture = ExtResource( 9 )
+10/tex_offset = Vector2( 0, 0 )
+10/modulate = Color( 1, 1, 1, 1 )
+10/region = Rect2( 0, 0, 32, 32 )
+10/tile_mode = 0
+10/occluder_offset = Vector2( 0, 0 )
+10/navigation_offset = Vector2( 0, 0 )
+10/shape_offset = Vector2( 0, 0 )
+10/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+10/shape_one_way = false
+10/shape_one_way_margin = 0.0
+10/shapes = [  ]
+10/z_index = 0

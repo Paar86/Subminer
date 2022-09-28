@@ -21,7 +21,7 @@ func _create_explosion(global_position: Vector2) -> void:
 
 # For enemies' hurtboxes
 func _on_Projectile_area_entered(area: Area2D):
-	if area.owner is GameActor:
+	if area.owner is GameActor and !area.owner.is_bulletproof:
 		area.owner.propagate_effects({Enums.Effects.DAMAGE: 1})
 	_create_explosion(global_position)
 

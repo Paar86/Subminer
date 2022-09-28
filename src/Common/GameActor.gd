@@ -1,6 +1,8 @@
 extends KinematicBody2D
 class_name GameActor
 
+export var is_bulletproof := false
+
 onready var _explosion_scene := preload("res://src/Common/ActorExplosion.tscn")
 onready var _random_bubble_generator := preload("res://src/Common/RandomBubbleSpawner.tscn")
 

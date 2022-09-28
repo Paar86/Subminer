@@ -46,7 +46,6 @@ var _shake_distance: float = _shake_default_distance
 var _shake_frequency: float = 50.0
 
 
-
 func propagate_effects(effects: Dictionary = {}) -> void:
 	.propagate_effects(effects)
 	if _hitpoints == 0:
