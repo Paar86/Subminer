@@ -727,6 +727,7 @@ format = 1
 [node name="LevelUI" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="LevelUI" instance=ExtResource( 3 )]
+visible = false
 
 [node name="RestartNotificationTimer" type="Timer" parent="LevelUI"]
 pause_mode = 2

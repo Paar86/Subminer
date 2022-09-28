@@ -35,6 +35,7 @@ var _mine_fatal_tile_name := "mine_fatal"
 var _mineral_ground_name := "mineral_boulder"
 var _fragment_tile_name := "mineral_fragment"
 var _hammer_fish_tile_name := "hammer_fish"
+var _fish_bulletproof_tile_name := "fish_bulletproof"
 var _seaweed_tile_name := "seaweed"
 var _snail_tile_name := "snail"
 var _stalactite_tile_name := "stalactite"
@@ -46,10 +47,30 @@ var _objects_dictionary = {
 	_mineral_ground_name: "res://src/Pickups/MineralBodyBase.tscn",
 	_fragment_tile_name: "res://src/Pickups/Fragment.tscn",
 	_hammer_fish_tile_name: "res://src/Enemies/HammerFish.tscn",
+	_fish_bulletproof_tile_name: "res://src/Enemies/HammerFishBulletproof.tscn",
 	_seaweed_tile_name: "res://src/Enemies/Seaweed.tscn",
 	_snail_tile_name: "res://src/Enemies/Snail.tscn",
 	_stalactite_tile_name: "res://src/Enemies/Stalactite.tscn"
 }
+
+var _player_folder_tiles := [
+	_player_tile_name
+]
+
+var _enemy_folder_tiles := [
+	_mine_tile_name,
+	_mine_fatal_tile_name,
+	_hammer_fish_tile_name,
+	_fish_bulletproof_tile_name,
+	_snail_tile_name,
+	_seaweed_tile_name,
+	_stalactite_tile_name,
+]
+
+var _pickups_folder_tiles := [
+	_mineral_ground_name,
+	_fragment_tile_name
+]
 
 
 # There can be only one player tile in the level
@@ -80,25 +101,12 @@ func place_objects() -> void:
 		var pos = ObjectsTilemap.map_to_world(cell) + region.size / 2
 
 		var folder_name: String
-		match type:
-			_player_tile_name:
-				folder_name = _player_folder_name
-			_mine_tile_name:
-				folder_name = _enemies_folder_name
-			_mine_fatal_tile_name:
-				folder_name = _enemies_folder_name
-			_mineral_ground_name:
-				folder_name = _pickups_folder_name
-			_fragment_tile_name:
-				folder_name = _pickups_folder_name
-			_hammer_fish_tile_name:
-				folder_name = _enemies_folder_name
-			_seaweed_tile_name:
-				folder_name = _enemies_folder_name
-			_snail_tile_name:
-				folder_name = _enemies_folder_name
-			_stalactite_tile_name:
-				folder_name = _enemies_folder_name
+		if _player_folder_tiles.has(type):
+			folder_name = _player_folder_name
+		if _enemy_folder_tiles.has(type):
+			folder_name = _enemies_folder_name
+		if _pickups_folder_tiles.has(type):
+			folder_name = _pickups_folder_name
 
 		var node_path = _objects_dictionary.get(type)
 		if node_path:
