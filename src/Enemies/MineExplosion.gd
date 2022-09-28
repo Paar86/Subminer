@@ -3,6 +3,7 @@ extends Area2D
 var _splash_damage_extents_max := 48.0
 var _splash_damage_area_growth: float
 var _animation_duration: float
+var _default_damage := 10
 
 onready var CollisionShapeNode := $CollisionShape2D
 
@@ -38,4 +39,4 @@ func _on_explosion_animation_finished():
 func _on_MineExplosion_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var direction = (area.owner.global_position - global_position).normalized()
-		area.owner.propagate_effects({Enums.Effects.DAMAGE: 10, Enums.Effects.PUSH: direction * 150.0})
+		area.owner.propagate_effects({Enums.Effects.DAMAGE: _default_damage, Enums.Effects.PUSH: direction * 150.0})

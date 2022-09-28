@@ -1,7 +1,7 @@
 tool
 extends Node2D
 
-# How long will the beam be active when fired
+# How long will the beam be active when fired; 0 for no pauses
 export var beam_longetivity := 2.0
 # Delay after which the beam begins to be active
 export var beam_delay := 0.0

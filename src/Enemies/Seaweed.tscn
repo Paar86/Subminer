@@ -88,9 +88,9 @@ animations = [ {
 } ]
 
 [node name="Seaweed" type="AnimatedSprite"]
-z_index = 1
+z_index = 2
 frames = SubResource( 21 )
-frame = 2
+frame = 13
 playing = true
 script = ExtResource( 2 )
 

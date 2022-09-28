@@ -33,13 +33,13 @@ position = Vector2( 0, -3 )
 shape = SubResource( 2 )
 
 [node name="PlayerDetectorLeft" type="RayCast2D" parent="."]
-position = Vector2( -8, -14 )
+position = Vector2( -7, -14 )
 enabled = true
 cast_to = Vector2( 0, 120 )
 collision_mask = 3
 
 [node name="PlayerDetectorRight" type="RayCast2D" parent="."]
-position = Vector2( 8, -14 )
+position = Vector2( 7, -14 )
 enabled = true
 cast_to = Vector2( 0, 120 )
 collision_mask = 3
