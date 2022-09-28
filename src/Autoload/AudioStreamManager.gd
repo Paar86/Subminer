@@ -8,12 +8,15 @@ var _free_channels := []
 var _sounds_queue := []
 
 
-func play_sound(sound_file: String):
+func play_sound(sound_file: String) -> void:
 	if not _sounds_queue.has(sound_file):
 		_sounds_queue.append(sound_file)
 
 
 func _ready() -> void:
+	# We want to finish all queued sounds even if the game has been paused
+	pause_mode = Node.PAUSE_MODE_PROCESS
+	
 	for i in TOTAL_CHANNELS:
 		var stream_player := AudioStreamPlayer.new()
 		stream_player.bus = BUS
@@ -31,7 +34,7 @@ func _process(delta: float) -> void:
 		var stream: AudioStreamPlayer = _free_channels.pop_front()
 		stream.stream = load(_sounds_queue.pop_front())
 		stream.play()
-		
+
 	_sounds_queue.clear()
 
 
