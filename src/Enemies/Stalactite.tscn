@@ -55,6 +55,11 @@ one_shot = true
 
 [node name="ShakeTween" type="Tween" parent="."]
 
+[node name="VisibilityEnabler2D" type="VisibilityEnabler2D" parent="."]
+position = Vector2( 0, 44 )
+scale = Vector2( 2, 7.3 )
+physics_process_parent = true
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_HitBox_area_entered"]
 [connection signal="timeout" from="ShakeFrequency" to="." method="_on_ShakeFrequency_timeout"]
 [connection signal="timeout" from="ShakeDuration" to="." method="_on_ShakeDuration_timeout"]
