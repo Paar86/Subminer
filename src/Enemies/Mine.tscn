@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Enemies/Mine.gd" type="Script" id=1]
 [ext_resource path="res://assets/mine_sheet.png" type="Texture" id=2]
@@ -11,9 +11,6 @@ radius = 8.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 42.0
-
-[sub_resource type="CircleShape2D" id=3]
-radius = 48.0
 
 [sub_resource type="CircleShape2D" id=6]
 radius = 7.0
@@ -51,7 +48,7 @@ tracks/0/keys = {
 }
 
 [node name="Mine" type="KinematicBody2D" groups=["Mines"]]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 0
 script = ExtResource( 1 )
 
@@ -63,7 +60,7 @@ hframes = 2
 shape = SubResource( 1 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
@@ -72,16 +69,10 @@ shape = SubResource( 7 )
 [node name="PlayerDetector" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
 shape = SubResource( 2 )
-
-[node name="SplashDamageArea" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SplashDamageArea"]
-shape = SubResource( 3 )
 
 [node name="TriggerArea" type="Area2D" parent="."]
 collision_layer = 0
@@ -94,6 +85,12 @@ shape = SubResource( 6 )
 anims/RESET = SubResource( 4 )
 anims/Warning = SubResource( 5 )
 
+[node name="DetonationDelayTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.15
+one_shot = true
+
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_PlayerDetector_body_exited"]
 [connection signal="body_entered" from="TriggerArea" to="." method="_on_TriggerArea_body_entered"]
+[connection signal="timeout" from="DetonationDelayTimer" to="." method="_on_DetonationDelayTimer_timeout"]

@@ -4,7 +4,7 @@ extends GameActor
 export var request_level_end := false
 
 onready var AnimPlayer: AnimationPlayer = $AnimationPlayer
-onready var SplashDamageArea: Area2D = $SplashDamageArea
+onready var DetonationDelayTimer := $DetonationDelayTimer
 
 onready var _mine_explosion_scene: PackedScene = preload("res://src/Enemies/MineExplosion.tscn")
 
@@ -19,11 +19,11 @@ var _move_frequency: float = 2.0
 func propagate_effects(effects: Dictionary = {}) -> void:
 	.propagate_effects(effects)
 	if _hitpoints == 0:
-		explode()
+		prepare_explosion()
 
 
 func _ready() -> void:
-	_hitpoints = 5
+	_hitpoints = 3
 	_starting_position = position
 
 
@@ -40,7 +40,13 @@ func _on_PlayerDetector_body_exited(body: GameActor) -> void:
 	AnimPlayer.play("RESET")
 
 
-func explode() -> void:
+func prepare_explosion() -> void:
+	$TriggerArea.set_deferred("monitoring", false)
+	$Sprite.set_deferred("frame", 1)
+	DetonationDelayTimer.start()
+
+
+func _explode() -> void:
 	var new_explosion = _mine_explosion_scene.instance()
 	new_explosion.global_position = global_position
 	get_parent().call_deferred("add_child", new_explosion)
@@ -51,5 +57,8 @@ func explode() -> void:
 
 
 func _on_TriggerArea_body_entered(body: Node) -> void:
-	if !body.is_in_group("Mines"):
-		explode()
+	prepare_explosion()
+
+
+func _on_DetonationDelayTimer_timeout() -> void:
+	_explode()
