@@ -12,6 +12,10 @@ onready var Hitbox := $HitBox
 enum States { IDLE, SHAKING, FALLING, ON_GROUND }
 var _state: int = States.IDLE
 
+var _shake_sfx_path := "res://assets/sfx/stalactiteShake3.wav"
+var _fall_sfx_path := "res://assets/sfx/stalactiteFall.wav"
+var _stuck_sfx_path := "res://assets/sfx/stalactiteStuck.wav"
+
 # How much will the sprite move from center position when shaking, in pixels
 var _shake_offset := 3.0
 # Number of "shakes" per second
@@ -61,11 +65,14 @@ func falling_state(delta: float) -> void:
 	_velocity = move_and_slide(_velocity, Vector2.UP)
 
 	if is_on_floor():
+		AudioStreamManager.play_sound(_stuck_sfx_path)
 		_state = States.ON_GROUND
 		Hitbox.set_deferred("monitoring", false)
 
 
 func start_shaking() -> void:
+	AudioStreamManager.play_sound(_shake_sfx_path)
+	
 	_state = States.SHAKING
 	_new_shake()
 
@@ -100,6 +107,8 @@ func _on_ShakeFrequency_timeout() -> void:
 
 
 func _on_ShakeDuration_timeout() -> void:
+	AudioStreamManager.play_sound(_fall_sfx_path)
+	
 	ShakeFrequency.stop()
 	_new_shake(true)
 	_state = States.FALLING

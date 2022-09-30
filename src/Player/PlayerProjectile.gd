@@ -2,6 +2,7 @@ extends Area2D
 
 var _speed := 400.0
 var _projectile_explosion_scene := preload("res://src/Player/ProjectileExplosion.tscn")
+var _bulletproof_sfx_path := "res://assets/sfx/bulletproof2.wav"
 
 
 func _physics_process(delta: float) -> void:
@@ -23,6 +24,10 @@ func _create_explosion(global_position: Vector2) -> void:
 func _on_Projectile_area_entered(area: Area2D):
 	if area.owner is GameActor and !area.owner.is_bulletproof:
 		area.owner.propagate_effects({Enums.Effects.DAMAGE: 1})
+
+	if area.owner.is_bulletproof:
+		AudioStreamManager.play_sound(_bulletproof_sfx_path)
+
 	_create_explosion(global_position)
 
 

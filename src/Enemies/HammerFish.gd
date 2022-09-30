@@ -14,6 +14,9 @@ onready var RaycastVisibility: RayCast2D = $RayCastVisibility
 onready var ChargeTimer: Timer = $ChargeCooldown
 onready var AnimationPlayerNode = $AnimationPlayer
 
+var _roar_sfx_path := "res://assets/sfx/fishRoar.wav"
+var _charge_sfx_path := "res://assets/sfx/fishCharge.wav"
+
 var _smoke_effect := preload("res://src/Common/SmokeParticles.tscn")
 
 var _target_body: KinematicBody2D = null
@@ -118,6 +121,8 @@ func _roar_state(delta: float) -> void:
 		_time = 0.0
 		_state = States.CHARGE
 		AnimationPlayerNode.play("CHARGE")
+		AudioStreamManager.play_sound(_charge_sfx_path)
+		
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
 			self,
 			8.0,
@@ -177,17 +182,18 @@ func _set_sprite_orientation(direction_basic: Vector2) -> void:
 
 
 func _check_charge_detectors_colliding() -> void:
-	var high_collider = ChargeDetectorHigh.get_collider()
-	var low_collider = ChargeDetectorLow.get_collider()
-	var collider = high_collider if high_collider else low_collider
-	if collider:
-		var destination = collider.global_position - RaycastVisibility.global_position
-		RaycastVisibility.cast_to = destination
-		if !RaycastVisibility.is_colliding() and _can_charge:
-			_can_charge = false
-			ChargeTimer.start()
-			_state = States.ROAR
-			AnimationPlayerNode.play("PREPARE_CHARGE")
+	var high_collider := ChargeDetectorHigh.get_collider() as PhysicsBody2D
+	var low_collider := ChargeDetectorLow.get_collider() as PhysicsBody2D
+
+	if !high_collider or !low_collider:
+		return
+
+	if high_collider.is_in_group("Player") and low_collider.is_in_group("Player"):
+		_can_charge = false
+		ChargeTimer.start()
+		_state = States.ROAR
+		AnimationPlayerNode.play("PREPARE_CHARGE")
+		AudioStreamManager.play_sound(_roar_sfx_path)
 
 
 func _is_target_body_visible() -> bool:
@@ -224,3 +230,8 @@ func _on_PlayerDetector_body_exited(body: KinematicBody2D) -> void:
 
 func _on_ChargeCooldown_timeout() -> void:
 	_can_charge = true
+
+
+func _on_VisibilityEnabler2D_screen_exited() -> void:
+	_state = States.IDLE
+	AnimationPlayerNode.play("IDLE")

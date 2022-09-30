@@ -1,6 +1,6 @@
 extends AnimatedSprite
 
-onready var _explosion_sfx_path := "res://assets/sfx/explosion.wav"
+onready var _explosion_sfx_path := "res://assets/sfx/explosionBig3.wav"
 
 
 func _ready() -> void:

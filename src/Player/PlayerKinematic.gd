@@ -54,6 +54,8 @@ var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
 var _player_default_texture := preload("res://assets/player_sprite.png")
 var _player_overheated_texture := preload("res://assets/player_overheated.tres")
 var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
+var _dash_sfx_path := "res://assets/sfx/dash2.wav"
+var _player_hit_sfx_path := "res://assets/sfx/playerHit.wav"
 
 
 # Properties
@@ -135,6 +137,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			0.03
 		)
 		_state = States.DRIFT
+		AudioStreamManager.play_sound(_dash_sfx_path)
 		yield(get_tree().create_timer(_dash_timeout), "timeout")
 		_dash_enabled = true
 		_toggle_bubble_generator(true)
@@ -237,6 +240,8 @@ func _spawn_projectile(global_position: Vector2, angle_rad: float) -> void:
 
 func _start_damage_flashing() -> void:
 	self._is_invincible = true
+	
+	AudioStreamManager.play_sound(_player_hit_sfx_path)
 
 	for i in 20:
 		MainSprite.hide()
