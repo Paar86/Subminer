@@ -42,11 +42,24 @@ func _process(delta: float) -> void:
 		stream_channel.stream_player.stream = load(sound_request.sound_path)
 		stream_channel.stream_owner = sound_request.sound_owner
 		stream_channel.stream_player.play()
+		sound_request.free()
 
 		_active_channels.append(stream_channel)
 
 	_sounds_queue.clear()
 	_update_active_channels_position()
+
+
+# Destroy all objects not in the scene tree to prevent memory leak
+func _exit_tree() -> void:
+	for sound_request in _sounds_queue:
+		sound_request.free()
+
+	for active_channel in _active_channels:
+		active_channel.free()
+
+	for free_channel in _free_channels:
+		free_channel.free()
 
 
 func _update_active_channels_position() -> void:
