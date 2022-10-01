@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/Player/PlayerKinematic.gd" type="Script" id=1]
 [ext_resource path="res://assets/player_sprite.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://assets/player_teleport_sheet.png" type="Texture" id=7]
 [ext_resource path="res://assets/ui/black_rect.png" type="Texture" id=8]
 [ext_resource path="res://src/Common/ScreenShaker.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/sfx/overheat.wav" type="AudioStream" id=10]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 11.0
@@ -277,6 +278,9 @@ offset = Vector2( 0.200001, -0.933332 )
 
 [node name="Listener2D" type="Listener2D" parent="Camera2D"]
 current = true
+__meta__ = {
+"_editor_description_": "Main listener for 2D positional audio."
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 z_as_relative = false
@@ -355,6 +359,10 @@ anims/TELEPORT_START = SubResource( 7 )
 [node name="TeleportInDelay" type="Timer" parent="TeleportEffect"]
 one_shot = true
 autostart = true
+
+[node name="OverheatStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+bus = "SFX"
 
 [connection signal="animation_finished" from="TeleportEffect/TeleportAnimationPlayer" to="TeleportEffect" method="_on_TeleportAnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TeleportEffect/TeleportInDelay" to="TeleportEffect" method="_on_TeleportInDelay_timeout"]

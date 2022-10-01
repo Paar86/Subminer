@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/laser_emitter.png" type="Texture" id=1]
 [ext_resource path="res://src/Obstacles/LaserEmitters.gd" type="Script" id=2]
 [ext_resource path="res://assets/laser_animatedtexture.tres" type="Texture" id=3]
+[ext_resource path="res://assets/sfx/laserShoot2.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sfx/laserPrepare.wav" type="AudioStream" id=5]
 
 [node name="LaserEmitters" type="Node2D"]
 script = ExtResource( 2 )
@@ -71,6 +73,16 @@ one_shot = true
 
 [node name="ShootTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="LaserPrepareStream" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+max_distance = 320.0
+bus = "SFX"
+
+[node name="LaserShootStream" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+max_distance = 320.0
+bus = "SFX"
 
 [connection signal="timeout" from="IntervalTimer" to="." method="_on_IntervalTimer_timeout"]
 [connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]

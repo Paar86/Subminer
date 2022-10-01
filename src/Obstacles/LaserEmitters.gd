@@ -23,6 +23,10 @@ onready var DelayTimer := $DelayTimer
 onready var PrepareTimer := $PrepareTimer
 onready var ShootTimer := $ShootTimer
 
+# Audio
+onready var LaserPrepareStream := $LaserPrepareStream
+onready var LaserShootStream := $LaserShootStream
+
 var _laser_animatedtexture := preload("res://assets/laser_animatedtexture.tres")
 var _laser_tele_animatedtexture := preload("res://assets/laser_tele_animatedtexture.tres")
 
@@ -81,6 +85,8 @@ func _on_IntervalTimer_timeout() -> void:
 	LaserLine.texture = _laser_tele_animatedtexture
 	LaserLine.show()
 	PrepareTimer.start()
+	
+	LaserPrepareStream.play()
 
 
 func _on_PrepareTimer_timeout() -> void:
@@ -91,6 +97,9 @@ func _on_PrepareTimer_timeout() -> void:
 	# Support for inifinite laser time
 	if beam_longetivity > 0:
 		ShootTimer.start()
+	
+	LaserPrepareStream.stop()
+	LaserShootStream.play()
 
 
 func _on_ShootTimer_timeout() -> void:
@@ -99,3 +108,5 @@ func _on_ShootTimer_timeout() -> void:
 	LaserRayCast.set_deferred("enabled", false)
 	LaserLine.hide()
 	IntervalTimer.start()
+	
+	LaserShootStream.stop()

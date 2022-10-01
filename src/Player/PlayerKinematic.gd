@@ -48,6 +48,7 @@ onready var HurtBox := $Hurtbox
 onready var DebrisSpawner := $DebrisSpawner
 onready var TeleportEffect := $TeleportEffect
 onready var CameraScene := $Camera2D
+onready var OverheatStreamPlayer := $OverheatStreamPlayer
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
@@ -275,11 +276,13 @@ func _on_hitpoints_depleted() -> void:
 func _on_weapon_overheated() -> void:
 	MainSprite.texture = _player_overheated_texture
 	_is_overheated = true
+	OverheatStreamPlayer.play()
 
 
 func _on_weapon_cooled() -> void:
 	MainSprite.texture = _player_default_texture
 	_is_overheated = false
+	OverheatStreamPlayer.stop()
 
 
 func _add_constant_effect(velocity: Vector2) -> void:
