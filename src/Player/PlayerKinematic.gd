@@ -137,7 +137,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			0.03
 		)
 		_state = States.DRIFT
-		AudioStreamManager.play_sound(_dash_sfx_path)
+		AudioStreamManager2D.play_sound(_dash_sfx_path, self)
 		yield(get_tree().create_timer(_dash_timeout), "timeout")
 		_dash_enabled = true
 		_toggle_bubble_generator(true)
@@ -223,11 +223,11 @@ func _fire_cannons() -> void:
 	_spawn_projectile(LeftCannonPoint.global_position, LeftCannon.rotation)
 	PlayerStats.heat_value += _heat_increment
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
-	AudioStreamManager.play_sound(_shoot_sfx_path)
+	AudioStreamManager2D.play_sound(_shoot_sfx_path, self)
 	_spawn_projectile(RightCannonPoint.global_position, RightCannon.rotation)
 	PlayerStats.heat_value += _heat_increment
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
-	AudioStreamManager.play_sound(_shoot_sfx_path)
+	AudioStreamManager2D.play_sound(_shoot_sfx_path, self)
 	_is_firing = false
 
 

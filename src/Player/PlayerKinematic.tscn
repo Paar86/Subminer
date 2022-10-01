@@ -275,6 +275,9 @@ offset = Vector2( 0.200001, -0.933332 )
 
 [node name="ScreenShaker" parent="Camera2D" instance=ExtResource( 9 )]
 
+[node name="Listener2D" type="Listener2D" parent="Camera2D"]
+current = true
+
 [node name="Sprite" type="Sprite" parent="."]
 z_as_relative = false
 texture = ExtResource( 2 )

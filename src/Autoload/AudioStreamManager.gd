@@ -1,7 +1,7 @@
 extends Node
 
 const TOTAL_CHANNELS := 8
-const BUS := "master"
+const BUS := "SFX"
 
 var _all_channels := []
 var _free_channels := []

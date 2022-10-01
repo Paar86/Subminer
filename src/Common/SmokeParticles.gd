@@ -17,7 +17,7 @@ func _ready() -> void:
 	YieldHandler.run_with_delay_time(function, lifetime * (2 - explosiveness))
 
 	EventProvider.request_shake(Enums.Events.SHAKE_MEDIUM)
-	AudioStreamManager.play_sound(_smoke_sfx_path)
+	AudioStreamManager2D.play_sound(_smoke_sfx_path, self)
 
 
 func _destroy() -> void:

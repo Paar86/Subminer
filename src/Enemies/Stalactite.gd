@@ -7,6 +7,7 @@ onready var ShakeFrequency := $ShakeFrequency
 onready var ShakeDuration := $ShakeDuration
 onready var ShakeTween := $ShakeTween
 onready var Hitbox := $HitBox
+onready var VisibilityEnablerNode := $VisibilityEnabler2D
 
 
 enum States { IDLE, SHAKING, FALLING, ON_GROUND }
@@ -65,14 +66,14 @@ func falling_state(delta: float) -> void:
 	_velocity = move_and_slide(_velocity, Vector2.UP)
 
 	if is_on_floor():
-		AudioStreamManager.play_sound(_stuck_sfx_path)
+		AudioStreamManager2D.play_sound(_stuck_sfx_path, self)
 		_state = States.ON_GROUND
 		Hitbox.set_deferred("monitoring", false)
+		VisibilityEnablerNode.set_enabler(VisibilityEnabler2D.ENABLER_PARENT_PHYSICS_PROCESS, true)
 
 
 func start_shaking() -> void:
-	AudioStreamManager.play_sound(_shake_sfx_path)
-	
+	AudioStreamManager2D.play_sound(_shake_sfx_path, self)
 	_state = States.SHAKING
 	_new_shake()
 
@@ -107,11 +108,13 @@ func _on_ShakeFrequency_timeout() -> void:
 
 
 func _on_ShakeDuration_timeout() -> void:
-	AudioStreamManager.play_sound(_fall_sfx_path)
+	AudioStreamManager2D.play_sound(_fall_sfx_path, self)
 	
 	ShakeFrequency.stop()
 	_new_shake(true)
 	_state = States.FALLING
+	
+	VisibilityEnablerNode.set_enabler(VisibilityEnabler2D.ENABLER_PARENT_PHYSICS_PROCESS, false)
 	Hitbox.set_deferred("monitoring", true)
 
 

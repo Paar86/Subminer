@@ -139,7 +139,7 @@ func _shoot_prepare_state(delta: float) -> void:
 
 
 func _shoot_state(delta: float) -> void:
-	AudioStreamManager.play_sound(_shoot_sfx_path)
+	AudioStreamManager2D.play_sound(_shoot_sfx_path, self)
 	
 	for projectile in _projectiles_container_array:
 		projectile.fire()

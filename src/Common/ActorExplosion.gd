@@ -5,7 +5,7 @@ onready var _explosion_sfx_path := "res://assets/sfx/explosion.wav"
 
 func _ready() -> void:
 	playing = true
-	AudioStreamManager.play_sound(_explosion_sfx_path)
+	AudioStreamManager2D.play_sound(_explosion_sfx_path, self)
 	BubbleGenerator.generate_bubbles_to_rect(
 		global_position,
 		8.0,

@@ -121,7 +121,7 @@ func _roar_state(delta: float) -> void:
 		_time = 0.0
 		_state = States.CHARGE
 		AnimationPlayerNode.play("CHARGE")
-		AudioStreamManager.play_sound(_charge_sfx_path)
+		AudioStreamManager2D.play_sound(_charge_sfx_path, self)
 		
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
 			self,
@@ -193,7 +193,7 @@ func _check_charge_detectors_colliding() -> void:
 		ChargeTimer.start()
 		_state = States.ROAR
 		AnimationPlayerNode.play("PREPARE_CHARGE")
-		AudioStreamManager.play_sound(_roar_sfx_path)
+		AudioStreamManager2D.play_sound(_roar_sfx_path, self)
 
 
 func _is_target_body_visible() -> bool:

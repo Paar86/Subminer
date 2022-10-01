@@ -40,7 +40,7 @@ func _ready() -> void:
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		area.owner.propagate_effects({Enums.Effects.DAMAGE: _damage})
-		AudioStreamManager.play_sound(_shock_sfx_path)
+		AudioStreamManager2D.play_sound(_shock_sfx_path, self)
 		HitEffectTimer.start()
 		HitEffect.show()
 		HitEffect.playing = true

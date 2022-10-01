@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func _explode() -> void:
 	playing = true
-	AudioStreamManager.play_sound(_explosion_sfx_path)
+	AudioStreamManager2D.play_sound(_explosion_sfx_path, self)
 	
 	# We generate bubbles only when explosion is visible, for optimalization purposes
 	if $VisibilityNotifier2D.is_on_screen():
