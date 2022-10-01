@@ -41,9 +41,10 @@ func _on_PlayerDetector_body_exited(body: GameActor) -> void:
 
 
 func prepare_explosion() -> void:
-	$TriggerArea.set_deferred("monitoring", false)
-	$Sprite.set_deferred("frame", 1)
-	DetonationDelayTimer.start()
+	if DetonationDelayTimer.is_stopped():
+		$TriggerArea.set_deferred("monitoring", false)
+		$Sprite.set_deferred("frame", 1)
+		DetonationDelayTimer.start()
 
 
 func _explode() -> void:
