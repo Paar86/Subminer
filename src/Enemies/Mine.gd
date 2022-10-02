@@ -5,6 +5,7 @@ export var request_level_end := false
 
 onready var AnimPlayer: AnimationPlayer = $AnimationPlayer
 onready var DetonationDelayTimer := $DetonationDelayTimer
+onready var ClickingStreamPlayer := $ClickingStreamPlayer
 
 onready var _mine_explosion_scene: PackedScene = preload("res://src/Enemies/MineExplosion.tscn")
 
@@ -32,14 +33,6 @@ func _physics_process(delta: float) -> void:
 	position.y = _starting_position.y + sin(_time * _move_frequency) * _move_distance
 
 
-func _on_PlayerDetector_body_entered(body: GameActor) -> void:
-	AnimPlayer.play("Warning")
-
-
-func _on_PlayerDetector_body_exited(body: GameActor) -> void:
-	AnimPlayer.play("RESET")
-
-
 func prepare_explosion() -> void:
 	if DetonationDelayTimer.is_stopped():
 		$TriggerArea.set_deferred("monitoring", false)
@@ -63,3 +56,13 @@ func _on_TriggerArea_body_entered(body: Node) -> void:
 
 func _on_DetonationDelayTimer_timeout() -> void:
 	_explode()
+
+
+func _on_ObjectDetector_body_entered(body: Node) -> void:
+	ClickingStreamPlayer.play()
+	AnimPlayer.play("Warning")
+
+
+func _on_ObjectDetector_body_exited(body: Node) -> void:
+	ClickingStreamPlayer.stop()
+	AnimPlayer.play("RESET")
