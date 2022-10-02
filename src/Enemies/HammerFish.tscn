@@ -93,13 +93,13 @@ texture = ExtResource( 1 )
 hframes = 8
 
 [node name="ChargeDetectorHigh" type="RayCast2D" parent="."]
-position = Vector2( 0, -9 )
+position = Vector2( 0, -7 )
 enabled = true
 cast_to = Vector2( 135, 0 )
 collision_mask = 3
 
 [node name="ChargeDetectorLow" type="RayCast2D" parent="."]
-position = Vector2( 0, 9 )
+position = Vector2( 0, 7 )
 enabled = true
 cast_to = Vector2( 135, 0 )
 collision_mask = 3
@@ -143,6 +143,7 @@ collision_mask = 2
 
 [node name="ChargeCooldown" type="Timer" parent="."]
 wait_time = 3.0
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "IDLE"

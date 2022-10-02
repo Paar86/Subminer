@@ -135,11 +135,11 @@ func _roar_state(delta: float) -> void:
 
 
 func _charge_state(delta: float) -> void:
-	_velocity = move_and_slide(_direction * _charge_speed)
+	_velocity = move_and_slide(_direction * _charge_speed, Vector2.UP)
 	var collisions_number = get_slide_count()
 	for i in collisions_number:
 		var collision = get_slide_collision(i)
-		if collision.collider is TileMap:
+		if is_on_wall() and collision.collider is TileMap:
 			var smoke_instance = _smoke_effect.instance()
 			smoke_instance.global_position = collision.position
 			get_parent().call_deferred("add_child", smoke_instance)
@@ -147,7 +147,7 @@ func _charge_state(delta: float) -> void:
 			AnimationPlayerNode.play("IDLE")
 			return
 
-	if collisions_number > 0:
+	if is_on_wall() and collisions_number > 0:
 		_state = States.IDLE
 		AnimationPlayerNode.play("IDLE")
 		return
