@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_PickupBox_body_entered(body: GameActor) -> void:
-	AudioStreamManager.play_sound(_pickup_sfx_path)
+	AudioStreamManager2D.play_sound(_pickup_sfx_path, self)
 	body.propagate_effects( {Enums.Effects.MINERALS: 1} )
 	AnimPlayer.play("Pickup")
 	$PickupBox.set_deferred("disabled", true)

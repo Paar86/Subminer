@@ -86,7 +86,7 @@ func _on_IntervalTimer_timeout() -> void:
 	LaserLine.show()
 	PrepareTimer.start()
 	
-	LaserPrepareStream.play()
+#	LaserPrepareStream.play()
 
 
 func _on_PrepareTimer_timeout() -> void:
@@ -98,7 +98,7 @@ func _on_PrepareTimer_timeout() -> void:
 	if beam_longetivity > 0:
 		ShootTimer.start()
 	
-	LaserPrepareStream.stop()
+#	LaserPrepareStream.stop()
 	LaserShootStream.play()
 
 
