@@ -54,9 +54,13 @@ var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
 var _player_default_texture := preload("res://assets/player_sprite.png")
 var _player_overheated_texture := preload("res://assets/player_overheated.tres")
+
 var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
 var _dash_sfx_path := "res://assets/sfx/dash2.wav"
 var _player_hit_sfx_path := "res://assets/sfx/playerHit.wav"
+var _teleport_a_path := "res://assets/sfx/teleport_a.wav"
+var _teleport_b_path := "res://assets/sfx/teleport_b.wav"
+var _teleport_c_path := "res://assets/sfx/teleport_c.wav"
 
 
 # Properties
@@ -111,6 +115,10 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		_add_constant_effect(effects[Enums.Effects.ADD_CONSTANT_PUSH])
 	if Enums.Effects.REMOVE_CONSTANT_PUSH in effects:
 		_remove_constant_effect(effects[Enums.Effects.REMOVE_CONSTANT_PUSH])
+
+
+func play_sound(sound_path: String) -> void:
+	AudioStreamManager2D.play_sound(sound_path, self)
 
 
 func _ready() -> void:
