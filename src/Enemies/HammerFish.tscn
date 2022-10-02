@@ -85,7 +85,7 @@ tracks/0/keys = {
 
 [node name="HammerFish" type="KinematicBody2D"]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 11
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -142,7 +142,7 @@ cast_to = Vector2( 1, 0 )
 collision_mask = 2
 
 [node name="ChargeCooldown" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

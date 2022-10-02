@@ -7,13 +7,13 @@
 radius = 7.0
 
 [sub_resource type="CircleShape2D" id=7]
-radius = 8.0
+radius = 9.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 42.0
 
 [sub_resource type="CircleShape2D" id=6]
-radius = 7.0
+radius = 8.0
 
 [sub_resource type="Animation" id=4]
 length = 0.001
@@ -48,7 +48,7 @@ tracks/0/keys = {
 }
 
 [node name="Mine" type="KinematicBody2D" groups=["Mines"]]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 0
 script = ExtResource( 1 )
 
@@ -60,7 +60,7 @@ hframes = 2
 shape = SubResource( 1 )
 
 [node name="Hurtbox" type="Area2D" parent="."]
-collision_layer = 8
+collision_layer = 12
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
@@ -87,7 +87,7 @@ anims/Warning = SubResource( 5 )
 
 [node name="DetonationDelayTimer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 0.15
+wait_time = 0.1
 one_shot = true
 
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]

@@ -1,7 +1,7 @@
 extends Area2D
 
 var _splash_damage_extents_max := 48.0
-var _default_damage := 10
+var _default_damage := 15
 var _push_strength := 150
 
 onready var CollisionShapeNode := $CollisionShape2D
