@@ -116,7 +116,6 @@ func _roar_state(delta: float) -> void:
 	# Transition to CHARGE state at the end of shake animation
 	if _shake_distance <= 0.0:
 		_shake_distance = _shake_default_distance
-		# TODO: Make a sound
 		_direction = self._direction_basic
 		_time = 0.0
 		_state = States.CHARGE
@@ -147,7 +146,7 @@ func _charge_state(delta: float) -> void:
 			AnimationPlayerNode.play("IDLE")
 			return
 
-	if is_on_wall() and collisions_number > 0:
+	if is_on_wall():
 		_state = States.IDLE
 		AnimationPlayerNode.play("IDLE")
 		return
@@ -188,7 +187,7 @@ func _check_charge_detectors_colliding() -> void:
 	if !high_collider or !low_collider:
 		return
 
-	if high_collider.is_in_group("Player") and low_collider.is_in_group("Player"):
+	if high_collider.is_in_group("Player") and low_collider.is_in_group("Player") and _can_charge:
 		_can_charge = false
 		ChargeTimer.start()
 		_state = States.ROAR
