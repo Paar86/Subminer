@@ -604,6 +604,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("../AmbientExplosionTimer:one_shot")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 3.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=100]
 length = 0.001
@@ -724,6 +736,9 @@ format = 1
 
 [node name="PlayerStart" type="Node" parent="."]
 
+[node name="AmbientExplosionTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [node name="LevelUI" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="LevelUI" instance=ExtResource( 3 )]
@@ -829,5 +844,6 @@ margin_right = 59.0
 margin_bottom = 13.0
 text = "0"
 
+[connection signal="timeout" from="AmbientExplosionTimer" to="." method="_on_AmbientExplosionTimer_timeout"]
 [connection signal="timeout" from="LevelUI/RestartNotificationTimer" to="." method="_on_RestartNoticitaionTimer_timeout"]
 [connection signal="animation_finished" from="LevelUI/UIAnimationPlayer" to="." method="_on_UIAnimationPlayer_animation_finished"]

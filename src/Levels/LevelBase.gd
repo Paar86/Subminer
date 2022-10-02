@@ -15,6 +15,7 @@ onready var RestartNotification := $LevelUI/RestartNotification
 onready var DebugControl := $Debug/DebugControl
 onready var PlayerEndLevelCanvas := $PlayerEndLevelLayer
 onready var UIAnimationPlayer := $LevelUI/UIAnimationPlayer
+onready var AmbientExplosionTimer := $AmbientExplosionTimer
 
 onready var _available_minerals_count := get_minerals_count()
 
@@ -71,6 +72,8 @@ var _pickups_folder_tiles := [
 	_mineral_ground_name,
 	_fragment_tile_name
 ]
+
+var _big_explosion_sfx_path := "res://assets/sfx/explosionBig3.wav"
 
 
 # There can be only one player tile in the level
@@ -280,3 +283,9 @@ func _on_level_fade_out_request() -> void:
 
 	_level_end_requested = true
 	UIAnimationPlayer.play("FADE_OUT_WHITE")
+	AmbientExplosionTimer.start()
+
+
+func _on_AmbientExplosionTimer_timeout() -> void:
+	AudioStreamManager.play_sound(_big_explosion_sfx_path)
+	AmbientExplosionTimer.wait_time = rand_range(0.1, 0.2)
