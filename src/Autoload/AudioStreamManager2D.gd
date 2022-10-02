@@ -45,16 +45,17 @@ func _process(delta: float) -> void:
 		sound_request.free()
 
 		_active_channels.append(stream_channel)
-
+	
+	# Destroy all unprocessed sound requests to avoid memory leaks
+	for sound_request in _sounds_queue:
+		sound_request.free()
+	
 	_sounds_queue.clear()
 	_update_active_channels_position()
 
 
-# Destroy all objects not in the scene tree to prevent memory leak
+# Destroy all objects not in the scene tree to prevent memory leaks
 func _exit_tree() -> void:
-	for sound_request in _sounds_queue:
-		sound_request.free()
-
 	for active_channel in _active_channels:
 		active_channel.free()
 
