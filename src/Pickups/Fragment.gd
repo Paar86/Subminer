@@ -1,7 +1,6 @@
 extends FloatingObject
 
 onready var AnimPlayer := $AnimationPlayer
-onready var _pickup_sfx_path := "res://assets/sfx/pickup2.wav"
 
 enum States { IDLE, FOLLOW, TRAVEL }
 
@@ -9,7 +8,7 @@ var _state: int = States.TRAVEL
 var _rotation_speed_rad := 2.0
 var _max_speed := 150.0
 var _target_body: KinematicBody2D = null
-
+var _pickup_sfx := preload("res://assets/sfx/pickup2.wav")
 
 func _physics_process(delta: float) -> void:
 
@@ -46,7 +45,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_PickupBox_body_entered(body: GameActor) -> void:
-	AudioStreamManager2D.play_sound(_pickup_sfx_path, self)
+	AudioStreamManager2D.play_sound(_pickup_sfx, self)
 	body.propagate_effects( {Enums.Effects.MINERALS: 1} )
 	AnimPlayer.play("Pickup")
 	$PickupBox.set_deferred("disabled", true)

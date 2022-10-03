@@ -1,6 +1,6 @@
 extends Particles2D
 
-onready var _smoke_sfx_path := "res://assets/sfx/smoke.wav"
+var _smoke_sfx := preload("res://assets/sfx/smoke.wav")
 
 
 func _ready() -> void:
@@ -17,7 +17,7 @@ func _ready() -> void:
 	YieldHandler.run_with_delay_time(function, lifetime * (2 - explosiveness))
 
 	EventProvider.request_shake(Enums.Events.SHAKE_MEDIUM)
-	AudioStreamManager2D.play_sound(_smoke_sfx_path, self)
+	AudioStreamManager2D.play_sound(_smoke_sfx, self)
 
 
 func _destroy() -> void:

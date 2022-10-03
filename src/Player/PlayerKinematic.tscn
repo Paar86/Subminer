@@ -194,13 +194,13 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.5, 0.72 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
-"args": [ "res://assets/sfx/teleport_b.wav" ],
+"args": [ "_teleport_b_sfx" ],
 "method": "play_sound"
 }, {
 "args": [  ],
 "method": "hide_player"
 }, {
-"args": [ "res://assets/sfx/teleport_c.wav" ],
+"args": [ "_teleport_c_sfx" ],
 "method": "play_sound"
 } ]
 }
@@ -243,16 +243,16 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1.14, 1.68, 1.8 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "values": [ {
-"args": [ "res://assets/sfx/teleport_a.wav" ],
+"args": [ "_teleport_a_sfx" ],
 "method": "play_sound"
 }, {
-"args": [ "res://assets/sfx/teleport_b.wav" ],
+"args": [ "_teleport_b_sfx" ],
 "method": "play_sound"
 }, {
 "args": [  ],
 "method": "show_player"
 }, {
-"args": [ "res://assets/sfx/teleport_c.wav" ],
+"args": [ "_teleport_c_sfx" ],
 "method": "play_sound"
 } ]
 }

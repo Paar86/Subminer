@@ -9,12 +9,12 @@ onready var _random_bubble_generator := preload("res://src/Common/RandomBubbleSp
 var _hitpoints: int
 var _blinking := false
 
-var _hit_sfx_path := "res://assets/sfx/hitHurt2.wav"
+var _hit_sfx := preload("res://assets/sfx/hitHurt2.wav")
 
 
 func propagate_effects(effects: Dictionary = {}) -> void:
 	if Enums.Effects.DAMAGE in effects:
-		AudioStreamManager2D.play_sound(_hit_sfx_path, self)
+		AudioStreamManager2D.play_sound(_hit_sfx, self)
 		var value: int = effects[Enums.Effects.DAMAGE]
 		if _hitpoints > value:
 			_hitpoints -= value

@@ -14,10 +14,10 @@ onready var RaycastVisibility: RayCast2D = $RayCastVisibility
 onready var ChargeTimer: Timer = $ChargeCooldown
 onready var AnimationPlayerNode = $AnimationPlayer
 
-var _roar_sfx_path := "res://assets/sfx/fishRoar.wav"
-var _charge_sfx_path := "res://assets/sfx/fishCharge.wav"
-
+var _roar_sfx := preload("res://assets/sfx/fishRoar.wav")
+var _charge_sfx := preload("res://assets/sfx/fishCharge.wav")
 var _smoke_effect := preload("res://src/Common/SmokeParticles.tscn")
+
 
 var _target_body: KinematicBody2D = null
 var _can_charge := true
@@ -120,7 +120,7 @@ func _roar_state(delta: float) -> void:
 		_time = 0.0
 		_state = States.CHARGE
 		AnimationPlayerNode.play("CHARGE")
-		AudioStreamManager2D.play_sound(_charge_sfx_path, self)
+		AudioStreamManager2D.play_sound(_charge_sfx, self)
 		
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
 			self,
@@ -192,7 +192,7 @@ func _check_charge_detectors_colliding() -> void:
 		ChargeTimer.start()
 		_state = States.ROAR
 		AnimationPlayerNode.play("PREPARE_CHARGE")
-		AudioStreamManager2D.play_sound(_roar_sfx_path, self)
+		AudioStreamManager2D.play_sound(_roar_sfx, self)
 
 
 func _is_target_body_visible() -> bool:

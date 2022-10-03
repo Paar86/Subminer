@@ -15,8 +15,8 @@ onready var _projectile_spawns_array = [ProjectileSpawnPoint1,
 										ProjectileSpawnPoint3]
 onready var _snail_projectile_scene := preload("res://src/Enemies/SnailProjectile.tscn")
 
-var _charging_sfx_path := "res://assets/sfx/snailCharging.wav"
-var _shoot_sfx_path := "res://assets/sfx/snailShoot.wav"
+var _charging_sfx := preload("res://assets/sfx/snailCharging.wav")
+var _shoot_sfx := preload("res://assets/sfx/snailShoot.wav")
 
 var _damage := 3
 var _push_strength := 150.0
@@ -139,7 +139,7 @@ func _shoot_prepare_state(delta: float) -> void:
 
 
 func _shoot_state(delta: float) -> void:
-	AudioStreamManager2D.play_sound(_shoot_sfx_path, self)
+	AudioStreamManager2D.play_sound(_shoot_sfx, self)
 	
 	for projectile in _projectiles_container_array:
 		projectile.fire()

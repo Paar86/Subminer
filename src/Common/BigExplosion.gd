@@ -1,6 +1,6 @@
 extends AnimatedSprite
 
-onready var _explosion_sfx_path := "res://assets/sfx/explosionBig3.wav"
+var _explosion_sfx := preload("res://assets/sfx/explosionBig3.wav")
 
 
 func _ready() -> void:
@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func _explode() -> void:
 	playing = true
-	AudioStreamManager2D.play_sound(_explosion_sfx_path, self)
+	AudioStreamManager2D.play_sound(_explosion_sfx, self)
 	
 	# We generate bubbles only when explosion is visible, for optimalization purposes
 	if $VisibilityNotifier2D.is_on_screen():

@@ -9,8 +9,8 @@ var _sounds_queue := []
 
 
 
-func play_sound(sound_file: String, sound_owner: Node2D) -> void:
-	var sound_request = SoundRequest.new(sound_file, sound_owner)
+func play_sound(sound_resource: Resource, sound_owner: Node2D) -> void:
+	var sound_request = SoundRequest.new(sound_resource, sound_owner)
 	if not _sounds_queue.has(sound_request):
 		_sounds_queue.append(sound_request)
 
@@ -37,19 +37,20 @@ func _process(delta: float) -> void:
 
 	for i in sound_requests:
 		var stream_channel: AudioStreamLocal = _free_channels.pop_front()
-		var sound_request = _sounds_queue.pop_front()
+		var sound_request = _sounds_queue.pop_front() as SoundRequest
 
-		stream_channel.stream_player.stream = load(sound_request.sound_path)
+		stream_channel.stream_player.stream = sound_request.sound_resource
+		stream_channel.stream_player.global_position = sound_request.initial_global_position
 		stream_channel.stream_owner = sound_request.sound_owner
 		stream_channel.stream_player.play()
 		sound_request.free()
 
 		_active_channels.append(stream_channel)
-	
+
 	# Destroy all unprocessed sound requests to avoid memory leaks
 	for sound_request in _sounds_queue:
 		sound_request.free()
-	
+
 	_sounds_queue.clear()
 	_update_active_channels_position()
 

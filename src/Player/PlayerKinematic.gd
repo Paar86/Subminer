@@ -55,12 +55,12 @@ var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
 var _player_default_texture := preload("res://assets/player_sprite.png")
 var _player_overheated_texture := preload("res://assets/player_overheated.tres")
 
-var _shoot_sfx_path := "res://assets/sfx/shoot.wav"
-var _dash_sfx_path := "res://assets/sfx/dash2.wav"
-var _player_hit_sfx_path := "res://assets/sfx/playerHit.wav"
-var _teleport_a_path := "res://assets/sfx/teleport_a.wav"
-var _teleport_b_path := "res://assets/sfx/teleport_b.wav"
-var _teleport_c_path := "res://assets/sfx/teleport_c.wav"
+var _shoot_sfx := preload("res://assets/sfx/shoot.wav")
+var _dash_sfx := preload("res://assets/sfx/dash2.wav")
+var _player_hit_sfx := preload("res://assets/sfx/playerHit.wav")
+var _teleport_a_sfx := preload("res://assets/sfx/teleport_a.wav")
+var _teleport_b_sfx := preload("res://assets/sfx/teleport_b.wav")
+var _teleport_c_sfx := preload("res://assets/sfx/teleport_c.wav")
 
 
 # Properties
@@ -117,8 +117,11 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		_remove_constant_effect(effects[Enums.Effects.REMOVE_CONSTANT_PUSH])
 
 
-func play_sound(sound_path: String) -> void:
-	AudioStreamManager2D.play_sound(sound_path, self)
+# For use from animation
+func play_sound(property_name: String) -> void:
+	var sound_resource = get(property_name) as Resource
+	if sound_resource:
+		AudioStreamManager2D.play_sound(sound_resource, self)
 
 
 func _ready() -> void:
@@ -146,7 +149,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			0.03
 		)
 		_state = States.DRIFT
-		AudioStreamManager2D.play_sound(_dash_sfx_path, self)
+		AudioStreamManager2D.play_sound(_dash_sfx, self)
 		yield(get_tree().create_timer(_dash_timeout), "timeout")
 		_dash_enabled = true
 		_toggle_bubble_generator(true)
@@ -232,11 +235,11 @@ func _fire_cannons() -> void:
 	_spawn_projectile(LeftCannonPoint.global_position, LeftCannon.rotation)
 	PlayerStats.heat_value += _heat_increment
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
-	AudioStreamManager2D.play_sound(_shoot_sfx_path, self)
+	AudioStreamManager2D.play_sound(_shoot_sfx, self)
 	_spawn_projectile(RightCannonPoint.global_position, RightCannon.rotation)
 	PlayerStats.heat_value += _heat_increment
 	yield(get_tree().create_timer(_rate_of_fire), "timeout")
-	AudioStreamManager2D.play_sound(_shoot_sfx_path, self)
+	AudioStreamManager2D.play_sound(_shoot_sfx, self)
 	_is_firing = false
 
 
@@ -250,7 +253,7 @@ func _spawn_projectile(global_position: Vector2, angle_rad: float) -> void:
 func _start_damage_flashing() -> void:
 	self._is_invincible = true
 	
-	AudioStreamManager.play_sound(_player_hit_sfx_path)
+	AudioStreamManager2D.play_sound(_player_hit_sfx, self)
 
 	for i in 20:
 		MainSprite.hide()

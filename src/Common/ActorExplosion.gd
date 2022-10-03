@@ -1,11 +1,11 @@
 extends AnimatedSprite
 
-onready var _explosion_sfx_path := "res://assets/sfx/explosion.wav"
+var _explosion_sfx := preload("res://assets/sfx/explosion.wav")
 
 
 func _ready() -> void:
 	playing = true
-	AudioStreamManager2D.play_sound(_explosion_sfx_path, self)
+	AudioStreamManager2D.play_sound(_explosion_sfx, self)
 	BubbleGenerator.generate_bubbles_to_rect(
 		global_position,
 		8.0,

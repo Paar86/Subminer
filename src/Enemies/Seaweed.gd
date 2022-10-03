@@ -4,7 +4,8 @@ var push_vector := Vector2.UP
 
 onready var HitEffect := $HitEffect
 onready var HitEffectTimer := $HitEffectTimer
-onready var _shock_sfx_path := "res://assets/sfx/shock.wav"
+
+var _shock_sfx := preload("res://assets/sfx/shock.wav")
 
 var _damage := 2
 var _push_strength := 60.0
@@ -40,7 +41,7 @@ func _ready() -> void:
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		area.owner.propagate_effects({Enums.Effects.DAMAGE: _damage})
-		AudioStreamManager2D.play_sound(_shock_sfx_path, self)
+		AudioStreamManager2D.play_sound(_shock_sfx, self)
 		HitEffectTimer.start()
 		HitEffect.show()
 		HitEffect.playing = true
