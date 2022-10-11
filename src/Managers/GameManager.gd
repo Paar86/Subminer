@@ -10,8 +10,8 @@ var _levels_dict = {
 	"level7": "res://src/Levels/Level7.tscn",
 }
 
-var _title_screen_path := "res://src/UI/TitlePage.tscn"
-var _dialogue_scene_path := "res://src/Levels/DialogueScene.tscn"
+var _title_screen_path := "res://src/IntermissionScreens/TitlePage.tscn"
+var _dialogue_scene_path := "res://src/IntermissionScreens/DialogueScene.tscn"
 
 var _current_level_number := 0
 var _current_level_id := ""
