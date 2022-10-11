@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/complications.mp3-e4b3281ce6449df42da8dba7a7d6ed93.mp3str"
+
+[deps]
+
+source_file="res://assets/music/complications.mp3"
+dest_files=[ "res://.import/complications.mp3-e4b3281ce6449df42da8dba7a7d6ed93.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=38.424

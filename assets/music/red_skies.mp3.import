@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/red_skies.mp3-66b28110a41223eda386883c0eba0720.mp3str"
+
+[deps]
+
+source_file="res://assets/music/red_skies.mp3"
+dest_files=[ "res://.import/red_skies.mp3-66b28110a41223eda386883c0eba0720.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=64.008

@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "AudioStreamLocal",
 "language": "GDScript",
-"path": "res://src/Autoload/HelperStructures/AudioStreamLocal.gd"
+"path": "res://src/Autoload/AudioManagers/HelperStructures/AudioStreamLocal.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "FloatingObject",
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "SoundRequest",
 "language": "GDScript",
-"path": "res://src/Autoload/HelperStructures/SoundRequest.gd"
+"path": "res://src/Autoload/AudioManagers/HelperStructures/SoundRequest.gd"
 } ]
 _global_script_class_icons={
 "AudioStreamLocal": "",
@@ -52,11 +52,12 @@ run/main_scene="res://src/Managers/GameManager.tscn"
 Enums="*res://src/Autoload/Enums.gd"
 PlayerStats="*res://src/Autoload/PlayerStats.gd"
 YieldHandler="*res://src/Autoload/YieldHandler.gd"
-AudioStreamManager="*res://src/Autoload/AudioStreamManager.gd"
-AudioStreamManager2D="*res://src/Autoload/AudioStreamManager2D.gd"
+AudioStreamManager="*res://src/Autoload/AudioManagers/AudioStreamManager.gd"
+AudioStreamManager2D="*res://src/Autoload/AudioManagers/AudioStreamManager2D.gd"
 TextManager="*res://src/Autoload/TextManager.gd"
 BubbleGenerator="*res://src/Autoload/BubbleGenerator.gd"
 EventProvider="*res://src/Autoload/EventProvider.gd"
+MusicManager="*res://src/Autoload/AudioManagers/MusicManager.gd"
 
 [display]
 
@@ -150,6 +151,7 @@ pause={
 2d_physics/layer_2="World"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Obstacles"
+2d_physics/layer_5="EnemyBlocker"
 
 [physics]
 

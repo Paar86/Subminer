@@ -13,7 +13,7 @@ var _dash_power := 160.0
 var _thrust_power_max := 90.0
 var _thrust_accel := 150.0
 var _friction := 90.0
-var _rate_of_fire := 0.1
+var _rate_of_fire := 0.08
 var _dash_timeout := 1.5
 
 var _heat_increment := 2.0
@@ -49,6 +49,7 @@ onready var DebrisSpawner := $DebrisSpawner
 onready var TeleportEffect := $TeleportEffect
 onready var CameraScene := $Camera2D
 onready var OverheatStreamPlayer := $OverheatStreamPlayer
+onready var WaterCurrentStreamPlayer := $WaterCurrentStreamPlayer
 
 var _big_explosion_scene := preload("res://src/Common/BigExplosion.tscn")
 var _projectile_scene := preload("res://src/Player/PlayerProjectile.tscn")
@@ -113,8 +114,11 @@ func propagate_effects(effects: Dictionary = {}) -> void:
 		PlayerStats.minerals += effects[Enums.Effects.MINERALS]
 	if Enums.Effects.ADD_CONSTANT_PUSH in effects:
 		_add_constant_effect(effects[Enums.Effects.ADD_CONSTANT_PUSH])
+		WaterCurrentStreamPlayer.play()
 	if Enums.Effects.REMOVE_CONSTANT_PUSH in effects:
 		_remove_constant_effect(effects[Enums.Effects.REMOVE_CONSTANT_PUSH])
+		if _constant_velocity_buffer.size() == 0:
+			WaterCurrentStreamPlayer.stop()
 
 
 # For use from animation

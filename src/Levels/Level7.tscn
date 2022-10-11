@@ -527,6 +527,7 @@ extents = Vector2( 32, 40 )
 
 [node name="Level7" instance=ExtResource( 1 )]
 minerals_goal = 200
+music_name = "legends"
 
 [node name="Lasers" type="Node" parent="Obstacles" index="0"]
 

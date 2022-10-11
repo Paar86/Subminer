@@ -99,7 +99,7 @@ func _on_PrepareTimer_timeout() -> void:
 		ShootTimer.start()
 	
 #	LaserPrepareStream.stop()
-	LaserShootStream.play()
+	LaserShootStream.stream_paused = false
 
 
 func _on_ShootTimer_timeout() -> void:
@@ -109,4 +109,4 @@ func _on_ShootTimer_timeout() -> void:
 	LaserLine.hide()
 	IntervalTimer.start()
 	
-	LaserShootStream.stop()
+	LaserShootStream.stream_paused = true

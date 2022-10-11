@@ -4,6 +4,7 @@ extends Node
 signal level_finished
 
 export var minerals_goal := 50
+export var music_name := "complications"
 
 onready var ObjectsTilemap := $ObjectsTileMap
 onready var WorldTilemap := $WallsTileMap
@@ -236,6 +237,7 @@ func _on_player_ready(camera: Camera2D) -> void:
 	camera.limit_right = pixel_rect.position.x + pixel_rect.size.x
 	camera.limit_bottom = pixel_rect.position.y + pixel_rect.size.y
 
+	MusicManager.play_music(music_name)
 	unpause()
 
 
@@ -261,6 +263,7 @@ func _on_minerals_goal_achieved() -> void:
 	UIAnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
 	UIAnimationPlayer.play("SHOW_GREAT_JOB")
 	HUDNode.hide()
+	MusicManager.play_music("victory")
 
 
 func _on_UIAnimationPlayer_animation_finished(anim_name: String) -> void:

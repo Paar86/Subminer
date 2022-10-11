@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/sunny_afternoon.mp3-a83a45f3cf624fd21351d26cf3947ff6.mp3str"
+
+[deps]
+
+source_file="res://assets/music/sunny_afternoon.mp3"
+dest_files=[ "res://.import/sunny_afternoon.mp3-a83a45f3cf624fd21351d26cf3947ff6.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

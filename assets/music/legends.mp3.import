@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/legends.mp3-ffb525c4f529c34b01ffb33c9f47492e.mp3str"
+
+[deps]
+
+source_file="res://assets/music/legends.mp3"
+dest_files=[ "res://.import/legends.mp3-ffb525c4f529c34b01ffb33c9f47492e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=73.884

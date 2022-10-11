@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/dance_till_you_die.mp3-50aed6181b2c93e61a1ec5f3b310e4fa.mp3str"
+
+[deps]
+
+source_file="res://assets/music/dance_till_you_die.mp3"
+dest_files=[ "res://.import/dance_till_you_die.mp3-50aed6181b2c93e61a1ec5f3b310e4fa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=64.038

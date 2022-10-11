@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ice_temple.mp3-c695ad30b38d99371a164e4aa78291db.mp3str"
+
+[deps]
+
+source_file="res://assets/music/ice_temple.mp3"
+dest_files=[ "res://.import/ice_temple.mp3-c695ad30b38d99371a164e4aa78291db.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

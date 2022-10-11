@@ -698,6 +698,7 @@ tracks/1/keys = {
 
 [node name="LevelBase" type="Node"]
 script = ExtResource( 1 )
+music_resource = null
 
 [node name="LevelRestarter" type="Node" parent="."]
 pause_mode = 2

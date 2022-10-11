@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/laser_emitter.png" type="Texture" id=1]
 [ext_resource path="res://src/Obstacles/LaserEmitters.gd" type="Script" id=2]
 [ext_resource path="res://assets/laser_animatedtexture.tres" type="Texture" id=3]
-[ext_resource path="res://assets/sfx/laserShoot2.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sfx/laserShoot3.wav" type="AudioStream" id=4]
 [ext_resource path="res://assets/sfx/laserPrepare.wav" type="AudioStream" id=5]
 
 [node name="LaserEmitters" type="Node2D"]
@@ -81,6 +81,8 @@ bus = "SFX"
 
 [node name="LaserShootStream" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 4 )
+autoplay = true
+stream_paused = true
 max_distance = 320.0
 bus = "SFX"
 

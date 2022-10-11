@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/a_small_town_on_pluto.mp3-07250a4d2ee1a099a2bed4ac21b1714a.mp3str"
+
+[deps]
+
+source_file="res://assets/music/a_small_town_on_pluto.mp3"
+dest_files=[ "res://.import/a_small_town_on_pluto.mp3-07250a4d2ee1a099a2bed4ac21b1714a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=106.386

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/npc_theme.mp3-72040c6a4855e707591da0a27e06e840.mp3str"
+
+[deps]
+
+source_file="res://assets/music/npc_theme.mp3"
+dest_files=[ "res://.import/npc_theme.mp3-72040c6a4855e707591da0a27e06e840.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=106.704
