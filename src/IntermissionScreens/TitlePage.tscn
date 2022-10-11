@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://src/UI/TitlePage.gd" type="Script" id=1]
+[ext_resource path="res://src/IntermissionScreens/TitlePage.gd" type="Script" id=1]
 [ext_resource path="res://src/UI/LanguageButtonGroup.tres" type="ButtonGroup" id=2]
 [ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=3]
 [ext_resource path="res://assets/ui/buttons/english_unpressed.png" type="Texture" id=4]
@@ -92,7 +92,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("VBoxContainer/MadeByLabel:modulate")
+tracks/4/path = NodePath("VBoxContainer/Footing/MadeByLabel:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -129,6 +129,18 @@ tracks/6/keys = {
 "update": 1,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/7/type = "value"
+tracks/7/path = NodePath("VBoxContainer/Footing/LanguageButtons:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -139,10 +151,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [  ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("FadeOutRect:visible")
@@ -193,7 +205,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 0 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("VBoxContainer/MadeByLabel:modulate")
+tracks/5/path = NodePath("VBoxContainer/Footing/MadeByLabel:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -203,6 +215,18 @@ tracks/5/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("VBoxContainer/Footing/LanguageButtons:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
 }
 
 [node name="TitlePage" type="Control"]
@@ -219,7 +243,7 @@ margin_top = -104.0
 [node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 320.0
-margin_bottom = 80.0
+margin_bottom = 25.0
 custom_constants/separation = 6
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer/Buttons"]
@@ -234,6 +258,7 @@ enabled_focus_mode = 0
 text = "{NewGameTitle}"
 
 [node name="HowToButton" type="Button" parent="VBoxContainer/Buttons"]
+visible = false
 margin_left = 109.0
 margin_top = 31.0
 margin_right = 211.0
@@ -245,13 +270,22 @@ disabled = true
 enabled_focus_mode = 0
 text = "{HowToPlayTitle}"
 
-[node name="LanguageButtons" type="HBoxContainer" parent="VBoxContainer/Buttons"]
-margin_top = 62.0
+[node name="Footing" type="VBoxContainer" parent="VBoxContainer"]
+margin_top = 29.0
 margin_right = 320.0
-margin_bottom = 80.0
+margin_bottom = 104.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="LanguageButtons" type="HBoxContainer" parent="VBoxContainer/Footing"]
+visible = false
+margin_top = 33.0
+margin_right = 320.0
+margin_bottom = 51.0
 alignment = 1
 
-[node name="ButtonENG" type="TextureButton" parent="VBoxContainer/Buttons/LanguageButtons"]
+[node name="ButtonENG" type="TextureButton" parent="VBoxContainer/Footing/LanguageButtons"]
 margin_left = 132.0
 margin_right = 158.0
 margin_bottom = 18.0
@@ -264,7 +298,7 @@ texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 9 )
 texture_hover = ExtResource( 7 )
 
-[node name="ButtonCZE" type="TextureButton" parent="VBoxContainer/Buttons/LanguageButtons"]
+[node name="ButtonCZE" type="TextureButton" parent="VBoxContainer/Footing/LanguageButtons"]
 margin_left = 162.0
 margin_right = 188.0
 margin_bottom = 18.0
@@ -278,11 +312,11 @@ texture_normal = ExtResource( 5 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 8 )
 
-[node name="MadeByLabel" type="Label" parent="VBoxContainer"]
+[node name="MadeByLabel" type="Label" parent="VBoxContainer/Footing"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 84.0
+margin_top = 55.0
 margin_right = 320.0
-margin_bottom = 104.0
+margin_bottom = 75.0
 rect_min_size = Vector2( 0, 20 )
 theme = ExtResource( 3 )
 text = "2022 Josef Šustek"
@@ -319,7 +353,7 @@ anchor_bottom = 1.0
 
 [connection signal="pressed" from="VBoxContainer/Buttons/NewGameButton" to="." method="_on_NewGameButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Buttons/HowToButton" to="." method="_on_HowToButton_pressed"]
-[connection signal="toggled" from="VBoxContainer/Buttons/LanguageButtons/ButtonENG" to="." method="_on_ButtonENG_toggled"]
-[connection signal="toggled" from="VBoxContainer/Buttons/LanguageButtons/ButtonCZE" to="." method="_on_ButtonCZE_toggled"]
+[connection signal="toggled" from="VBoxContainer/Footing/LanguageButtons/ButtonENG" to="." method="_on_ButtonENG_toggled"]
+[connection signal="toggled" from="VBoxContainer/Footing/LanguageButtons/ButtonCZE" to="." method="_on_ButtonCZE_toggled"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="BubbleTimer" to="." method="_on_BubbleTimer_timeout"]

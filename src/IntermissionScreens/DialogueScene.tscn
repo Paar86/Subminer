@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://src/Levels/DialogueScene.gd" type="Script" id=2]
+[ext_resource path="res://src/IntermissionScreens/DialogueScene.gd" type="Script" id=2]
 [ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/ui/continued_text_symbol.png" type="Texture" id=5]
 

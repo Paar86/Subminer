@@ -6,7 +6,7 @@ enum States { PAGE_LOADING, PAGE_LOADED, LAST_PAGE_LOADED }
 onready var DialogueTextLabel: Label = $BorderRect/DialogueText
 onready var AnimationPlayerNode: AnimationPlayer = $IndicatorAnimationPlayer
 
-var _voice_sfx := "res://assets/sfx/voice.wav"
+var _voice_sfx := "res://assets/sfx/voice2.wav"
 var _is_dialogue_finished := false setget , _get_is_dialogue_finished
 var _state = States.PAGE_LOADING
 var _pages: PoolStringArray = PoolStringArray()

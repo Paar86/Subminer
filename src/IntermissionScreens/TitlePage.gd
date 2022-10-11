@@ -5,8 +5,8 @@ signal new_game_pressed
 
 onready var NewGameButton = $VBoxContainer/Buttons/NewGameButton
 onready var HowToButton = $VBoxContainer/Buttons/HowToButton
-onready var ButtonENG = $VBoxContainer/Buttons/LanguageButtons/ButtonENG
-onready var ButtonCZE = $VBoxContainer/Buttons/LanguageButtons/ButtonCZE
+onready var ButtonENG = $VBoxContainer/Footing/LanguageButtons/ButtonENG
+onready var ButtonCZE = $VBoxContainer/Footing/LanguageButtons/ButtonCZE
 onready var AnimationPlayerScene = $AnimationPlayer
 
 onready var _screen_size := get_viewport_rect().size
@@ -15,6 +15,7 @@ onready var _screen_size := get_viewport_rect().size
 func _ready() -> void:
 	_refresh_text()
 	AnimationPlayerScene.play("INTRO")
+	MusicManager.play_music("sunny_afternoon")
 
 
 func _refresh_text() -> void:
@@ -37,6 +38,7 @@ func _activate_buttons():
 
 
 func _on_NewGameButton_pressed() -> void:
+	MusicManager.stop_music_with_fadeout()
 	AnimationPlayerScene.play("FADE_OUT")
 	yield(AnimationPlayerScene, "animation_finished")
 	emit_signal("new_game_pressed")
