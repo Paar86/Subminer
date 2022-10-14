@@ -17,16 +17,20 @@ duration = 5.0
 text = "page_purpose"
 duration = 10.0
 
-[node name="PageMusic" parent="Pages" instance=ExtResource( 3 )]
-text = "page_music"
-duration = 10.0
-
 [node name="PageNextWork" parent="Pages" instance=ExtResource( 3 )]
 text = "page_next_work"
 duration = 10.0
 
+[node name="PageMusic" parent="Pages" instance=ExtResource( 3 )]
+text = "page_music"
+duration = 10.0
+
 [node name="PageThankYou" parent="Pages" instance=ExtResource( 3 )]
 text = "page_thank_you"
+duration = 8.0
+
+[node name="PageTheEnd" parent="Pages" instance=ExtResource( 3 )]
+text = "page_the_end"
 
 [node name="DelayTimer" type="Timer" parent="."]
 one_shot = true

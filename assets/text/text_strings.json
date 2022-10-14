@@ -188,7 +188,7 @@
       "id": "page_purpose",
       "languages":
         {
-          "cz": "Tento projekt vznikl za účelem studia enginu Godot a vývoje her obecně. Zdrojový kód je zcela otevřený pro všechny, kteří také s vývojem začínají a chtějí se něčemu přiučit.",
+          "cz": "Tento projekt vznikl za účelem studia enginu Godot a vývoje her obecně. Zdrojový kód je zcela otevřený pro všechny, kteří se také v herním vývoji vzdělávají.",
           "en": "{level8_en}"
         }
     },
@@ -196,7 +196,7 @@
       "id": "page_music",
       "languages":
         {
-          "cz": "Všechna ta skvělá hudba, kterou jste ve hře slyšeli, včetně té aktuálně znějící, vznikla z pera uživatele jménem Holizna.\r\n\r\nK dispozici je zcela zdarma na stránkách https://freemusicarchive.org.",
+          "cz": "Všechna ta skvělá hudba, kterou jste ve hře slyšeli, včetně té aktuálně znějící, vznikla z pera uživatele jménem Holizna. Doporučuji poslechnout i jeho další práci.\r\n\r\nJeho profil najdete na stránkách https://freemusicarchive.org.",
           "en": "{level8_en}"
         }
     },
@@ -204,7 +204,7 @@
       "id": "page_next_work",
       "languages":
         {
-          "cz": "Toto je můj první veřejný projekt, jeho vývoj trval s přestávkami něco málo přes rok. Věřím, že ten další vznikne podstatně rychleji.",
+          "cz": "Jde o můj první veřejný projekt, na kterém jsem pracoval po večerech něco málo přes rok. Hodně jsem se toho naučil, ale i tak jsem stále na začátku.",
           "en": "{level8_en}"
         }
     },
@@ -212,8 +212,16 @@
       "id": "page_thank_you",
       "languages":
         {
-          "cz": "DĚKUJI, ŽE JSTE VYDRŽELI AŽ DO KONCE!",
-          "en": "THANK YOU FOR STICKING AROUND TO THE END!"
+          "cz": "Děkuji, že jste vytrvali až do konce. Snad jste se dobře bavili.",
+          "en": "Thank you for sticking around to the end. I hope you had some fun with the game."
+        }
+    },
+    {
+      "id": "page_the_end",
+      "languages":
+        {
+          "cz": "KONEC",
+          "en": "THE END"
         }
     },
   ]
