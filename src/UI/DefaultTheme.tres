@@ -1,11 +1,11 @@
 [gd_resource type="Theme" load_steps=13 format=2]
 
 [ext_resource path="res://assets/ui/buttons/button_unpressed.png" type="Texture" id=1]
-[ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/ui/buttons/button_pressed.png" type="Texture" id=3]
+[ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=17]
-font_data = ExtResource( 2 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxTexture" id=6]
 texture = ExtResource( 1 )
@@ -71,7 +71,7 @@ margin_top = 6.0
 margin_bottom = 6.0
 
 [sub_resource type="DynamicFont" id=23]
-font_data = ExtResource( 2 )
+font_data = ExtResource( 4 )
 
 [resource]
 Button/colors/font_color = Color( 0.752941, 0.752941, 0.752941, 1 )

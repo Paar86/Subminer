@@ -1,10 +1,9 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://src/Levels/LevelBase.gd" type="Script" id=1]
 [ext_resource path="res://src/Levels/LevelRestarter.gd" type="Script" id=2]
 [ext_resource path="res://src/UI/HUD.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/Tilesets/placeable_objects.tres" type="TileSet" id=4]
-[ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/tilemap_ground.png" type="Texture" id=6]
 [ext_resource path="res://src/UI/PauseScreen.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=8]
@@ -575,7 +574,7 @@ font_data = ExtResource( 9 )
 [sub_resource type="DynamicFont" id=98]
 outline_size = 1
 outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 5 )
+font_data = ExtResource( 9 )
 
 [sub_resource type="Animation" id=103]
 resource_name = "FADE_OUT_WHITE"
@@ -698,7 +697,6 @@ tracks/1/keys = {
 
 [node name="LevelBase" type="Node"]
 script = ExtResource( 1 )
-music_resource = null
 
 [node name="LevelRestarter" type="Node" parent="."]
 pause_mode = 2

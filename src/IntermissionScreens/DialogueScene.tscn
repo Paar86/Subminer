@@ -1,8 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/IntermissionScreens/DialogueScene.gd" type="Script" id=2]
-[ext_resource path="res://fonts/PolygonPixel5x7Standard.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://assets/ui/continued_text_symbol.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -10,7 +9,7 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 32
-font_data = ExtResource( 4 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="Animation" id=6]
 length = 0.001
