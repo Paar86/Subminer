@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://src/IntermissionScreens/EndingCredits/EndPage.gd" type="Script" id=2]
+
+[node name="EndPage" type="Label"]
+modulate = Color( 1, 1, 1, 0 )
+anchor_left = 0.1
+anchor_right = 0.9
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+text = "end_page_key"
+align = 1
+valign = 1
+autowrap = true
+script = ExtResource( 2 )

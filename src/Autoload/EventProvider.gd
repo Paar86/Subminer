@@ -2,6 +2,7 @@ extends Node
 
 signal shake_requested
 signal level_fade_out_white_requested
+signal game_restart_requested
 
 
 func request_shake(shake_type: int) -> void:
@@ -27,3 +28,7 @@ func request_shake(shake_type: int) -> void:
 
 func request_level_fade_out_white() -> void:
 	emit_signal("level_fade_out_white_requested")
+
+
+func request_game_restart() -> void:
+	emit_signal("game_restart_requested")

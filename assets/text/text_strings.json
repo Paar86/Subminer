@@ -183,6 +183,38 @@
           "cz": "{level8_cz}",
           "en": "{level8_en}"
         }
-    }
+    },
+    {
+      "id": "page_purpose",
+      "languages":
+        {
+          "cz": "Tento projekt vznikl za účelem studia enginu Godot a vývoje her obecně. Zdrojový kód je zcela otevřený pro všechny, kteří také s vývojem začínají a chtějí se něčemu přiučit.",
+          "en": "{level8_en}"
+        }
+    },
+    {
+      "id": "page_music",
+      "languages":
+        {
+          "cz": "Všechna ta skvělá hudba, kterou jste ve hře slyšeli, včetně té aktuálně znějící, vznikla z pera uživatele jménem Holizna.\r\n\r\nK dispozici je zcela zdarma na stránkách https://freemusicarchive.org.",
+          "en": "{level8_en}"
+        }
+    },
+    {
+      "id": "page_next_work",
+      "languages":
+        {
+          "cz": "Toto je můj první veřejný projekt, jeho vývoj trval s přestávkami něco málo přes rok. Věřím, že ten další vznikne podstatně rychleji.",
+          "en": "{level8_en}"
+        }
+    },
+    {
+      "id": "page_thank_you",
+      "languages":
+        {
+          "cz": "DĚKUJI, ŽE JSTE VYDRŽELI AŽ DO KONCE!",
+          "en": "THANK YOU FOR STICKING AROUND TO THE END!"
+        }
+    },
   ]
 }

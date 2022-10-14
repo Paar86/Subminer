@@ -31,6 +31,7 @@ func play_music(music_name: String) -> void:
 		return
 
 	_music_player.stream = playlist[music_name]
+	_music_player.stream_paused = false
 	_music_player.play()
 
 	_current_music_name = music_name
@@ -57,7 +58,7 @@ func stop_music_with_fadeout() -> void:
 	tween.start()
 
 	yield(tween, "tween_all_completed")
-	_music_player.stop()
+	_music_player.stream_paused = true
 	_music_player.volume_db = original_volume
 
 

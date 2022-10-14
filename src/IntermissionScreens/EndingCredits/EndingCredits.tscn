@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/IntermissionScreens/EndingCredits/EndingCredits.gd" type="Script" id=2]
+[ext_resource path="res://src/IntermissionScreens/EndingCredits/EndPage.tscn" type="PackedScene" id=3]
+
+[node name="EndingCredits" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Pages" type="Node" parent="."]
+
+[node name="PageIntro" parent="Pages" instance=ExtResource( 3 )]
+text = "SUBMINER"
+translate = false
+duration = 5.0
+
+[node name="PagePurpose" parent="Pages" instance=ExtResource( 3 )]
+text = "page_purpose"
+duration = 10.0
+
+[node name="PageMusic" parent="Pages" instance=ExtResource( 3 )]
+text = "page_music"
+duration = 10.0
+
+[node name="PageNextWork" parent="Pages" instance=ExtResource( 3 )]
+text = "page_next_work"
+duration = 10.0
+
+[node name="PageThankYou" parent="Pages" instance=ExtResource( 3 )]
+text = "page_thank_you"
+
+[node name="DelayTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="NextPageTimer" type="Timer" parent="."]
+wait_time = 6.0
+one_shot = true
+
+[node name="QuitEnablerTimer" type="Timer" parent="."]
+wait_time = 2.0
+__meta__ = {
+"_editor_description_": "Time after which last page is interactive (can be closed)."
+}
+
+[connection signal="timeout" from="DelayTimer" to="." method="_on_DelayTimer_timeout"]
+[connection signal="timeout" from="NextPageTimer" to="." method="_on_NextPageTimer_timeout"]
+[connection signal="timeout" from="QuitEnablerTimer" to="." method="_on_QuitEnablerTimer_timeout"]
