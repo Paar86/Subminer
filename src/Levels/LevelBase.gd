@@ -74,7 +74,7 @@ var _pickups_folder_tiles := [
 	_fragment_tile_name
 ]
 
-var _big_explosion_sfx_path := "res://assets/sfx/explosionBig3.wav"
+var _big_explosion_sfx := preload("res://assets/sfx/explosionBig3.wav")
 
 
 # There can be only one player tile in the level
@@ -290,5 +290,5 @@ func _on_level_fade_out_request() -> void:
 
 
 func _on_AmbientExplosionTimer_timeout() -> void:
-	AudioStreamManager.play_sound(_big_explosion_sfx_path)
+	AudioStreamManager.play_sound(_big_explosion_sfx)
 	AmbientExplosionTimer.wait_time = rand_range(0.1, 0.2)
