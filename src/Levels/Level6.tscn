@@ -229,21 +229,36 @@ tile_data = PoolIntArray( -196589, 1073741829, 0, -196588, 1073741829, 0, -19658
 visible = true
 
 [node name="Label" parent="Debug/DebugControl/VBoxContainer" index="0"]
-margin_right = 71.0
+margin_right = 69.0
+margin_bottom = 14.0
 
 [node name="HBoxContainer" parent="Debug/DebugControl/VBoxContainer" index="1"]
-margin_right = 71.0
+margin_top = 18.0
+margin_right = 69.0
+margin_bottom = 32.0
+
+[node name="Goal" parent="Debug/DebugControl/VBoxContainer/HBoxContainer" index="0"]
+margin_right = 28.0
+margin_bottom = 14.0
 
 [node name="GoalCount" parent="Debug/DebugControl/VBoxContainer/HBoxContainer" index="1"]
-margin_right = 51.0
+margin_left = 32.0
+margin_right = 48.0
+margin_bottom = 14.0
 text = "120"
 
 [node name="HBoxContainer2" parent="Debug/DebugControl/VBoxContainer" index="2"]
-margin_right = 71.0
+margin_top = 36.0
+margin_right = 69.0
+margin_bottom = 50.0
+
+[node name="Current" parent="Debug/DebugControl/VBoxContainer/HBoxContainer2" index="0"]
+margin_bottom = 14.0
 
 [node name="CurrentCount" parent="Debug/DebugControl/VBoxContainer/HBoxContainer2" index="1"]
 modulate = Color( 1, 1, 1, 1 )
-margin_right = 71.0
+margin_right = 69.0
+margin_bottom = 14.0
 text = "124"
 
 [editable path="Obstacles/WaterCurrent"]
