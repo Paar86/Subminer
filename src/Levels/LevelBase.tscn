@@ -707,10 +707,23 @@ __meta__ = {
 
 [node name="Obstacles" type="Node" parent="."]
 
+[node name="Pickups" type="Node" parent="."]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="PlayerStart" type="Node" parent="."]
+
 [node name="DecorationsTileMap" type="TileMap" parent="."]
 z_index = -10
 tile_set = SubResource( 102 )
 cell_size = Vector2( 16, 16 )
+format = 1
+
+[node name="ObjectsTileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 16, 16 )
+collision_layer = 0
+collision_mask = 0
 format = 1
 
 [node name="WallsTileMap" type="TileMap" parent="."]
@@ -721,19 +734,6 @@ collision_use_kinematic = true
 collision_layer = 2
 collision_mask = 0
 format = 1
-
-[node name="ObjectsTileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 4 )
-cell_size = Vector2( 16, 16 )
-collision_layer = 0
-collision_mask = 0
-format = 1
-
-[node name="Pickups" type="Node" parent="."]
-
-[node name="Enemies" type="Node" parent="."]
-
-[node name="PlayerStart" type="Node" parent="."]
 
 [node name="AmbientExplosionTimer" type="Timer" parent="."]
 wait_time = 0.1

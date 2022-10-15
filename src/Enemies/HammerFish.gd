@@ -146,7 +146,7 @@ func _charge_state(delta: float) -> void:
 			AnimationPlayerNode.play("IDLE")
 			return
 
-	if is_on_wall():
+	if is_on_wall() or _velocity == Vector2.ZERO:
 		_state = States.IDLE
 		AnimationPlayerNode.play("IDLE")
 		return

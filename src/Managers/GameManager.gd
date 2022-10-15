@@ -7,7 +7,7 @@ var _levels_dict = {
 	"level4": "res://src/Levels/Level4.tscn",
 	"level5": "res://src/Levels/Level5.tscn",
 	"level6": "res://src/Levels/Level6.tscn",
-	"level7": "res://src/Levels/Level7.tscn",
+	"level7": "res://src/Levels/Level7Alt.tscn",
 }
 
 var _title_screen_path := "res://src/IntermissionScreens/TitlePage.tscn"
