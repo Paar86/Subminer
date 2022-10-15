@@ -13,4 +13,5 @@ func _init(stream_player_init: AudioStreamPlayer2D, stream_owner_init: Node2D = 
 func reset() -> void:
 	stream_player.global_position = Vector2.ZERO
 	stream_player.stream = null
+	stream_player.volume_db = 0.0
 	stream_owner = null

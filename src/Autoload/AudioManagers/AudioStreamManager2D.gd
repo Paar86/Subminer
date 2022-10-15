@@ -8,8 +8,8 @@ var _active_channels := []
 var _sounds_queue := []
 
 
-func play_sound(sound_resource: Resource, sound_owner: Node2D) -> void:
-	var sound_request = SoundRequest.new(sound_resource, sound_owner)
+func play_sound(sound_resource: Resource, sound_owner: Node2D, volume = 0.0) -> void:
+	var sound_request = SoundRequest.new(sound_resource, sound_owner, volume)
 	if not _sounds_queue.has(sound_request):
 		_sounds_queue.append(sound_request)
 
@@ -39,6 +39,7 @@ func _process(delta: float) -> void:
 		var sound_request = _sounds_queue.pop_front() as SoundRequest
 
 		stream_channel.stream_player.stream = sound_request.sound_resource
+		stream_channel.stream_player.volume_db = sound_request.volume
 		stream_channel.stream_player.global_position = sound_request.initial_global_position
 		stream_channel.stream_owner = sound_request.sound_owner
 		stream_channel.stream_player.play()

@@ -6,7 +6,7 @@ enum States { PAGE_LOADING, PAGE_LOADED, LAST_PAGE_LOADED }
 onready var DialogueTextLabel: Label = $BorderRect/DialogueText
 onready var AnimationPlayerNode: AnimationPlayer = $IndicatorAnimationPlayer
 
-var _voice_sfx := "res://assets/sfx/voice2.wav"
+var _voice_sfx := preload("res://assets/sfx/voice.wav")
 var _is_dialogue_finished := false setget , _get_is_dialogue_finished
 var _state = States.PAGE_LOADING
 var _pages: PoolStringArray = PoolStringArray()
@@ -75,9 +75,9 @@ func _start_current_page() -> void:
 	DialogueTextLabel.visible_characters = 0
 	var characters_count = DialogueTextLabel.get_total_character_count()
 	while (DialogueTextLabel.visible_characters < characters_count):
-		AudioStreamManager.play_sound(_voice_sfx)
+		AudioStreamManager.play_sound(_voice_sfx, -12.0)
 		DialogueTextLabel.visible_characters += 1
-		yield(get_tree().create_timer(0.025), "timeout")
+		yield(get_tree().create_timer(0.032), "timeout")
 
 	if _current_page == _pages.size() - 1:
 		_state = States.LAST_PAGE_LOADED

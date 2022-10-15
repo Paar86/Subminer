@@ -8,9 +8,10 @@ var _free_channels := []
 var _sounds_queue := []
 
 
-func play_sound(sound_file: String) -> void:
-	if not _sounds_queue.has(sound_file):
-		_sounds_queue.append(sound_file)
+func play_sound(sound_resource: Resource, volume: float = 0.0) -> void:
+	var sound_request = SoundRequest.new(sound_resource, null, volume)
+	if not _sounds_queue.has(sound_request):
+		_sounds_queue.append(sound_request)
 
 
 func _ready() -> void:
@@ -21,7 +22,6 @@ func _ready() -> void:
 		var stream_player := AudioStreamPlayer.new()
 		stream_player.bus = BUS
 		stream_player.autoplay = true
-		stream_player.volume_db = -6.0
 		add_child(stream_player)
 
 		_all_channels.append(stream_player)
@@ -34,11 +34,24 @@ func _process(delta: float) -> void:
 
 	for i in sounds_to_play:
 		var stream: AudioStreamPlayer = _free_channels.pop_front()
-		stream.stream = load(_sounds_queue.pop_front())
+		var sound_request: SoundRequest = _sounds_queue.pop_front()
+		stream.stream = sound_request.sound_resource
+		stream.volume_db = sound_request.volume
 		stream.play()
+
+		sound_request.free()
+
+	for sound in _sounds_queue:
+		sound.free()
 
 	_sounds_queue.clear()
 
 
+func _exit_tree() -> void:
+	for sound in _sounds_queue:
+		sound.free()
+
+
 func _on_stream_finished(stream: AudioStreamPlayer) -> void:
 	_free_channels.append(stream)
+	stream.volume_db = 0.0

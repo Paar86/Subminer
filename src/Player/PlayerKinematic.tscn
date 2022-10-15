@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/ui/black_rect.png" type="Texture" id=8]
 [ext_resource path="res://src/Common/ScreenShaker.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/sfx/overheat.wav" type="AudioStream" id=10]
-[ext_resource path="res://assets/sfx/water_current3.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/sfx/water_current4.wav" type="AudioStream" id=11]
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 11.0
@@ -378,6 +378,7 @@ autostart = true
 
 [node name="OverheatStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
+volume_db = -6.0
 bus = "SFX"
 
 [node name="WaterCurrentStreamPlayer" type="AudioStreamPlayer2D" parent="."]
