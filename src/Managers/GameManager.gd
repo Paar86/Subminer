@@ -7,7 +7,7 @@ var _levels_dict = {
 	"level4": "res://src/Levels/Level4.tscn",
 	"level5": "res://src/Levels/Level5.tscn",
 	"level6": "res://src/Levels/Level6.tscn",
-	"level7": "res://src/Levels/Level7Alt.tscn",
+	"level7": "res://src/Levels/Level7.tscn",
 }
 
 var _title_screen_path := "res://src/IntermissionScreens/TitlePage.tscn"
@@ -25,29 +25,22 @@ func _ready() -> void:
 	_show_title_screen()
 
 
-func _play_level_intro(level_number: int) -> void:
-	_clear_current_scene()
-
-
 func _clear_current_scene() -> void:
 	for scene in CurrentScene.get_children():
 		scene.call_deferred("free")
 
 
 # We'll first show dialogue scene
-func _prepare_level(level_number: int) -> void:
+func _show_dialogue_scene(level_id: String, is_ending_dialogue: bool = false) -> void:
 	_clear_current_scene()
-	level_number = clamp(level_number, 1, _levels_dict.size())
-	_current_level_number = level_number
-	var dict_key = "level" + str(level_number)
-
 	var dialogue_scene = load(_dialogue_scene_path).instance()
-	dialogue_scene.level_id = dict_key
+	dialogue_scene.level_id = level_id
 
 	CurrentScene.add_child(dialogue_scene)
-	dialogue_scene.set_dialogue(dict_key + "_dialogue")
+	dialogue_scene.show_level_name = !is_ending_dialogue
+	dialogue_scene.set_dialogue(level_id + "_dialogue")
 	dialogue_scene.start_dialogue()
-	dialogue_scene.connect("dialogue_ended", self, "_on_dialogue_ended", [dict_key])
+	dialogue_scene.connect("dialogue_ended", self, "_on_dialogue_ended", [level_id, is_ending_dialogue])
 
 
 func _load_level(dict_key: String) -> void:
@@ -65,12 +58,13 @@ func _load_next_level() -> void:
 	# To be certain the tree has not gotten paused in some point of the time
 	get_tree().paused = false
 	
-	var next_level_number := _current_level_number + 1
-	if next_level_number > _levels_dict.size():
-		_show_ending_screen()
+	_current_level_number = _current_level_number + 1
+	if _current_level_number > _levels_dict.size():
+		_show_dialogue_scene("end", true)
 		return
 	
-	_prepare_level(next_level_number)
+	var next_level_id = _levels_dict.keys()[_current_level_number - 1]
+	_show_dialogue_scene(next_level_id)
 
 
 func _reload_level() -> void:
@@ -100,8 +94,12 @@ func _show_ending_screen() -> void:
 
 
 # Loading the actual level, after a dialogue scene
-func _on_dialogue_ended(dict_key: String) -> void:
-	_load_level(dict_key)
+func _on_dialogue_ended(level_id: String, is_ending_dialogue: bool = false) -> void:
+	if is_ending_dialogue:
+		_show_ending_screen()
+		return
+	
+	_load_level(level_id)
 
 
 func _on_new_game_pressed() -> void:

@@ -6,6 +6,8 @@ enum States { PAGE_LOADING, PAGE_LOADED, LAST_PAGE_LOADED }
 onready var DialogueTextLabel: Label = $BorderRect/DialogueText
 onready var AnimationPlayerNode: AnimationPlayer = $IndicatorAnimationPlayer
 
+var show_level_name := true
+
 var _voice_sfx := preload("res://assets/sfx/voice.wav")
 var _is_dialogue_finished := false setget , _get_is_dialogue_finished
 var _state = States.PAGE_LOADING
@@ -28,7 +30,7 @@ func set_dialogue(dialogue_key: String) -> void:
 	var dialogue_text: String = TextManager.get_string_by_key(dialogue_key)
 	_pages = _create_pages(dialogue_text)
 	_current_page = -1
-	
+
 	DialogueTextLabel.text = dialogue_text
 	DialogueTextLabel.visible_characters = 0
 	DialogueTextLabel.lines_skipped = 0
@@ -51,12 +53,16 @@ func _unhandled_input(event: InputEvent) -> void:
 				_load_next_page()
 				return
 			States.LAST_PAGE_LOADED:
-				$LevelNameAnimationPlayer.play("SHOW_LEVEL_NAME")
+				if show_level_name:
+					$LevelNameAnimationPlayer.play("SHOW_LEVEL_NAME")
+					return
+
+				emit_signal("dialogue_ended")
 
 
 func _ready() -> void:
 	$LevelName.text = TextManager.get_string_by_key(level_id + "_name")
-	
+
 
 func _load_next_page() -> void:
 	_current_page += 1
