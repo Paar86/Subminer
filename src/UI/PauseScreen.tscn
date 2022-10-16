@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://src/UI/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://src/UI/SubmarineTheme.tres" type="Theme" id=1]
 [ext_resource path="res://fonts/LCDBlock.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/UI/PauseScreen.gd" type="Script" id=3]
 
@@ -37,10 +37,10 @@ text = "{pause_text}"
 align = 1
 
 [node name="RestartButton" type="Button" parent="VBoxContainer"]
-margin_left = 116.0
+margin_left = 119.0
 margin_top = 54.0
-margin_right = 204.0
-margin_bottom = 80.0
+margin_right = 201.0
+margin_bottom = 76.0
 rect_min_size = Vector2( 60, 0 )
 focus_mode = 0
 size_flags_horizontal = 4
@@ -49,10 +49,10 @@ shortcut_in_tooltip = false
 text = "{restart_text}"
 
 [node name="BackButton" type="Button" parent="VBoxContainer"]
-margin_left = 124.0
-margin_top = 84.0
-margin_right = 196.0
-margin_bottom = 110.0
+margin_left = 127.0
+margin_top = 80.0
+margin_right = 193.0
+margin_bottom = 102.0
 rect_min_size = Vector2( 60, 0 )
 focus_mode = 0
 size_flags_horizontal = 4

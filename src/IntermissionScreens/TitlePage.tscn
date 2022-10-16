@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/IntermissionScreens/TitlePage.gd" type="Script" id=1]
 [ext_resource path="res://src/UI/LanguageButtonGroup.tres" type="ButtonGroup" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/ui/buttons/english_pressed.png" type="Texture" id=9]
 [ext_resource path="res://assets/ui/title_logo_hollow.png" type="Texture" id=10]
 [ext_resource path="res://assets/ui/title_logo.png" type="Texture" id=11]
+[ext_resource path="res://src/UI/SubmarineTheme.tres" type="Theme" id=12]
 
 [sub_resource type="Animation" id=2]
 resource_name = "FADE_OUT"
@@ -243,35 +244,34 @@ margin_top = -104.0
 [node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
 margin_right = 320.0
-margin_bottom = 25.0
+margin_bottom = 50.0
 custom_constants/separation = 6
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer/Buttons"]
-margin_left = 113.0
-margin_right = 207.0
-margin_bottom = 25.0
+margin_left = 121.0
+margin_right = 198.0
+margin_bottom = 22.0
 focus_mode = 0
 size_flags_horizontal = 4
-theme = ExtResource( 3 )
+theme = ExtResource( 12 )
 disabled = true
 enabled_focus_mode = 0
 text = "{NewGameTitle}"
 
 [node name="HowToButton" type="Button" parent="VBoxContainer/Buttons"]
-visible = false
-margin_left = 109.0
-margin_top = 31.0
-margin_right = 211.0
-margin_bottom = 56.0
+margin_left = 117.0
+margin_top = 28.0
+margin_right = 202.0
+margin_bottom = 50.0
 focus_mode = 0
 size_flags_horizontal = 4
-theme = ExtResource( 3 )
+theme = ExtResource( 12 )
 disabled = true
 enabled_focus_mode = 0
 text = "{HowToPlayTitle}"
 
 [node name="Footing" type="VBoxContainer" parent="VBoxContainer"]
-margin_top = 29.0
+margin_top = 54.0
 margin_right = 320.0
 margin_bottom = 104.0
 size_flags_horizontal = 3
@@ -314,9 +314,9 @@ texture_hover = ExtResource( 8 )
 
 [node name="MadeByLabel" type="Label" parent="VBoxContainer/Footing"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 55.0
+margin_top = 30.0
 margin_right = 320.0
-margin_bottom = 75.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 0, 20 )
 theme = ExtResource( 3 )
 text = "2022 Josef Šustek"
