@@ -75,6 +75,7 @@ var _pickups_folder_tiles := [
 ]
 
 var _big_explosion_sfx := preload("res://assets/sfx/explosionBig3.wav")
+var _smoke_particles_resource := preload("res://src/Materials/SmokeParticles.tres")
 
 
 # There can be only one player tile in the level
@@ -185,6 +186,14 @@ func _ready() -> void:
 	HUDNode.reset_hitpoints()
 	HUDNode.set_minerals_goal(minerals_goal)
 	HUDNode.show()
+	
+	# Caching smoke particles to avoid stuttering at first occurence
+	var smoke_particle := Particles2D.new()
+	smoke_particle.process_material = _smoke_particles_resource
+	smoke_particle.one_shot = true
+	smoke_particle.emitting = true
+	smoke_particle.modulate = Color(1, 1, 1, 0)
+	add_child(smoke_particle)
 
 
 func _unhandled_input(event: InputEvent) -> void:
