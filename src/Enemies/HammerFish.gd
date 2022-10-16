@@ -9,6 +9,7 @@ var _state = States.IDLE
 
 onready var SpriteNode: Sprite = $Sprite
 onready var ChargeDetectorHigh: RayCast2D = $ChargeDetectorHigh
+onready var ChargeDetectorMid: RayCast2D = $ChargeDetectorMid
 onready var ChargeDetectorLow: RayCast2D = $ChargeDetectorLow
 onready var RaycastVisibility: RayCast2D = $RayCastVisibility
 onready var ChargeTimer: Timer = $ChargeCooldown
@@ -177,17 +178,26 @@ func _set_sprite_orientation(direction_basic: Vector2) -> void:
 
 	var _player_detector_scale := Vector2(direction_basic.x, 0.0)
 	ChargeDetectorHigh.set_deferred("scale", _player_detector_scale)
+	ChargeDetectorMid.set_deferred("scale", _player_detector_scale)
 	ChargeDetectorLow.set_deferred("scale", _player_detector_scale)
 
 
 func _check_charge_detectors_colliding() -> void:
-	var high_collider := ChargeDetectorHigh.get_collider() as PhysicsBody2D
 	var low_collider := ChargeDetectorLow.get_collider() as PhysicsBody2D
-
-	if !high_collider or !low_collider:
+	var mid_collider := ChargeDetectorMid.get_collider() as PhysicsBody2D
+	var high_collider := ChargeDetectorHigh.get_collider() as PhysicsBody2D
+	
+	# This is primary collider
+	if !mid_collider:
 		return
-
-	if high_collider.is_in_group("Player") and low_collider.is_in_group("Player") and _can_charge:
+	
+	# Secondary colliders
+	if !low_collider and !high_collider:
+		return
+		
+	var secondary_collider := low_collider if low_collider != null else high_collider
+	
+	if mid_collider.is_in_group("Player") and secondary_collider.is_in_group("Player") and _can_charge:
 		_can_charge = false
 		ChargeTimer.start()
 		_state = States.ROAR
