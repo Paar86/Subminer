@@ -1,6 +1,6 @@
 extends Node
 
-var current_lang = Enums.Languages.CZ setget _set_current_lang
+var current_lang = Enums.Languages.EN setget _set_current_lang
 
 const FILE_FORMAT_WARNING_MESSAGE := "Parsed file is in wrong format!"
 

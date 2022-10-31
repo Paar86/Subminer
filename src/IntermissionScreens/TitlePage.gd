@@ -11,6 +11,9 @@ onready var AnimationPlayerScene = $AnimationPlayer
 
 onready var _screen_size := get_viewport_rect().size
 
+var _flash_sfx := preload("res://assets/sfx/flash.wav")
+var _start_sfx := preload("res://assets/sfx/start2.wav")
+
 
 func _ready() -> void:
 	_refresh_text()
@@ -37,7 +40,12 @@ func _activate_buttons():
 	ButtonCZE.disabled = false
 
 
+func _play_flash_sound() -> void:
+	AudioStreamManager.play_sound(_flash_sfx)
+
+
 func _on_NewGameButton_pressed() -> void:
+	AudioStreamManager.play_sound(_start_sfx)
 	MusicManager.stop_music_with_fadeout()
 	AnimationPlayerScene.play("FADE_OUT")
 	yield(AnimationPlayerScene, "animation_finished")

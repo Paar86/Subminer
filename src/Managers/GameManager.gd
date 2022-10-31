@@ -57,12 +57,12 @@ func _load_level(dict_key: String) -> void:
 func _load_next_level() -> void:
 	# To be certain the tree has not gotten paused in some point of the time
 	get_tree().paused = false
-	
+
 	_current_level_number = _current_level_number + 1
 	if _current_level_number > _levels_dict.size():
 		_show_dialogue_scene("end", true)
 		return
-	
+
 	var next_level_id = _levels_dict.keys()[_current_level_number - 1]
 	_show_dialogue_scene(next_level_id)
 
@@ -98,7 +98,7 @@ func _on_dialogue_ended(level_id: String, is_ending_dialogue: bool = false) -> v
 	if is_ending_dialogue:
 		_show_ending_screen()
 		return
-	
+
 	_load_level(level_id)
 
 

@@ -33,6 +33,7 @@ duration = 8.0
 text = "page_the_end"
 
 [node name="DelayTimer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 autostart = true
 
@@ -42,6 +43,7 @@ one_shot = true
 
 [node name="QuitEnablerTimer" type="Timer" parent="."]
 wait_time = 2.0
+one_shot = true
 __meta__ = {
 "_editor_description_": "Time after which last page is interactive (can be closed)."
 }

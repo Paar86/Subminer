@@ -231,6 +231,7 @@ resource_local_to_scene = true
 extents = Vector2( 16, 32 )
 
 [node name="Level2" instance=ExtResource( 1 )]
+minerals_goal = 55
 music_name = "day_dreams"
 
 [node name="DecorationsTileMap" parent="." index="1"]
@@ -435,6 +436,7 @@ margin_bottom = 14.0
 margin_left = 32.0
 margin_right = 44.0
 margin_bottom = 14.0
+text = "55"
 
 [node name="HBoxContainer2" parent="Debug/DebugControl/VBoxContainer" index="2"]
 margin_top = 36.0

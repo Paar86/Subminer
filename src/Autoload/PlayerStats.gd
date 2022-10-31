@@ -22,6 +22,7 @@ func reset() -> void:
 	hitpoints = STARTING_HITPOINTS
 	minerals = 0
 	minerals_goal = -1
+	heat_value = 0.0
 
 
 func _ready() -> void:

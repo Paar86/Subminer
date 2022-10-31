@@ -17,6 +17,7 @@ var _can_quit := false
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("dash") and _can_quit:
 		_close_last_page()
+		_can_quit = false
 
 
 func _ready() -> void:
