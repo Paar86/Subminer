@@ -132,7 +132,7 @@ func _prepare_death_state() -> void:
 
 func _shoot_prepare_state(delta: float) -> void:
 #	AudioStreamManager.play_sound(_charging_sfx_path)
-	
+
 	if !_loading_projectiles:
 		_load_projectiles()
 		_tween_projectiles()
@@ -140,7 +140,7 @@ func _shoot_prepare_state(delta: float) -> void:
 
 func _shoot_state(delta: float) -> void:
 	AudioStreamManager2D.play_sound(_shoot_sfx, self)
-	
+
 	for projectile in _projectiles_container_array:
 		projectile.fire()
 
@@ -155,6 +155,8 @@ func _death_state(delta: float) -> void:
 func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var target_direction = (area.owner.global_position - global_position).normalized()
+		if target_direction == Vector2.ZERO:
+			target_direction = Vector2.RIGHT
 		(area.owner as GameActor).propagate_effects({
 				Enums.Effects.DAMAGE: _damage,
 				Enums.Effects.PUSH: target_direction * _push_strength

@@ -8,12 +8,15 @@ enum States { IDLE, FOLLOW, ROAR, CHARGE, REST, DEATH }
 var _state = States.IDLE
 
 onready var SpriteNode: Sprite = $Sprite
+onready var ChargeTimer: Timer = $ChargeCooldown
+onready var AnimationPlayerNode = $AnimationPlayer
+
 onready var ChargeDetectorHigh: RayCast2D = $ChargeDetectorHigh
 onready var ChargeDetectorMid: RayCast2D = $ChargeDetectorMid
 onready var ChargeDetectorLow: RayCast2D = $ChargeDetectorLow
 onready var RaycastVisibility: RayCast2D = $RayCastVisibility
-onready var ChargeTimer: Timer = $ChargeCooldown
-onready var AnimationPlayerNode = $AnimationPlayer
+onready var WallDetectorHigh: RayCast2D = $WallDetectorHigh
+onready var WallDetectorLow: RayCast2D = $WallDetectorLow
 
 var _roar_sfx := preload("res://assets/sfx/fishRoar.wav")
 var _charge_sfx := preload("res://assets/sfx/fishCharge.wav")
@@ -122,7 +125,7 @@ func _roar_state(delta: float) -> void:
 		_state = States.CHARGE
 		AnimationPlayerNode.play("CHARGE")
 		AudioStreamManager2D.play_sound(_charge_sfx, self)
-		
+
 		BubbleGenerator.generate_bubbles_in_rect_with_delay(
 			self,
 			8.0,
@@ -135,11 +138,14 @@ func _roar_state(delta: float) -> void:
 
 
 func _charge_state(delta: float) -> void:
-	_velocity = move_and_slide(_direction * _charge_speed, Vector2.UP)
+	_velocity = move_and_slide(_direction * _charge_speed,
+								Vector2.UP)
+
 	var collisions_number = get_slide_count()
 	for i in collisions_number:
 		var collision = get_slide_collision(i)
-		if is_on_wall() and collision.collider is TileMap:
+		if ((is_on_wall() and collision.collider is TileMap)
+				or (WallDetectorHigh.is_colliding() and WallDetectorLow.is_colliding())):
 			var smoke_instance = _smoke_effect.instance()
 			smoke_instance.global_position = collision.position
 			get_parent().call_deferred("add_child", smoke_instance)
@@ -147,7 +153,7 @@ func _charge_state(delta: float) -> void:
 			AnimationPlayerNode.play("IDLE")
 			return
 
-	if is_on_wall() or _velocity == Vector2.ZERO:
+	if is_on_wall():
 		_state = States.IDLE
 		AnimationPlayerNode.play("IDLE")
 		return
@@ -186,17 +192,17 @@ func _check_charge_detectors_colliding() -> void:
 	var low_collider := ChargeDetectorLow.get_collider() as PhysicsBody2D
 	var mid_collider := ChargeDetectorMid.get_collider() as PhysicsBody2D
 	var high_collider := ChargeDetectorHigh.get_collider() as PhysicsBody2D
-	
+
 	# This is primary collider
 	if !mid_collider:
 		return
-	
+
 	# Secondary colliders
 	if !low_collider and !high_collider:
 		return
-		
+
 	var secondary_collider := low_collider if low_collider != null else high_collider
-	
+
 	if mid_collider.is_in_group("Player") and secondary_collider.is_in_group("Player") and _can_charge:
 		_can_charge = false
 		ChargeTimer.start()
@@ -226,6 +232,8 @@ func _on_Hitbox_area_entered(area: Area2D) -> void:
 	if area.owner is GameActor:
 		var calculated_damage = _damage if _state == States.CHARGE else _damage / 2
 		var direction = (area.owner.global_position - global_position).normalized()
+		if direction == Vector2.ZERO:
+			direction = Vector2.RIGHT
 		area.owner.propagate_effects({Enums.Effects.DAMAGE: calculated_damage, Enums.Effects.PUSH: direction * _push_strength })
 
 

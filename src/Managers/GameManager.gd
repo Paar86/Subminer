@@ -27,7 +27,7 @@ func _ready() -> void:
 
 func _clear_current_scene() -> void:
 	for scene in CurrentScene.get_children():
-		scene.call_deferred("free")
+		scene.queue_free()
 
 
 # We'll first show dialogue scene
