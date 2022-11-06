@@ -100,7 +100,7 @@
       "id": "level7_name",
       "languages":
         {
-          "cz": "Cílová stanice",
+          "cz": "Konečná zastávka",
           "en": "The Final Destination"
         }
     },
@@ -108,24 +108,24 @@
       "id": "level1_dialogue",
       "languages":
         {
-          "cz": "Haló? Slyšíme se? Raz, dva, tři... Funguje to nebo ne? Á, výborně. Jsem Alja, tvoje operátorka. Takže ty jsi ten zázrak, co v simulátorech překonal skóre Quinna Floyda? Musím tě upozornit, že se skutečnost od virtuální reality dost liší. Najít nová ložiska je stále těžší a musíme se vydávat do míst, kam jsme předtím kvůli bezpečnosti nemohli. A proto jsme si taky zavolali tebe. Potřebujeme někoho schopného, kdo nám to tam očíhne a zároveň něco natěží. Neměj strach, začneme hezky zlehka a pomaloučku, ať se můžeš trochu rozehřát. Nechceme ti přeci dělat parte hned po první misi, no ne?",
-          "en": "Hello? Can you hear me? One, two, three... Is it working or not? Oh, finally. I'm Alja, your operator. So you're the wonder who beat Quinn Floyd's score in the simulator. I have to warn you that the reality is quite different from the VR. It's getting harder and harder to find new deposits and we have to go to places which were deemed too dangerous before. And that's why we've called you in. We need someone with a skill who'll do some scouting for us and will harvest some ore while at it. Don't worry, we'll start nice and easy so you can warm yourself up. We don't want to make an obituary for you after your first mission, do we?"
+          "cz": "Haló? Slyšíme se? Raz, dva, tři... Haló? Á, výborně. Jsem Alja, tvoje operátorka. Takže ty jsi ten zázrak, co v simulátorech překonal skóre Quinna Floyda? Musím tě upozornit, že se skutečnost od virtuální reality dost liší. Najít nová ložiska je stále těžší a musíme se vydávat do míst, kam jsme předtím z bezpečnostních důvodů nemohli. A proto jsme si taky zavolali tebe. Potřebujeme někoho schopného, kdo nám to tam očíhne a zároveň něco natěží. Neměj strach, začneme hezky zlehka a pomaloučku, ať se můžeš trochu rozehřát. Nechceme ti přeci psát parte hned po první misi.",
+          "en": "Hello? Can you hear me? One, two, three... Hello? Oh, excellent. I'm Alja, your operator. So you're the wonder who beat Quinn Floyd's score in the simulator. I have to warn you that the reality is quite different from the VR. It's getting harder and harder to find new deposits and we have to go to places which were deemed too dangerous before due to security reasons. And that's why we've called you in. We need someone with a skill who'll do some scouting for us and will harvest some ore while at it. Don't worry, we'll start nice and easy so you can warm yourself up. We don't want to write an obituary for you right after your first mission."
         }
     },
     {
       "id": "level2_dialogue",
       "languages":
         {
-          "cz": "Hotovo? Ani jsem nedopila kafe, a to jsem doufala, že stihnu ještě zákusek. Musím uznat, že jsem tě krapet podcenila. A neboj se, zábavy tady pro tebe máme dost a dost. Třeba tahle jeskyně, jenom pár kilometrů na sever. Nikdo tam nebyl kvůli silným vodním proudům, sondy tam ale nedávno hlásily nemalá ložiska. Myslím, že pro člověka tvých schopností to bude dobrá výzva. Rozehřívací kolo máme za sebou, teď je čas se do toho konečně opřít.",
-          "en": "Done already? I haven't even finished my coffee and I was hoping to get a desert too. I have to admit I kind of underastimated you. Don't worry, there's still a lot more fun ahead. Take this cave, only few klicks to the north. Nobody ever went there because of high underwater currents but our probes reported some substantial deposits. I think it's gonna be a good challenge for a man of you abilities. We're done with the warm-up round, now it's finally time to get serious."
+          "cz": "Hotovo? Ani jsem nedopila kafe. Musím uznat, že jsem tě krapet podcenila. A neboj se, zábavy tady pro tebe máme dost a dost. Třeba tahle jeskyně, jenom pár kilometrů na sever. Nikdo tam nebyl kvůli silným vodním proudům, sondy tam ale nedávno hlásily nemalá ložiska. Myslím, že to pro tebe bude dobrá výzva. Rozehřívací kolo máme za sebou, teď je čas se do toho pořádně opřít.",
+          "en": "Done already? I haven't even finished my coffee. I have to admit I kind of underastimated you. Don't worry, there's still a lot more fun ahead. Take this cave, only few klicks to the north. Nobody ever went there because of high underwater currents but there are some substantial deposits reported by our probes. I think it's gonna be a good challenge. We're done with the warm-up round, now it's time to get serious."
         }
     },
     {
       "id": "level3_dialogue",
       "languages":
         {
-          "cz": "No vida, jde ti to hezky, ani ses nezapotil. S takovou budeme co neviděť doma. Koukám teď na naši další destinaci a vidím tady nějaké zdroje energie, patrně stará technika Marinetechu. Ti divoši nestrpěli konkurenci, vždycky komplet zaminovali všechno, kam vlezli. Měj se na pozoru. A přestaň myslet na domov, teď jsme my tvoje rodina.",
-          "en": "Well look at that. You're doing fine, didn't even break a sweat. Keep at it and we'll go home early. I'm looking at our next destination and am seeing some kind of energy sources. Probably some old Marinetech technology. Those savages couldn't stand any kind of a competition, they always left load of mines everywhere they set foot into. Be careful. And stop think about your home, we're your family now."
+          "cz": "No vida, jde ti to hezky, ani ses nezapotil. S takovou půjdeme co nevidět domů. Koukám teď na naši další destinaci a vidím nějaké energetické stopy, patrně staré miny Marinetechu. Ti divoši nestrpěli konkurenci, nesnášeli, když jim někdo lezl do zelí. Měj se na pozoru. A přestaň myslet na domov, teď jsme my tvoje rodina.",
+          "en": "Well look at that. You're doing just fine, didn't even break a sweat. Keep at it and we'll go home early. I'm looking at our next destination and am seeing some kind of energy sources. Probably old Marinetech mines. Those savages couldn't stand any kind of a competition, they hated when somebody got into their way. Be careful. And stop think about home, we're your family now."
         }
     },
     {
@@ -133,39 +133,39 @@
       "languages":
         {
           "cz": "Máš pevné nervy, to se musí nechat. Jednou jsem pracovala s týpkem, co po návratu z mise přestal mluvit a trvalo asi týden, než z něj doktoři něco dostali. Teď už je v pohodě, občas poskládá i celou větu... Jó, to byly časy. Od té doby dáváme pilotům do kokpitu smajlíka s žárovkou, aby se tam dole necítili sami. Tma a samota s tebou udělají divy.",
-          "en": "You have nerves of steel, I'll give you that. I've worked with one guy before, he completely stopped talking when he got back from a mission and it took the doctors almost a week to get anything out of him. Now he's fine, from time to time he even strings a complete sentence together... Yeah, those were the days. Since then we've been putting a glowing smiley to every pilot's cockpit so they don't feel alone down there. Darkness and solitude can do wonders to a human spirit."
+          "en": "You have strong nerves, I'll give you that. I've worked with one guy before, he completely stopped talking when he got back from a mission and it took the doctors almost a week to get anything out of him. Now he's fine, from time to time he even strings a complete sentence together... Yeah, those were the days. Since then we've been putting a glowing smiley to every pilot's cockpit so they don't feel alone down there. Darkness and solitude can do wonders to the human mind."
         }
     },
     {
       "id": "level5_dialogue",
       "languages":
         {
-          "cz": "Něco ti prozradím, málokdo tady nahoře věřil, že se dostaneme takhle daleko. Hned z kraje tě odepsali. Kdybys jen viděl, jak to tady vypadá teď. Všichni jsou nalepení na monitoru a hádají se, kdo se s tebou vyfotí první, až se vrátíš. Stala se z tebe malá celebrita. I tak ale nemáme zdaleko vyhráno, takže se pořádně soustřeď. Nezapomeň, stačí jedno malé zaváhání a je konec. Nechceš přece, aby z tebe bylo žrádlo pro ryby, no ne?",
-          "en": "I'll tell you something. Nobody up here believed that we could get this far. They've signed you off right at the start. If only you could see how they look now. With their faces glued to the monitor and arguing who'll get a picture with you when you come back. You've become quite a celebrity here. But we're still far from the finish line so stay focused. Don't forget - one moment of hesitation and it's over. You don't want to turn into a fish food, right?"
+          "cz": "Něco ti prozradím, málokdo tady nahoře věřil, že se dostaneme takhle daleko. Hned z kraje tě odepsali. Kdybys jen viděl, jak to tady vypadá teď. Všichni jsou nalepení na monitoru a hádají se, kdo se s tebou vyfotí první, až se vrátíš. Stala se z tebe tak trochu celebrita. Pořád ale nemáme vyhráno, takže se soustřeď. Nezapomeň, stačí jedno malé zaváhání a je po všem. Nechceš, aby z tebe bylo žrádlo pro ryby, no ne?",
+          "en": "I'll tell you something. Nobody up here believed that we could get this far. They've signed you off right from the start. If only you could see how their faces now. Glued to the monitor and arguing who'll get a picture with you when you come back. You've become quite a celebrity here. But we're still far from the finish line so stay focused. Don't forget - one moment of hesitation and it's over. You don't want to turn into a fish food, right?"
         }
     },
     {
       "id": "level6_dialogue",
       "languages":
         {
-          "cz": "Skvělá práce, občas jsem skoro nedýchala, jak těsné to bylo. Ukázal jsi, že dokážeš být trpělivý, teď se ti to bude hodit dvojnásob. Mám pro tebe místo, na kterém se Marinetech opravdu vyřádil. Je to kompletně zaminovaný důlní komplex, který drží pohormadě snad už jen silou vůle. Stačí jediný výbuch a celé se ti to tam sesype na hlavu, tak si dávej pozor. Musí tam být něco fakt cenného, jinak by Marinetech tolik nebláznil. Ať je to cokoli, těším se, až to bude naše.",
-          "en": "Great job. At times I was almost out of my breath how close it was. You've proven your patience which is a property that'll come especially handy in your next mission. I've found a place where Marinetech really made a mess. It's an old mine complex full of active explosives, pretty unstable. One blast and the whole place will come crashing down on your head, so watch out. There's gotta be something really valuable in there, otherwise Marinetech wouldn't go so crazy about it. Whatever it is, I'm looking forward to get it."
+          "cz": "To bylo hodně těsné, málem jsi mi přivodil infarkt. Jsem ráda, že dokážeš být trpělivý, teď se ti to bude hodit dvojnásob. Mám pro tebe místo, na kterém se Marinetech opravdu vyřádil - starý a dlouhá léta opuštěný důlní komplex, z nějakého důvodu po okraj naplněný výbušninami. Jedna jediná exploze a celé se ti to tam sesype na hlavu. A to nechceš. Musí tam být něco fakt cenného, jinak by nebyli tak paranoidní. Ať je to cokoli, těším se, až to bude naše.",
+          "en": "That was pretty close, you almost gave me a heart attack. I'm glad you can be patient which is something that'll be especially handy in you next misson. I've found a place where Marinetech really made a mess - an old and long-abandoned mining complex, for some reason filled to the brim with explosives. One blast and the whole place comes crashing down. And you definitelly don't want that. There's gotta be something really valuable in there, they wouldn't be so paranoid otherwise. Whatever it is, I'm looking forward to get it."
         }
     },
     {
       "id": "level7_dialogue",
       "languages":
         {
-          "cz": "Je to tady, naše cílová páska. Poprvé vůbec, co se někdo vydává takhle hluboko, na to si netroufli ani ti největší drsňáci. To víš, těžké časy si žádají troufalá rozhodnutí. Detekujeme tady rozsáhlé zdroje rudy, každopádně nemůžeme ti předem říct, co tam dole žije za havěť. Tvoje ponorka je jediné zařízení v našem inventáři, které odolá tak velkému tlaku. Nezbývá mi, než ti popřát hodně štěstí a pevné nervy. Ne, že bys to potřeboval.",
-          "en": "Here it comes, our finish line. This is the first time anyone's going this deep, not even our toughest have ever done that. You know, difficult times call for bold decisions. We're detecting a large ore resources but we can't tell you in advance what creatures lurk down there. Your submarine is the only device in our inventory that can withstand that much pressure. The only thing I can do for you now is wish you luck. Not that you would need it."
+          "cz": "Je to tady, naše cílové páska, naše konečná zastávka. Bude to vůbec poprvé, co se někdo vydává takhle hluboko, víš to? No jo, těžké časy si žádají těžká rozhodnutí. Detekujeme rozsáhlé zdroje rudy, každopádně nemůžeme ti předem říct, co tam dole žije za havěť. Tvoje ponorka je jediné zařízení v našem inventáři, které odolá tak velkému tlaku, a to ještě jenom teoreticky. Je to premiéra pro nás pro všechny, ne jen pro tebe. Nezbývá mi, než ti popřát hodně štěstí. Budeš ho potřebovat.",
+          "en": "Here it comes, our finish line, our final destination. This is the first time anyone's going this deep, you know? Yeah, well, tough times call for tough decisions. We're detecting a large ore resources but we can't tell you in advance what kind of creatures lurk down there. Your submarine is the only device in our inventory that can withstand that much pressure, and that's only in theory. It's a first for all of us, not only you. I can't help but wish you luck. You're gonna need it."
         }
     },
     {
       "id": "end_dialogue",
       "languages":
         {
-          "cz": "Páni. No to teda zírám. Zvládl jsi to! Připrav se na velkou oslavu, šampaňské bude téct proudem, to ti povídám! Pro některé jsi hrdina, pro jiné šílenecm, co si neváží života, každopádně jedno ti můžu říct už teď - tohle není konec, ale pouze začátek. Ostatní nemají vůbec potuchy, co spolu ještě dokážeme. Budou koukat! Kdo ví, třeba se o tobě jednou budou učit děti ve škole. To by bylo, co? Ha ha. Tak pojď, už tady na tebe čekáme. Tohle bude dlooouhá noc... Noc, která se zapíše do historie.",
-          "en": "Wow. I can't believe it. You did it! Get ready for a party, champagne will be flowing, I can promise you that! For some you're a hero, to others you're just a lunatic who doesn't value his own life. One thing is certain though - this not the end, it's just a beginning. They have no idea what we can do together. They'll see! Who knows, maybe someday kids will learn about you in schools. That would be something, wouldn't it? Ha ha. So let's get going, everyone is waiting for you. This we'll be a looong night... A night that will go down in history."
+          "cz": "Páni. No to teda zírám. Ty jsi to fakt zvládl. Nemůžu tomu uvěřit. Tak teď už určitě budeš slavný. Pro některé jsi hrdina, pro jiné šílencem, co si neváží života. Ať je to tak či onak, jedno ti můžu říct už teď - tohle není konec, ale začátek. Ostatní nemají vůbec potuchy, co spolu ještě dokážeme. Budou zírat! Jednou se o tobě budou učit děti ve škole, to ti garantuju. To by bylo, co? Tak pojď, už tady na tebe čekáme. Čeká nás dlooouhá noc... Noc, co se zapíše do historie.",
+          "en": "Wow. That's something. You actually pulled it off. I can't believe it. You'll surely be famous now. For some you'll be a hero, to others you'll just be a lunatic who doesn't value his own life. Either way one thing is certain - this not the end, it's just a beginning. They have no idea what we'll achieve together. They'll see! Someday kids will learn about you in schools, I can guarantee it. That would be something, wouldn't it? So let's get going, everyone is waiting for you. This we'll be a looong night... A night that will go down in history."
         }
     },
     {
