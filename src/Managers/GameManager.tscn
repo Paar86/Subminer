@@ -12,6 +12,7 @@ script = ExtResource( 1 )
 
 [node name="MouseLayer" type="CanvasLayer" parent="."]
 pause_mode = 2
+layer = 2
 script = ExtResource( 3 )
 
 [node name="MouseCursor" type="Sprite" parent="MouseLayer"]

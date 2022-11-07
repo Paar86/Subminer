@@ -186,6 +186,8 @@ func _set_sprite_orientation(direction_basic: Vector2) -> void:
 	ChargeDetectorHigh.set_deferred("scale", _player_detector_scale)
 	ChargeDetectorMid.set_deferred("scale", _player_detector_scale)
 	ChargeDetectorLow.set_deferred("scale", _player_detector_scale)
+	WallDetectorHigh.set_deferred("scale", _player_detector_scale)
+	WallDetectorLow.set_deferred("scale", _player_detector_scale)
 
 
 func _check_charge_detectors_colliding() -> void:

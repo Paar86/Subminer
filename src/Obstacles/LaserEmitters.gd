@@ -30,6 +30,7 @@ onready var LaserShootStream := $LaserShootStream
 var _laser_animatedtexture := preload("res://assets/laser_animatedtexture.tres")
 var _laser_tele_animatedtexture := preload("res://assets/laser_tele_animatedtexture.tres")
 
+var _damage := 10.0
 
 func _ready() -> void:
 	if Engine.editor_hint:
@@ -72,7 +73,7 @@ func _physics_process(delta: float) -> void:
 	if LaserRayCast.is_colliding():
 		var collider = LaserRayCast.get_collider()
 		if collider.owner is GameActor:
-			collider.owner.propagate_effects({Enums.Effects.DAMAGE: 50})
+			collider.owner.propagate_effects({Enums.Effects.DAMAGE: _damage})
 
 
 func _on_DelayTimer_timeout() -> void:

@@ -172,16 +172,16 @@
       "id": "page_purpose",
       "languages":
         {
-          "cz": "Tento projekt vznikl za účelem studia enginu Godot a vývoje her obecně. Zdrojový kód je zcela otevřený pro všechny, kteří se také v tomto oboru vzdělávají.",
-          "en": "This project has been created for the purpose of studying Godot Engine and game development in general. The source code is open to anyone who's also studying in this field."
+          "cz": "Tento projekt vznikl v rámci studia enginu Godot a vývoje her obecně. Zdrojový kód je zcela otevřený pro všechny, kteří by rádi náhlédli pod pokličku.",
+          "en": "This project has been created while learning the Godot Engine and game development in general. The source code is open to anyone who'd like to peek under the hood."
         }
     },
     {
       "id": "page_next_work",
       "languages":
         {
-          "cz": "Přesto bych rád upozornil, že výsledná hra je produktem samostudia a experimentování, nejde tedy o ukázku, jak by měla vypadat práce profesionála. Byli jste varováni!",
-          "en": "However I'd like to point out that the final game is a product of self-learning process and experimentions, therefore it's not an example how professional work should look. You've been warned!"
+          "cz": "Výsledná hra je produktem samostudia a experimentování, nejde tedy o ukázku, jak by měla vypadat práce profesionála. Byli jste varováni!",
+          "en": "The final game is a product of self-learning process and experimentions, therefore it's not an example how professional work should look. You've been warned!"
         }
     },
     {
